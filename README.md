@@ -23,15 +23,16 @@ You will build a team in your IDE of choice with each agent having specific role
 
 ```
 Features/
-├── 1-Backlog/          # Raw ideas
-├── 2-HLD/              # High Level Design docs
-├── 3-TaskReview/       # Architect sign-off queue
-├── 4-Implementation/   # Active coding
-├── 5-Testing-Agent/    # Automated test suite
-├── 6-Testing-Manual/   # Human QA
-├── 7-Verified/         # Ready for PR
-├── 8-Review/           # PR open
-└── 9-Done/             # Merged & complete
+├── 1-Backlog/          # Feature stubs (no stories yet)
+├── 2-HLD/              # Agent writes HLD + decomposes stories
+├── 3-HLD-Review/       # Human reviews and approves HLD
+├── 4-TaskReview/       # Agent writes LLD + Gherkin; human approves
+├── 5-Implementation/   # Agent writes code from LLD
+├── 6-Testing-Agent/    # Agent runs automated tests
+├── 7-Testing-Manual/   # Human QA
+├── 8-Verified/         # Tests passed, human approved
+├── 9-Review/           # PR open
+└── 10-Done/            # Merged & complete
 ```
 
 Stories are markdown files that move between folders as they progress.
@@ -48,34 +49,39 @@ flowchart TD
         H_in["Feature design\n─────────────\n· C4 L1 Context diagram\n· C4 L2 Container diagram\n· Components & data model\n· Stories decomposed here"]
     end
 
-    subgraph TASKREVIEW["3 · TaskReview  🤖 Architect Agent  →  👤 CTO approves"]
+    subgraph HLDREVIEW["3 · HLD-Review  👤 Human"]
+        HR_in["Human reviews HLD\n─────────────\n· Design sound?\n· Stories complete?\n· Approve to proceed"]
+    end
+
+    subgraph TASKREVIEW["4 · TaskReview  🤖 Architect Agent  →  👤 Human approves"]
         TR_in["Per-story LLD\n─────────────\n· C4 L3 Component diagram\n· Interface contracts\n· Sequence diagrams\n· Gherkin acceptance criteria"]
     end
 
-    subgraph IMPL["4 · Implementation  🤖 Agent"]
+    subgraph IMPL["5 · Implementation  🤖 Agent"]
         I_in["Code\n─────────────\n· Tests written first (TDD)\n· Implements LLD contracts\n· Updates Gherkin checklist"]
     end
 
-    subgraph TEST["5/6 · Testing"]
-        TA["5 · Testing-Agent  🤖\n─────────────\nUnit · Integration\nAcceptance (Gherkin)\nV-Model: all levels"]
-        TM["6 · Testing-Manual  👤\n─────────────\nExploratory · UX\nEdge cases requiring\nhuman judgment"]
+    subgraph TEST["6/7 · Testing"]
+        TA["6 · Testing-Agent  🤖\n─────────────\nUnit · Integration\nAcceptance (Gherkin)\nV-Model: all levels"]
+        TM["7 · Testing-Manual  👤\n─────────────\nExploratory · UX\nEdge cases requiring\nhuman judgment"]
     end
 
-    subgraph VERIFY["7 · Verified  👤 Human"]
+    subgraph VERIFY["8 · Verified  👤 Human"]
         V_in["Human approval\n─────────────\nAll tests pass\nAcceptance criteria met"]
     end
 
-    subgraph REVIEW["8 · Review  👤 Human"]
+    subgraph REVIEW["9 · Review  👤 Human"]
         R_in["PR open\n─────────────\nCode review\nFeedback addressed"]
     end
 
-    subgraph DONE["9 · Done  👤 Human"]
+    subgraph DONE["10 · Done  👤 Human"]
         D_in["PR merged\n─────────────\nFeature complete"]
     end
 
-    BACKLOG -->|"Human moves\nfeature to HLD"| HLD
-    HLD -->|"Agent signals ready\nHuman moves"| TASKREVIEW
-    TASKREVIEW -->|"CTO commits move"| IMPL
+    BACKLOG -->|"Human moves"| HLD
+    HLD -->|"Agent moves\nwhen HLD complete"| HLDREVIEW
+    HLDREVIEW -->|"Human approves"| TASKREVIEW
+    TASKREVIEW -->|"Human approves"| IMPL
     IMPL -->|"Agent routes"| TA
     IMPL -->|"Agent routes\n(can't automate)"| TM
     TA -->|"All pass"| VERIFY
@@ -88,6 +94,7 @@ flowchart TD
 
     style BACKLOG fill:#f5f5f5,stroke:#999
     style HLD fill:#dbeafe,stroke:#3b82f6
+    style HLDREVIEW fill:#e0f2fe,stroke:#0284c7
     style TASKREVIEW fill:#dbeafe,stroke:#3b82f6
     style IMPL fill:#dcfce7,stroke:#16a34a
     style TEST fill:#fef9c3,stroke:#ca8a04

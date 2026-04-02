@@ -2,7 +2,7 @@
 
 ## What is TaskReview?
 
-**TaskReview** is the LLD gate. Stories arrive here from HLD and leave with:
+**TaskReview** is the LLD gate. Stories arrive here from `HLD-Review` (after human approval) and leave with:
 - A Low Level Design (LLD) per story — interface contracts, sequence diagrams, data shapes (C4 L3)
 - Gherkin acceptance criteria
 - CTO sign-off (commit to move to Implementation)
