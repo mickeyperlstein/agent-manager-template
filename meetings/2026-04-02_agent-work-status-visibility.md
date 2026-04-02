@@ -41,6 +41,9 @@ Decide: how should agents signal sub-column work status, and validate the overal
 - Filename: `{name}-{taskid}-{featureid}-{epicid}.md`, all hex ids
 - Gates: always present, presentation layer abstracts for non-technical users
 - Test coverage: guaranteed by chain (HLD→Task→TaskReview), no extra gate needed
+- Human review compression: HLD-Review = 60s async yes/no; TaskReview auto-advances on green
+- Column moves: `features` CLI (sandboxed to Features/, single `allow`), replaces mark-for-deletion workaround
+- Two new Backlog stories: 0013 (features CLI core), 0014 (features CLI git, separate risk surface)
 
 ## Decisions
 1. **Status visibility**: no `status` field. Column location IS the status. Task files move individually through columns.
@@ -52,6 +55,9 @@ Decide: how should agents signal sub-column work status, and validate the overal
 7. **TaskReview stays as hard gate**: PM's suggestion to fold into HLD-Review rejected — LLD doesn't exist at HLD-Review.
 8. **No configurable gates**: presentation varies by user profile (plain-English summary for non-technical users), but the gate and artifact are always produced.
 9. **Test coverage gap**: not a gap — guaranteed by HLD→Task→TaskReview chain. No additional gate needed.
+10. **Column move mechanism**: `features` CLI (`python -m features`), sandboxed to `Features/` tree, single `allow` grant covers all workflow ops. Replaces write+mark-for-deletion workaround.
+11. **`features` CLI split into two stories**: 0013 (core: column moves + ID generation + clean) ships first; 0014 (git: stage/commit/push scoped to Features/) is a separate story with its own risk/test surface.
+12. **Human review compression**: HLD-Review = 60-second async, agent provides diff summary + single yes/no question. TaskReview auto-advances on green (all tests pass + artifact checklist complete); human signature only on red flag.
 
 ## Open Questions
 - None.
@@ -59,6 +65,8 @@ Decide: how should agents signal sub-column work status, and validate the overal
 ## Action Items
 - Update HLD data model: add `epic` (hex) and `feature` (hex) fields to CSV schema and frontmatter spec
 - Update HLD: task stubs created by HLD agent, not Task agent — revise §12 Task Decomposition
-- Update KANBAN.md: reflect individual file moves, folder lifecycle change, filename convention
+- Update KANBAN.md: reflect individual file moves, folder lifecycle change, filename convention, Column Move Protocol section
 - Update Agent HowTos: Backlog, HLD, Task, TaskReview to reflect new artifact map and filename convention
 - Existing task files in `Features/4-Task/csv-two-way-sync/` need renaming to new convention and epic/feature ids added to frontmatter
+- Story 0013: features CLI core — added to Backlog
+- Story 0014: features CLI git — added to Backlog

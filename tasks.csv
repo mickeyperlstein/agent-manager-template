@@ -10,4 +10,6 @@ id,epic,feature,story,status,assignee,column,type,review_gate,path
 0010,,,cline wrappers,backlog,architect,Backlog,story,yes — Mickey manually tests each wrapper,devops-bootstrap/stories
 0011,,,mcp servers sync,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
 0012,,,meeting stub template,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+0013,,,features CLI — core (column moves + ID generation),backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+0014,,,features CLI — git (Features/-scoped git operations),backlog,architect,Backlog,story,yes,devops-bootstrap/stories
 s09,,,agent manager repo,backlog,architect,Done,story,yes,

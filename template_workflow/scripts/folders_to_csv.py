@@ -118,7 +118,8 @@ def write_csv(stories: list, output_path: Path = None):
 
 
 def main():
-    repo_root = Path(__file__).parent.parent
+    repo_root = Path(__file__).parent.parent.parent
+    print("repo_root:", repo_root)
     features_dir = repo_root / 'Features'
     output_path = repo_root / 'tasks.csv'
     
