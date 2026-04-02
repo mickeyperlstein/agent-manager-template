@@ -18,12 +18,12 @@
 | Backlog | Human | `Features/1-Backlog/` | `{feature}.md` |
 | HLD | Agent (Architect) | `Features/2-HLD/` | `{feature}-HLD.md` |
 | HLD-Review | Human | `Features/3-HLD-Review/` | `{feature}-HLD.md` |
-| Task | Agent | `Features/4-Task/{feature}/` | `{feature}-HLD.md` + `{id}-{task}.md` files |
-| TaskReview | Agent (Architect) + Human | `Features/5-TaskReview/{feature}/` | same folder, LLD added per task |
-| Implementation | Agent | `Features/6-Implementation/{feature}/` | same folder |
-| Test | Agent → Human if needed | `Features/7-Test/{feature}/` | same folder |
-| Review | Human | `Features/8-Review/{feature}/` | same folder |
-| Done | Human | `Features/9-Done/{feature}/` | same folder |
+| Task | Agent | `Features/4-Task/{epic}/{feature}/` | `{feature}-HLD.md` + `{name}-{taskid}-{featureid}-{epicid}.md` files |
+| TaskReview | Agent (Architect) + Human | `Features/5-TaskReview/{epic}/{feature}/` | individual task files move here as completed |
+| Implementation | Agent | `Features/6-Implementation/{epic}/{feature}/` | individual task files move here after review |
+| Test | Agent → Human if needed | `Features/7-Test/{epic}/{feature}/` | individual task files move here |
+| Review | Human | `Features/8-Review/{epic}/{feature}/` | individual task files move here |
+| Done | Human | `Features/9-Done/{epic}/{feature}/` | individual task files move here |
 
 ## Gates
 
@@ -32,27 +32,39 @@
 | `Backlog → HLD` | Human | Feature stub with clear scope |
 | `HLD → HLD-Review` | **HLD agent** | HLD doc complete |
 | `HLD-Review → Task` | Human | Human approves HLD |
-| `Task → TaskReview` | Human | Tasks decomposed, files created |
-| `TaskReview → Implementation` | Architect agent + Human | LLD + Gherkin per task; human commits move |
+| `Task → TaskReview` | Agent | Per task file: agent adds LLD + Gherkin + TestPlan, moves file to TaskReview |
+| `TaskReview → Implementation` | Human | Per task file: human reviews LLD + Gherkin + TestPlan, commits move |
 | `Implementation → Test` | Agent | Agent routes automatically |
 | `Test → Review` | Human | Tests pass, human approves |
 | `Review → Done` | Human | PR merged |
 
+## Filename Convention
+
+Task files (and all items from Task column onwards) use:
+```
+{name}-{taskid}-{featureid}-{epicid}.md
+```
+- `name` — human-readable slug (shown first for readability in file explorer)
+- `taskid`, `featureid`, `epicid` — 3-byte hex, generated at creation, collision-free across agents and branches
+
+Example: `folders-to-csv-385474-e9245d-23a043.md`
+
 ## Folder Lifecycle
 
-A feature starts as a single file and grows into a folder as tasks are added:
+Files move individually from Task onwards. `depends_on` controls ordering between tasks.
 
 ```
 1-Backlog/   {feature}.md
 2-HLD/       {feature}-HLD.md
 3-HLD-Review/{feature}-HLD.md
-4-Task/      {feature}/
-               {feature}-HLD.md
-               0001-{task}.md
-               0002-{task}.md
-5-TaskReview/{feature}/        ← whole folder moves
-6-Implementation/{feature}/   ← whole folder moves
-7-Test/{feature}/              ← whole folder moves
-8-Review/{feature}/            ← whole folder moves
-9-Done/{feature}/              ← whole folder moves
+4-Task/      {epic}/{feature}/
+               {feature}-HLD.md          ← reference, stays here
+               {name}-{tid}-{fid}-{eid}.md
+               {name}-{tid}-{fid}-{eid}.md
+
+5-TaskReview/{epic}/{feature}/           ← individual files move here as agent completes them
+6-Implementation/{epic}/{feature}/       ← individual files move here after human review
+7-Test/{epic}/{feature}/
+8-Review/{epic}/{feature}/
+9-Done/{epic}/{feature}/
 ```
