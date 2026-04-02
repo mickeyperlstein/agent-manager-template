@@ -34,24 +34,25 @@ The team needs a single source of truth for Kanban state that:
 
 **CSV Schema:**
 ```
-id,state,epic,name,assignee,type,review_required,approved,depends_on
+id,epic,feature,state,name,assignee,type,review_required,approved,depends_on
 ```
 
 **Example Row:**
 ```
-a3f9c1,2-HLD,devops-bootstrap,Implement CSV sync,Agent,feature,yes,no,
+a3f9c1,23a043,e9245d,Task,folders-to-csv,Agent,task,yes,no,
 ```
-in the shared library of python, make sure the csv order is simple to change.
+In the shared library of python, make sure the csv order is simple to change.
 
-both scripts need to be based on a shared module that includes the schema so a change in the schema doesnt break anything
+Both scripts need to be based on a shared module that includes the schema so a change in the schema doesn't break anything.
 
 | Field | Source | Description |
 |-------|--------|-------------|
 | `id` | frontmatter | Short hex ID (e.g. `a3f9c1`) — generated at item creation, unique across agents and branches, no coordination required |
-| `epic` | folder path | Epic name |
-| `name` | filename | Item name — works for features and tasks alike |
-| `assignee` | frontmatter | Owner |
+| `epic` | frontmatter | Hex id of the epic this item belongs to |
+| `feature` | frontmatter | Hex id of the feature this item belongs to |
 | `state` | folder path | Kanban column — derived from `Features/{n}-{Kanban}/`. This IS the lifecycle state; no separate state field needed |
+| `name` | filename | Item name — derived from the human-readable slug in the filename |
+| `assignee` | frontmatter | Owner |
 | `type` | frontmatter | `feature` / `bug` / `task` |
 | `review_required` | frontmatter | `yes` / `no` — if `yes`, auto-progression is blocked until human clears it |
 | `approved` | frontmatter | `yes` / `no` — `yes` triggers auto-progression to next column (only if `review_required=no`) |

@@ -1,4 +1,6 @@
 ---
+epic: 23a043
+feature: bd72df
 id: 8bed76
 title: Write E2E test suite
 type: task

@@ -1,4 +1,6 @@
 ---
+epic: 23a043
+feature: bd72df
 id: 73df4b
 title: Update Agent-HowTos to reflect new frontmatter schema
 type: task
