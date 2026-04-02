@@ -53,9 +53,19 @@ Also define:
 ## 6. Open Questions
 
 ## 7. Task Decomposition
-Tasks to be created in the Task column:
-- [ ] 0001-{task-name}: one-line description
-- [ ] 0002-{task-name}: one-line description
+HLD agent creates task stub files alongside the HLD doc. Each stub file uses the filename convention:
+`{name}-{taskid}-{featureid}-{epicid}.md`
+
+Generate a hex id for each task:
+```bash
+python3 -c "import secrets; print(secrets.token_hex(3))"
+```
+
+Each stub must contain: What, Scope, Acceptance Criteria, Test Conditions, Definition of Done.
+The Task column agent will add LLD + Gherkin + TestPlan to each stub.
+
+- [ ] {name}-{taskid}-{featureid}-{epicid}.md: one-line description
+- [ ] {name}-{taskid}-{featureid}-{epicid}.md: one-line description
 ```
 
 ## Example
@@ -72,11 +82,12 @@ Features/
     csv-two-way-sync-HLD.md          ← same file, moved by agent
 
   4-Task/
-    csv-two-way-sync/
-      csv-two-way-sync-HLD.md        ← HLD becomes sibling
-      0001-folders-to-csv.md
-      0002-csv-to-folders.md
-      0003-pre-commit-hook.md
+    devops-bootstrap/
+      csv-two-way-sync/
+        csv-two-way-sync-HLD.md                          ← HLD reference (stays here)
+        folders-to-csv-385474-e9245d-23a043.md           ← task stub created by HLD agent
+        csv-to-folders-0640af-e9245d-23a043.md
+        pre-commit-hook-3cda27-e9245d-23a043.md
 ```
 
 ## File Path
@@ -87,7 +98,7 @@ Features/2-HLD/{feature}-HLD.md
 
 ## After HLD
 
-1. Agent moves file to `Features/3-HLD-Review/`
-2. Human reviews and approves
-3. Human moves to `4-Task` — agent creates task files here
-4. The HLD becomes a sibling inside `{feature}/` folder from Task onwards
+1. Agent creates task stub files in `Features/4-Task/{epic}/{feature}/` alongside a copy of the HLD
+2. Agent moves the HLD file to `Features/3-HLD-Review/`
+3. Human reviews HLD + task stubs and approves
+4. Task column agent picks up each stub and adds LLD + Gherkin + TestPlan

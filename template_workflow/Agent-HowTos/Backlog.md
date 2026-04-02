@@ -13,6 +13,8 @@ Features/1-Backlog/{feature}.md
 ```markdown
 ---
 id: a3f9c1              ← short hex, generated at creation (e.g. python3 -c "import secrets; print(secrets.token_hex(3))")
+epic: 23a043            ← hex id of the epic this feature belongs to
+feature: e9245d         ← hex id of this feature (same as id for feature-level stubs)
 title: Feature title
 type: feature
 assignee: architect

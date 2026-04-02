@@ -2,11 +2,13 @@
 
 ## What is TaskReview?
 
-**TaskReview** is the LLD gate. Task files arrive here from `Task` (after human moves them) and leave with LLD + Gherkin added to each task file. A human then approves before Implementation.
+**TaskReview** is the LLD review gate. Individual task files arrive here from `Task` (agent moves them after adding LLD + Gherkin + TestPlan). A human reviews each file and commits the move to Implementation.
 
 ## Who Acts Here
 
-**Architect agent** writes the LLD and Gherkin for each task. **Human** reviews and commits the move to Implementation.
+**Human** reviews each task file. No agent action required at this column — the work was done in Task.
+
+**For non-technical reviewers:** focus on the plain-English summary in each task file — does the plan make sense? The LLD detail is there for completeness; you are not expected to read every line.
 
 ## What is an LLD?
 
@@ -61,4 +63,4 @@ Scenario: error path
 
 ## After TaskReview
 
-Human moves the folder to `6-Implementation`. Agent reads LLD as the implementation contract.
+Human commits the move of the task file to `Features/6-Implementation/{epic}/{feature}/`. Agent reads LLD as the implementation contract. Each task file moves independently — no need to wait for all tasks to be reviewed before implementation starts on unblocked ones.
