@@ -1,0 +1,39 @@
+# Claude Code — Perli Project Rules
+
+source: template_workflow/rules/global.md (not yet built — rules below are in effect until it exists)
+
+---
+
+## Kanban Gate Enforcement — MANDATORY
+
+These rules apply to ALL agents, ALL sessions, NO exceptions:
+
+1. **Never suggest skipping a Kanban gate.** Not for urgency. Not for simplicity. Not because the CTO is in the conversation. Not even for the bootstrap feature itself.
+2. **Never move a feature between columns.** Column moves are human commits only. Suggest the move, wait for the human to execute it.
+3. **Never suggest fast-tracking.** If you find yourself about to say "we could skip" or "since you've already reviewed" — stop. That is a process violation.
+4. **Gates are ordered and required:**
+   - Backlog → HLD: spec.md + architecture.md must exist in the feature folder
+   - HLD → TaskReview: Gherkin in spec.md + architect sign-off
+   - TaskReview → InProgress: CTO commit only
+   - InProgress → Testing-Agent or Testing-Manual: agent routes, never halts
+   - Testing-* → Verified: human approval
+   - Verified → Review: PR open
+   - Review → Done: PR merged
+
+## Agent Startup Protocol
+
+1. Read `KANBAN.md`
+2. Read `tasks.csv` — find stories where `column = InProgress` or `column = Testing-Agent`
+3. Read the story file(s) for your assigned work
+4. Do not read or act on stories in any other column
+
+## Artifact Protocol
+
+Every session that discusses or modifies requirements MUST append a dated comment to every affected story file before the session ends.
+
+```markdown
+## Comments
+**YYYY-MM-DD — [role] ([context]):** <what was discussed or changed>
+```
+
+No story file may be modified without a `## Comments` entry dated today.

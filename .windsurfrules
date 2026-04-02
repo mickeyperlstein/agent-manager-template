@@ -1,0 +1,181 @@
+# Windsurf Rules — Perli Project
+
+source: template_workflow/rules/global.md (built from global development rules)
+
+---
+
+## Windsurf Global Development Rules
+
+windsurf:
+  rules:
+
+    # ----------------------------
+    # 1. Architecture & Engineering
+    # ----------------------------
+    - Always design and implement code using clean architecture principles.
+    - Apply SOLID, separation of concerns, modularity, and maintainability.
+    - Balance speed vs. over-engineering; optimize for delivery without gold-plating.
+    - Follow YAGNI: do not add features or abstractions until needed.
+    - Consider CAP theorem, scalability, and performance, but avoid over-engineering.
+    - Prefer well-known, widely used, actively maintained libraries.
+
+    # ----------------------------
+    # 2. Clarification & Guidance
+    # ----------------------------
+    - When in doubt, ask questions.
+    - The system architect (30 years experience) is always available for clarification.
+
+    # ----------------------------
+    # 3. TDD (Test-Driven Development)
+    # ----------------------------
+    - All development must follow TDD.
+    - Every chunk must:
+        * Begin by writing or updating tests.
+        * Only implement code after tests are defined.
+        * Ensure tests fail before implementation and pass after.
+        * Update or extend tests for any dependency the chunk touches.
+    - No code is considered "done" unless:
+        * Tests exist
+        * Tests pass
+        * Tests cover the behavior introduced or modified
+
+    # ----------------------------
+    # 4. Plans Folder Workflow
+    # ----------------------------
+    - Before starting any task:
+        * Look for a plan file in the `Plans/` folder.
+        * If the folder does not exist, create it.
+        * If no plan exists, create a new plan file.
+    - Plan naming convention:
+        * `Plans/YYYY-MM-DD-short-task-name.md`
+
+    # ----------------------------
+    # 5. Plan Structure Requirements
+    # ----------------------------
+    - Every plan must follow this structure:
+
+      plan_template: |
+        # Plan: <Short Title>
+
+        ## Goal
+        <Concise description>
+
+        ## Constraints
+        - Follow Windsurf global rules
+        - Avoid over-engineering
+        - Use trusted libraries
+        - Apply TDD for every chunk
+
+        ## Assumptions
+        - List assumptions
+        - Ask questions if unclear
+
+        ## Breakdown (Small, Testable Chunks)
+        # Each chunk must:
+        # - Be independently testable
+        # - Produce measurable output
+        # - Be completable in < 1 hour
+        # - Have a clear definition of done
+        # - Start with writing/updating tests (TDD)
+        # - Update tests for any dependency it touches
+
+        ### Chunk 1: <Name>
+        - Description:
+        - Inputs:
+        - Outputs:
+        - Tests to Add/Update:
+        - Definition of Done:
+
+        ### Chunk 2: <Name>
+        - Description:
+        - Inputs:
+        - Outputs:
+        - Tests to Add/Update:
+        - Definition of Done:
+
+        ### Chunk N: <Name>
+
+        ## Risks / Open Questions
+        - List items requiring clarification
+
+        ## Ledger
+        Link to: /AGENT_WHAT_I_DID.md
+
+    # ----------------------------
+    # 6. Chunking Rules
+    # ----------------------------
+    - All plans must be broken into small, digestible, testable chunks.
+    - A valid chunk must be:
+        * Atomic
+        * Testable (clear pass/fail)
+        * Observable (produces visible change)
+        * Documentable
+        * Low-risk
+        * Fully TDD-compliant (tests first, code second)
+
+    # ----------------------------
+    # 7. Ledger Requirements
+    # ----------------------------
+    - All actions must be logged in `AGENT_WHAT_I_DID.md`:
+        * File changes + reasons
+        * Relevant bash commands + meaningful output
+        * Links to external sources
+        * Link back to the plan file
+
+    # ----------------------------
+    # 8. Documentation Updates
+    # ----------------------------
+    - After completing a plan:
+        * Update README.md succinctly
+        * Update WhatsNew.md descriptively
+        * Update architecture.md (including diagrams)
+        * Increment versions in:
+            - App properties
+            - Documentation properties
+
+    # ----------------------------
+    # 9. Execution Flow
+    # ----------------------------
+    - Implementation is done with aider Coder model
+    - The agent must follow this sequence:
+        1. Check for existing plan
+        2. If none → create plan
+        3. Break work into small testable chunks
+        4. For each chunk:
+            * Write/update tests (TDD)
+            * Run tests (expect failure)
+            * Implement code
+            * Run tests (expect success)
+            * Log in AGENT_WHAT_I_DID.md
+        5. Repeat until all chunks are complete
+        6. Update documentation
+        7. Increment versions
+
+## Kanban Gate Enforcement — MANDATORY
+
+These rules apply to ALL agents, ALL sessions, NO exceptions:
+
+1. **Never suggest skipping a Kanban gate.** Not for urgency. Not for simplicity. Not because the CTO is in the conversation. Not even for the bootstrap feature itself.
+2. **Never move a feature between columns.** Column moves are human commits only. Suggest the move, wait for the human to execute it.
+3. **Never suggest fast-tracking.** If you find yourself about to say "we could skip" or "since you've already reviewed" — stop. That is a process violation.
+4. **Gates are ordered and required:**
+   - Backlog → Ready: spec.md + architecture.md must exist in the feature folder
+   - Ready → TaskReview: Gherkin in spec.md + architect sign-off
+   - TaskReview → InProgress: CTO commit only
+   - InProgress → Testing-Agent or Testing-Manual: agent routes, never halts
+   - Testing-* → Verified: human approval
+   - Verified → Review: PR open
+   - Review → Done: PR merged
+
+## Agent Startup Protocol
+
+1. Read `KANBAN.md`
+2. Read `tasks.csv` — find stories where `column = InProgress` or `column = Testing-Agent`
+3. Read the story file(s) for your assigned work
+4. Do not read or act on stories in any other column
+
+## Artifact Protocol
+
+Every session that discusses or modifies requirements MUST append a dated comment to every affected story file before the session ends.
+
+No story file may be modified without a `## Comments` entry dated today.

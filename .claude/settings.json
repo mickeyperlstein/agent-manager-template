@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/mickeyperlstein/Documents/**)",
+      "Bash(grep -v \"^/Users/mickeyperlstein/Documents/perli$\")",
+      "Bash(sed -i '' 's/^id: s01$/id: \"0002\"/' 0002-csv-two-way-sync.md)",
+      "Bash(sed -i '' 's/^id: s02$/id: \"0003\"/' 0003-github-repo.md)",
+      "Bash(sed -i '' 's/^id: s03$/id: \"0004\"/' 0004-github-projects-kanban.md)",
+      "Bash(sed -i '' 's/^id: s04$/id: \"0005\"/' 0005-sync-stories-to-github-projects.md)",
+      "Bash(sed -i '' 's/^id: s05$/id: \"0007\"/' 0007-copy-agents.md)",
+      "Bash(gh repo:*)"
+    ]
+  }
+}
