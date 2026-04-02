@@ -23,16 +23,15 @@ You will build a team in your IDE of choice with each agent having specific role
 
 ```
 Features/
-├── 1-Backlog/          # Feature stubs (no stories yet)
-├── 2-HLD/              # Agent writes HLD + decomposes stories
-├── 3-HLD-Review/       # Human reviews and approves HLD
-├── 4-TaskReview/       # Agent writes LLD + Gherkin; human approves
-├── 5-Implementation/   # Agent writes code from LLD
-├── 6-Testing-Agent/    # Agent runs automated tests
-├── 7-Testing-Manual/   # Human QA
-├── 8-Verified/         # Tests passed, human approved
-├── 9-Review/           # PR open
-└── 10-Done/            # Merged & complete
+├── 1-Backlog/          # {feature}.md — raw intent
+├── 2-HLD/              # {feature}-HLD.md — agent writes design
+├── 3-HLD-Review/       # human approves HLD
+├── 4-Task/             # {feature}/ — agent creates task files
+├── 5-TaskReview/       # agent adds LLD + Gherkin; human approves
+├── 6-Implementation/   # agent writes code from LLD
+├── 7-Test/             # agent runs tests; routes forward or back
+├── 8-Review/           # PR open, human reviews
+└── 9-Done/             # merged & complete
 ```
 
 Stories are markdown files that move between folders as they progress.
@@ -42,63 +41,59 @@ Stories are markdown files that move between folders as they progress.
 ```mermaid
 flowchart TD
     subgraph BACKLOG["1 · Backlog  👤 Human"]
-        B_in["Feature stub\n─────────────\n· title\n· scope\n· out-of-scope"]
+        B_in["{feature}.md\n─────────────\n· title · scope\n· out-of-scope"]
     end
 
     subgraph HLD["2 · HLD  🤖 Architect Agent"]
-        H_in["Feature design\n─────────────\n· C4 L1 Context diagram\n· C4 L2 Container diagram\n· Components & data model\n· Stories decomposed here"]
+        H_in["{feature}-HLD.md\n─────────────\n· C4 L1/L2 diagrams\n· Components & data model\n· Task decomposition list"]
     end
 
     subgraph HLDREVIEW["3 · HLD-Review  👤 Human"]
-        HR_in["Human reviews HLD\n─────────────\n· Design sound?\n· Stories complete?\n· Approve to proceed"]
+        HR_in["Human reviews HLD\n─────────────\n· Design sound?\n· Tasks complete?\n· Approve to proceed"]
     end
 
-    subgraph TASKREVIEW["4 · TaskReview  🤖 Architect Agent  →  👤 Human approves"]
-        TR_in["Per-story LLD\n─────────────\n· C4 L3 Component diagram\n· Interface contracts\n· Sequence diagrams\n· Gherkin acceptance criteria"]
+    subgraph TASK["4 · Task  🤖 Agent"]
+        T_in["{feature}/\n─────────────\n· {feature}-HLD.md\n· 0001-{task}.md\n· 0002-{task}.md"]
     end
 
-    subgraph IMPL["5 · Implementation  🤖 Agent"]
-        I_in["Code\n─────────────\n· Tests written first (TDD)\n· Implements LLD contracts\n· Updates Gherkin checklist"]
+    subgraph TASKREVIEW["5 · TaskReview  🤖 Architect Agent  →  👤 Human"]
+        TR_in["LLD added per task\n─────────────\n· C4 L3 · interfaces\n· sequences · data shapes\n· Gherkin scenarios"]
     end
 
-    subgraph TEST["6/7 · Testing"]
-        TA["6 · Testing-Agent  🤖\n─────────────\nUnit · Integration\nAcceptance (Gherkin)\nV-Model: all levels"]
-        TM["7 · Testing-Manual  👤\n─────────────\nExploratory · UX\nEdge cases requiring\nhuman judgment"]
+    subgraph IMPL["6 · Implementation  🤖 Agent"]
+        I_in["Code\n─────────────\n· Tests first (TDD)\n· Implements LLD contracts\n· Updates Gherkin checklist"]
     end
 
-    subgraph VERIFY["8 · Verified  👤 Human"]
-        V_in["Human approval\n─────────────\nAll tests pass\nAcceptance criteria met"]
+    subgraph TEST["7 · Test  🤖 Agent"]
+        T2_in["Verify\n─────────────\n· Unit · Integration\n· Acceptance (Gherkin)\n· Routes back if fail"]
     end
 
-    subgraph REVIEW["9 · Review  👤 Human"]
-        R_in["PR open\n─────────────\nCode review\nFeedback addressed"]
+    subgraph REVIEW["8 · Review  👤 Human"]
+        R_in["PR open\n─────────────\n· Code review\n· Feedback addressed"]
     end
 
-    subgraph DONE["10 · Done  👤 Human"]
+    subgraph DONE["9 · Done  👤 Human"]
         D_in["PR merged\n─────────────\nFeature complete"]
     end
 
     BACKLOG -->|"Human moves"| HLD
-    HLD -->|"Agent moves\nwhen HLD complete"| HLDREVIEW
-    HLDREVIEW -->|"Human approves"| TASKREVIEW
+    HLD -->|"Agent moves\nwhen done"| HLDREVIEW
+    HLDREVIEW -->|"Human approves"| TASK
+    TASK -->|"Human moves"| TASKREVIEW
     TASKREVIEW -->|"Human approves"| IMPL
-    IMPL -->|"Agent routes"| TA
-    IMPL -->|"Agent routes\n(can't automate)"| TM
-    TA -->|"All pass"| VERIFY
-    TA -->|"Needs human QA"| TM
-    TM --> VERIFY
-    VERIFY -->|"Human moves"| REVIEW
+    IMPL -->|"Agent routes"| TEST
+    TEST -->|"Pass"| REVIEW
+    TEST -->|"Fail"| IMPL
+    TEST -->|"Needs human"| REVIEW
     REVIEW -->|"PR merged"| DONE
-
-    TA -->|"Tests fail"| IMPL
 
     style BACKLOG fill:#f5f5f5,stroke:#999
     style HLD fill:#dbeafe,stroke:#3b82f6
     style HLDREVIEW fill:#e0f2fe,stroke:#0284c7
+    style TASK fill:#dbeafe,stroke:#3b82f6
     style TASKREVIEW fill:#dbeafe,stroke:#3b82f6
     style IMPL fill:#dcfce7,stroke:#16a34a
     style TEST fill:#fef9c3,stroke:#ca8a04
-    style VERIFY fill:#f3e8ff,stroke:#9333ea
     style REVIEW fill:#f3e8ff,stroke:#9333ea
     style DONE fill:#d1fae5,stroke:#059669
 ```
