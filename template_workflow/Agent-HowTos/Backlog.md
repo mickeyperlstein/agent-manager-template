@@ -1,47 +1,48 @@
 # Backlog
 
-The Backlog holds **feature stubs only** — raw intent captured before any design has started.
+The Backlog holds **feature stubs only** — one file per feature, no tasks yet.
 
-**No stories here.** Stories are written *after* HLD is complete. A backlog entry is a feature, not a story.
+## File Path
 
-## What Belongs in Backlog
-
-- A feature idea with enough context to design it
-- Rough scope and out-of-scope boundaries
-- No architecture, no Gherkin, no implementation details
+```
+Features/1-Backlog/{feature}.md
+```
 
 ## Feature Stub Format
 
-```
+```markdown
 ---
-id: "0001"
+id: a3f9c1              ← short hex, generated at creation (e.g. python3 -c "import secrets; print(secrets.token_hex(3))")
 title: Feature title
 type: feature
-status: backlog
 assignee: architect
-depends_on: none
 review_gate: yes
+approved: no
+depends_on:             ← comma-separated hex ids this feature depends on; leave empty if none
 ---
 
 ## Feature
 
-**What is asked:** one paragraph — what this feature does
-**Why it's needed:** the problem it solves
+**What:** one paragraph
+**Why:** the problem it solves
 **Scope:** what is in
-**Out of Scope:** what is explicitly not in
+**Out of Scope:** what is not
 ```
 
-## What is NOT in a Backlog Entry
+## ID Generation
 
-- Acceptance criteria (written at TaskReview after LLD)
-- Gherkin scenarios (written at TaskReview after LLD)
-- Architecture decisions (written at HLD)
-- Stories / tasks (written as output of HLD)
+IDs are short hex strings — no sequential counter, no coordination needed. Generate with:
+```bash
+python3 -c "import secrets; print(secrets.token_hex(3))"
+```
+
+## What Does NOT Belong Here
+
+- Tasks (created in the Task column after HLD)
+- Gherkin (written at TaskReview)
+- Architecture (written at HLD)
+- LLD (written at TaskReview)
 
 ## After Backlog
 
-A feature exits Backlog when:
-- Intent is clear enough to design
-- Human moves it to `HLD` column
-
-The HLD phase is where the feature gets designed and stories are first decomposed.
+Human moves the file to `2-HLD` when intent is clear enough to design.
