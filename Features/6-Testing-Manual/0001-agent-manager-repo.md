@@ -25,4 +25,4 @@ none
 
 ## Comments
 **2026-04-02 — agent (InProgress):** Created public GitHub repo at https://github.com/mickeyperlstein/agent-manager-template. Added `template_workflow/version.json` v1.0.0 and `template_workflow/README.md` documenting load order and version bump policy. All acceptance criteria met.
-
+**2026-04-02 — agent (Routing):** Story ready for Testing-Manual. All acceptance criteria verified. Routing to manual testing phase as per Kanban protocol.
