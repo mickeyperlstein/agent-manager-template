@@ -28,3 +28,4 @@ none
 **2026-04-02 — agent (Routing):** Story ready for Testing-Manual. All acceptance criteria verified. Routing to manual testing phase as per Kanban protocol.
 **2026-04-02 — agent (Verification):** Manual testing complete. All acceptance criteria verified: (1) GitHub repo exists, (2) version.json present with v1.0.0, (3) README.md documents load order and version policy. Ready to move to Verified.
 **2026-04-02 — agent (Review):** Story verified and ready for Review. All acceptance criteria met. Ready for PR review.
+**2026-04-02 — agent (Done):** Story complete. PR merged. All acceptance criteria met and verified. Moving to Done.
