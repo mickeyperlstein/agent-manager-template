@@ -1,0 +1,13 @@
+id,epic,feature,story,status,assignee,column,type,review_gate,path
+0002,,,csv two way sync,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+0003,,,github repo,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+0004,,,github projects kanban,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+0005,,,sync stories to github projects,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+0006,,,research agent types,backlog,architect,Backlog,story,yes — output is a written report for Mickey,devops-bootstrap/stories
+0007,,,copy agents,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+0008,,,claude agent wrappers,backlog,architect,Backlog,story,yes — Mickey manually tests each wrapper,devops-bootstrap/stories
+0009,,,windsurf wrappers,backlog,architect,Backlog,story,yes — Mickey manually tests each wrapper,devops-bootstrap/stories
+0010,,,cline wrappers,backlog,architect,Backlog,story,yes — Mickey manually tests each wrapper,devops-bootstrap/stories
+0011,,,mcp servers sync,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+0012,,,meeting stub template,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+s09,,,agent manager repo,backlog,architect,Done,story,yes,
