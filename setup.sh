@@ -11,13 +11,12 @@ COLUMNS=(
   "Features/1-Backlog"
   "Features/2-HLD"
   "Features/3-HLD-Review"
-  "Features/4-TaskReview"
-  "Features/5-Implementation"
-  "Features/6-Testing-Agent"
-  "Features/7-Testing-Manual"
-  "Features/8-Verified"
-  "Features/9-Review"
-  "Features/10-Done"
+  "Features/4-Task"
+  "Features/5-TaskReview"
+  "Features/6-Implementation"
+  "Features/7-Test"
+  "Features/8-Review"
+  "Features/9-Done"
 )
 
 for col in "${COLUMNS[@]}"; do
@@ -27,29 +26,13 @@ done
 
 echo "  Created Features/ column structure"
 
-# Create scripts/ from template
-mkdir -p scripts
-cp template_workflow/scripts/csv_to_folders.py scripts/
-cp template_workflow/scripts/folders_to_csv.py scripts/
-cp template_workflow/scripts/kanban_utils.py scripts/
-chmod +x scripts/*.py
-echo "  Copied sync scripts to scripts/"
+chmod +x template_workflow/scripts/*.py
+chmod +x template_workflow/scripts/*.sh
 
-# Create tasks.csv with headers only
-echo "id,epic,story,state,assignee,column,type,review_gate,approved" > tasks.csv
-echo "  Created tasks.csv"
-
-# Create .gitignore
-cat > .gitignore << 'EOF'
-__pycache__/
-*.pyc
-.DS_Store
-meetings/
-EOF
-echo "  Created .gitignore"
+echo "  Scripts ready at template_workflow/scripts/"
 
 echo ""
 echo "Done. Next steps:"
-echo "  1. Add your first feature stub to Features/1-Backlog/"
+echo "  1. Add your first feature stub to Features/1-Backlog/{feature}.md"
 echo "  2. Read template_workflow/Agent-HowTos/Kanban.md for the workflow"
 echo "  3. Configure your agent rules in CLAUDE.md / .clinerules / .windsurfrules"
