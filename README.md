@@ -132,10 +132,33 @@ Agents never move stories. Humans commit all column transitions.
 3. **Create feature stubs** in `Features/1-Backlog/{epic}/0001-feature-name.md` (stories are written later, as output of HLD)
 4. **Move stories** through columns via git mv and commit
 
+## Agent Lookup Order
+
+When commands like `/meeting` need to resolve a participant name to an agent file, the lookup order is:
+
+| Priority | Path | Purpose |
+|----------|------|---------|
+| 1 | `<project-root>/ai/agents/<name>.md` | **Project-level overrides** — customize an agent for this repo only |
+| 2 | `<project-root>/template_workflow/agents/<name>.md` | **Template defaults** — shipped with this template |
+| 3 | `~/ai/agents/<name>.md` | **User-global agents** — your personal agents shared across all projects |
+| 4 | `~/.claude/`, `~/.windsurf/`, `~/.cursor/`, `~/.cline/` | **AI tool folders** — speculative fallback |
+
+Higher priority wins. To override a template agent for a specific project, create `ai/agents/<name>.md` in your repo — it takes precedence over `template_workflow/agents/<name>.md`.
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `/start [task-id]` | Start working on a task — reads Kanban state, confirms scope, begins work |
+| `/meeting <participants...>` | Start a multi-agent meeting with named participants |
+| `/meeting --working <participants...>` | Convert current conversation into a meeting, capturing prior discussion as context |
+| `/meeting --resume` | Resume a recent meeting — shows summaries, confirms/modifies participant roster |
+
 ## Documentation
 
 - `KANBAN.md` — Full column definitions and workflow rules
 - `Features/` — Where you create and move story files organized by status
+- `template_workflow/commands/` — Canonical command protocols (agent-agnostic)
 - `.windsurfrules` — Windsurf agent behavior rules
 - `CLAUDE.md` — Claude Code agent behavior rules
 - `.clinerules` — Cline agent behavior rules
@@ -144,6 +167,12 @@ Agents never move stories. Humans commit all column transitions.
 
 ```
 ├── Features/              # Kanban board (authoritative source)
+├── template_workflow/
+│   ├── commands/          # Canonical command protocols (SOT)
+│   ├── agents/            # Template-default agent definitions
+│   └── templates/         # File templates (meeting stubs, etc.)
+├── ai/agents/             # Project-level agent overrides
+├── meetings/              # Meeting artifacts (created on first use)
 ├── scripts/               # Onboarding and sync utilities
 ├── Docs/                  # Additional documentation
 ├── KANBAN.md             # Main workflow rules for ai agents

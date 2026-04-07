@@ -50,9 +50,17 @@ Also define:
 - **Dashboards / alerts:** Grafana panels or alerts affected
 - **E2E observability contract:** what a passing test will observe (specific log entries, metric values, DB artifacts)
 
-## 6. Open Questions
+## 6. Documentation
+Update any affected documentation as part of the HLD:
+- **README.md** — if the feature adds new commands, folders, conventions, or lookup paths, update the relevant README sections (Commands, Repository Structure, Agent Lookup Order, etc.)
+- **KANBAN.md** — if the feature changes workflow rules or column behavior
+- **Agent-HowTos** — if the feature changes how a column works or adds new agent responsibilities
 
-## 7. Task Decomposition
+Documentation is a first-class deliverable, not an afterthought. If the HLD introduces something a user or agent needs to know about, it must be documented before moving to HLD-Review.
+
+## 7. Open Questions
+
+## 8. Task Decomposition
 HLD agent creates task stub files alongside the HLD doc. Each stub file uses the filename convention:
 `{name}-{taskid}-{featureid}-{epicid}.md`
 

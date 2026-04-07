@@ -9,7 +9,14 @@ id,epic,feature,story,status,assignee,column,type,review_gate,path
 0009,,,windsurf wrappers,backlog,architect,Backlog,story,yes — Mickey manually tests each wrapper,devops-bootstrap/stories
 0010,,,cline wrappers,backlog,architect,Backlog,story,yes — Mickey manually tests each wrapper,devops-bootstrap/stories
 0011,,,mcp servers sync,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
-0012,,,meeting stub template,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+0012,,,meeting stub template,closed — superseded by 0015/c1546f,architect,Done,story,yes,devops-bootstrap/stories
 0013,,,features CLI — core (column moves + ID generation),backlog,architect,Backlog,story,yes,devops-bootstrap/stories
 0014,,,features CLI — git (Features/-scoped git operations),backlog,architect,Backlog,story,yes,devops-bootstrap/stories
+0015,,,multi-agent meeting workflow (agent-agnostic),backlog,architect,Test,story,yes — Mickey manually runs a meeting end-to-end,devops-bootstrap/stories
+3075d4,devops-bootstrap,0015,write canonical meeting protocol,Test,agent,Test,task,yes,devops-bootstrap/0015-meeting-workflow
+537577,devops-bootstrap,0015,create Claude meeting wrapper stub,Test,agent,Test,task,yes,devops-bootstrap/0015-meeting-workflow
+e7453a,devops-bootstrap,0015,create Windsurf meeting wrapper stub,Test,agent,Test,task,yes,devops-bootstrap/0015-meeting-workflow
+c1546f,devops-bootstrap,0015,create meeting file template,Test,agent,Test,task,yes,devops-bootstrap/0015-meeting-workflow
+44aa7b,devops-bootstrap,0015,review documentation updates,Test,human,Test,task,yes,devops-bootstrap/0015-meeting-workflow
+4e7564,devops-bootstrap,0015,manual E2E test — full meeting lifecycle,Test,human,Test,task,yes — Mickey manually runs a meeting end-to-end,devops-bootstrap/0015-meeting-workflow
 s09,,,agent manager repo,backlog,architect,Done,story,yes,
