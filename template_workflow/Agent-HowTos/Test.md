@@ -49,6 +49,21 @@ The agent verifies the implementation against the E2E scenarios defined in the t
    - Needs human judgment (UX, visual) → flag for human, leave in Test
    - Fail → move folder back to `6-Implementation` with failure notes in task file
 
+## Manual Testing — When the Human is Your Hands
+
+Some tests cannot be run by the agent (e.g., interactive commands, UI flows, multi-session workflows). In these cases the **agent is the test admin** and the **human is the test executor**.
+
+The agent cannot assume the human knows the system. Write test instructions as if handing them to someone who has never seen the feature. The goal is zero friction — the human should be able to copy-paste commands and report results without guessing.
+
+**Rules for manual test plans:**
+
+1. **Exact commands** — every step the human must take is a copy-pasteable command or literal input. No placeholders the human has to figure out. No "run the meeting command with some agents."
+2. **Expected behavior** — after each command, state exactly what the human should see. Not "it should work" — describe the specific output, prompts, or file changes.
+3. **Pass/fail checklist** — checkboxes the human ticks. Each checkbox tests one thing. Keep them observable (file exists, output contains X, error message shown).
+4. **One step at a time** — do not dump all tests at once. Give the human one test, wait for results, judge pass/fail, then give the next. The agent stays in control of the test session.
+5. **Prerequisites first** — state what must be true before the test starts (repo, branch, open tool, existing files). Verify prerequisites before giving the first command.
+6. **Report template** — tell the human exactly what to report back: pass/fail per checkbox, any error messages (copy-paste), any unexpected behavior.
+
 ## Checklist
 
 - [ ] Each scenario verified via logs or harness output
