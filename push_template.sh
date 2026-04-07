@@ -8,6 +8,8 @@ set -e
 VERSION_FILE="template_workflow/version.json"
 
 # Bump minor version
+echo "Bumping minor version..."
+echo "previous version: $(cat $VERSION_FILE | python3 -c "import json; print(json.load(open('-'))['version'])")"
 current=$(python3 -c "import json; v=json.load(open('$VERSION_FILE'))['version'].split('.'); v[1]=str(int(v[1])+1); v[2]='0'; print('.'.join(v))")
 echo "current version was: $current"
 python3 -c "import json; d=json.load(open('$VERSION_FILE')); d['version']='$current'; json.dump(d, open('$VERSION_FILE','w'))"
