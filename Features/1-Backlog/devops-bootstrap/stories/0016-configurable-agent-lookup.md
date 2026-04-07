@@ -17,7 +17,7 @@ Currently, the agent lookup order is hardcoded in `README.md` lines 135-146 and 
 3. `~/ai/agents/<name>.md` (user-global agents)
 4. `~/.claude/`, `~/.windsurf/`, etc. (AI tool folders — speculative fallback)
 
-This is a "priority matrix" that users may want to customize per-project. Making it configurable increases flexibility without breaking the template.
+This is a "priority matrix" that users may want to customize per-project. Making it configurable increases flexibility without breaking the template. i.e. open-closed principle
 
 ## Scope
 
