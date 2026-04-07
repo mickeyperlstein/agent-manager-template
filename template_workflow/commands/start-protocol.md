@@ -66,9 +66,13 @@ On confirmation, follow the HowTo for your column:
 - `Implementation` column → `template_workflow/Agent-HowTos/Implement.md`
 - `Test` column → `template_workflow/Agent-HowTos/Test.md`
 
+Update the frontmatter of the file you are working on with the current column status.
+
 ### Step 6 — Done
 
 When finished:
 - Append a dated comment to every file you modified
+- Note where the file should move to next
 - Do not move files or folders — that is a human commit
 - Report what you did and what the human needs to do next
+- Update the frontmatter status: if you did not move the file, set state to `{state}-verify`
