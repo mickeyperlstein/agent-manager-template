@@ -67,8 +67,8 @@ If an agent file is not found: **stop immediately**. Tell the user exactly which
 Date: <today YYYY-MM-DD>  Time: <current time HH:MM>
 
 ## Participants
-- MOD + <first participant LABEL>: <Model> — playing [first participant role] + facilitator
-- <LABEL>: <Model> <agent name> — <one line from agent description> — `<path where agent file was found>`
+- MOD + <first participant LABEL>: <Actual Model> — playing [first participant role] + facilitator (agent recommends: <Model from agent file>)
+- <LABEL>: <Actual Model> <agent name> — <one line from agent description> — `<path where agent file was found>` (agent recommends: <Model from agent file>)
 - (repeat for each remaining participant)
 
 ## Topic
@@ -154,9 +154,11 @@ All remaining participants are spawned as sub-agents:
 
 Introduce the meeting:
 
-1. List each participant with their label, one-line role, and agent file path:
-   - For yourself: `MOD + [LABEL]: <Model> — playing [role] + facilitator`
-   - For each sub-agent: `[LABEL]: <Model> <agent name> — [role] — <path>`
+1. List each participant with their label, one-line role, agent file path, and model information:
+   - For yourself: `MOD + [LABEL]: <Actual Model> — playing [role] + facilitator (agent recommends: <Model>)`
+   - For each sub-agent: `[LABEL]: <Actual Model> <agent name> — [role] — <path> (agent recommends: <Model>)`
+   
+   **Note:** The model field in the agent file is a *recommendation*. The actual model used may differ based on availability, cost, or user preference. Always document the actual model being used.
 
 2. Show the user their commands:
 
