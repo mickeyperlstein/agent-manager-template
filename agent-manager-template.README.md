@@ -178,6 +178,14 @@ If you already have a project and want to add the agent-manager workflow:
    └── agent-manager-template.KANBAN.md  # Rename if conflicts with your KANBAN.md
    ```
 
+   **Which option to choose?**
+
+   | Option | Pros | Cons | Best For |
+   |--------|------|------|----------|
+   | **A: Git remote** | Easy updates (`git fetch template`); tracks origin; clean history | Requires git; adds remote | Projects already in git; want ongoing updates |
+   | **B: Curl** | One command; no git setup | No version tracking; manual updates | Quick prototyping; not using git |
+   | **C: Manual** | Full control; cherry-pick files | Time-consuming; easy to miss files | Need only specific files; customizing heavily |
+
 3. **Initialize the workflow**:
    ```bash
    # Create Features/ structure if it doesn't exist
