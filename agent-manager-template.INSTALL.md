@@ -85,10 +85,12 @@ This creates the Features/ column folders and makes scripts executable.
 Add these lines to `.gitignore` if not present:
 ```
 meetings/
-tasks.csv
 Features/**/temp_*
 .DS_Store
+__pycache__
 ```
+
+**Note:** `tasks.csv` is tracked in git so it can be synced to Google Drive, GitHub Projects, or other external systems. Do not ignore it.
 
 ### Step 6: Commit
 
