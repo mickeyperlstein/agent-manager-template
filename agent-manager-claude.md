@@ -23,6 +23,7 @@ Acting without reading `agent-manager-template.KANBAN.md` is a process violation
 You must complete these steps in order before taking any action:
 
 1. **Read `agent-manager-template.KANBAN.md` in full** — columns, gates, folder structure, artifact requirements
+1a. **Run `/housekeeping`** — prune empty folders and move stragglers to correct stages before reading board state
 2. **Read `tasks.csv`** — find stories where `column = HLD`, `column = Task`, `column = TaskReview`, `column = Implementation`, or `column = Test`
 3. **Read the story/feature file(s)** for your assigned work only
 4. **Confirm your column** — you are only permitted to act on work in the columns above. If your assigned work is not in one of those columns, stop and tell the human.

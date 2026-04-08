@@ -6,6 +6,15 @@ Usage: `/start` or `/start <task-id>`
 
 ## Protocol
 
+### Step 0 — Housekeeping
+
+Before reading the Kanban board, run `/housekeeping` to ensure the board is clean:
+- Prune empty epic folders
+- Move any stragglers to their correct stages
+- Report what was cleaned
+
+This ensures you're reading accurate board state.
+
 ### Step 1 — Orient
 
 Read in this order (stop and report if any file is missing):
