@@ -1,3 +1,4 @@
+### AGENT_MANAGER_TEMPLATE_START
 # Cline Rules
 
 **IMPORTANT:** Read `agent-manager-cline.md` first for Kanban workflow rules.
@@ -14,3 +15,4 @@
 ---
 
 See `agent-manager-cline.md` for full Kanban workflow rules, startup protocol, gate rules, and artifact protocol.
+### AGENT_MANAGER_TEMPLATE_END

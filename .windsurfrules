@@ -1,3 +1,5 @@
+
+### AGENT_MANAGER_TEMPLATE_START
 # Windsurf Rules
 
 ---
@@ -53,3 +55,5 @@ Every session that modifies a story or feature file MUST append a dated comment 
 ```
 
 No file may be modified without this entry dated today.
+
+### AGENT_MANAGER_TEMPLATE_END
