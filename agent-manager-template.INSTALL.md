@@ -42,13 +42,11 @@ git fetch template main
 
 ### Step 2: Checkout all template files
 
-The `main` branch is guaranteed safe — `push_template.sh` always excludes Features/, meetings/, and tasks.csv. Pull everything:
-
 ```bash
 git checkout template/main -- .
 ```
 
-This pulls all template files and preserves any existing project files (Features/, meetings/, tasks.csv won't exist yet if you don't have them).
+This pulls all template files. Your existing project files (Features/, meetings/, tasks.csv) are preserved.
 
 ### Step 3: Handle agent rule conflicts (if any)
 
@@ -172,5 +170,5 @@ Or run `setup.sh` which does this automatically.
 - Make it executable: `chmod +x setup.sh`
 
 **Q: Which branch do I pull from?**
-- Always use `main` (kept clean by `push_template.sh`, excludes Features/ and project files)
-- Never pull from `dev` (the working branch with examples, has project-specific files)
+- Always use `main` (the clean template branch — safe for all projects)
+- Never pull from `dev` (the working branch with examples)
