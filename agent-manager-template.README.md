@@ -139,12 +139,34 @@ Agents never move stories. Humans commit all column transitions.
 If you already have a project and want to add the agent-manager workflow:
 
 1. **Download the template files** into your project root:
+
+   **Option A: Git pull from remote (recommended)**
    ```bash
-   # From the template repo, copy core files
+   # Add the template repo as a remote
+   git remote add template https://github.com/mickeyperlstein/agent-manager-template.git
+   
+   # Fetch the template (don't merge — your histories are unrelated)
+   git fetch template main
+   
+   # Checkout template files into your project
+   git checkout template/main -- template_workflow
+   
+   # Optional: copy other files if needed
+   git checkout template/main -- agent-manager-template.KANBAN.md
+   git checkout template/main -- agent-manager-template.README.md
+   
+   # Commit the imported files
+   git add template_workflow agent-manager-template.KANBAN.md agent-manager-template.README.md
+   git commit -m "Add agent-manager-template workflow from upstream"
+   ```
+
+   **Option B: Curl download**
+   ```bash
    curl -L https://github.com/mickeyperlstein/agent-manager-template/raw/main/template_workflow.zip | unzip -d your-project/
    ```
 
-2. **Or manually copy** the required structure:
+   **Option C: Manual copy**
+   Copy the required structure from the template repo manually.
    ```
    your-existing-project/
    ├── template_workflow/        # Copy from template
