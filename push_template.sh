@@ -18,10 +18,11 @@ echo "Version bumped to $current"
 # Stage everything
 git add .
 
-# Remove Features/, meetings/, and tasks.csv from the staging area
+# Remove dev-specific files from the staging area (not needed in template branch)
 git restore --staged Features/ 2>/dev/null && echo "  Excluded Features/" || true
 git restore --staged meetings/ 2>/dev/null && echo "  Excluded meetings/" || true
 git restore --staged tasks.csv 2>/dev/null && echo "  Excluded tasks.csv" || true
+git restore --staged push_template.sh 2>/dev/null && echo "  Excluded push_template.sh" || true
 
 # Commit
 git commit -m "chore: release template v$current"
