@@ -1,1 +1,4 @@
 test_area/**
+
+# MacOs
+.DS_Store
