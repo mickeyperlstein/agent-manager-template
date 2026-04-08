@@ -28,9 +28,6 @@ def BumpPatchNumber(version):
     parts = version.split('.')
     parts[2] = str(int(parts[2]) + 1)
     return '.'.join(parts)
-    
-    >>> BumpPatchNumber("1.2.3")
-    '1.2.4'
 
 def save_to_file(file_path, data):
     with open(file_path, 'w') as f:
@@ -39,7 +36,7 @@ def save_to_file(file_path, data):
 def load_from_file(file_path):
     with open(file_path, 'r') as f:
         version_data = json.load(f)
-    return version_data['version']
+    return version_data
 
 def main():
     import sys
@@ -93,7 +90,7 @@ def main():
             print(f"  Excluded {exclusion}")
     
     # Also exclude any files in excluded directories
-    for d in exclusions if d.endswith('/'):
+    for d in [exclusion for exclusion in exclusions if exclusion.endswith('/')]:
         features_dir = Path(d)
         if features_dir.exists():
             for item in features_dir.iterdir():
