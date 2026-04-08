@@ -112,9 +112,15 @@ def main():
     parser.add_argument('--dry-run', action='store_true', help='Print CSV to stdout instead of writing file')
     args = parser.parse_args()
 
-    root = repo_root()
-    features_dir = root / 'Features'
-    output_path = root / 'tasks.csv'
+    # Use cwd if Features/ exists there, otherwise use repo_root
+    cwd = Path.cwd()
+    if (cwd / 'Features').exists():
+        features_dir = cwd / 'Features'
+        output_path = cwd / 'tasks.csv'
+    else:
+        root = repo_root()
+        features_dir = root / 'Features'
+        output_path = root / 'tasks.csv'
 
     stories = scan_features(features_dir)
     write_csv(stories, output_path, dry_run=args.dry_run)

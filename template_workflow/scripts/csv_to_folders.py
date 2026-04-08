@@ -112,9 +112,15 @@ def main():
     parser.add_argument('--dry-run', action='store_true', help='Show what would be done without making changes')
     args = parser.parse_args()
 
-    root = repo_root()
-    csv_path = root / 'tasks.csv'
-    features_dir = root / 'Features'
+    # Use cwd if Features/ exists there, otherwise use repo_root
+    cwd = Path.cwd()
+    if (cwd / 'Features').exists():
+        csv_path = cwd / 'tasks.csv'
+        features_dir = cwd / 'Features'
+    else:
+        root = repo_root()
+        csv_path = root / 'tasks.csv'
+        features_dir = root / 'Features'
     
     if not csv_path.exists():
         print(f"Error: {csv_path} not found", file=sys.stderr)
