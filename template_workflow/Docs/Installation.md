@@ -97,9 +97,6 @@ If you already have the template and want to pull the latest version:
 # Fetch latest from template repo
 git fetch template main
 
-# Review what changed if you are cautious
-git diff HEAD template/main
-
 # Pull all template files (Features/, meetings/, tasks.csv are excluded by push_template.sh)
 git checkout template/main -- .
 
