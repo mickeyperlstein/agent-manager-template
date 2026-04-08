@@ -1,54 +1,16 @@
 # Claude Code Rules
 
-> **Wrapper Pattern:** If you already have a `CLAUDE.md` in your project, you can use this file as a wrapper. Simply rename this file to `agent-manager-template.CLAUDE.md` and add this line to your existing `CLAUDE.md`:
+**IMPORTANT:** Read `agent-manager-claude.md` first for Kanban workflow rules.
+
+---
+
+> **For existing projects with CLAUDE.md:**
+> This file is a thin wrapper. The actual rules are in `agent-manager-claude.md`.
+> To merge with your existing rules, add this line to your CLAUDE.md:
 > ```
-> See agent-manager-template.CLAUDE.md for Kanban workflow rules.
+> See agent-manager-claude.md for Kanban workflow rules.
 > ```
-> Or merge the two files by appending this content to your existing rules.
 
 ---
 
-## ⛔ STOP — MANDATORY BEFORE ANY ACTION
-
-**You have not earned the right to act in this repo yet.**
-
-Before you write a single line, move a single file, or make any suggestion — you must read `agent-manager-template.KANBAN.md` in full. Not skim it. Read it.
-
-**If you have not read `agent-manager-template.KANBAN.md` in this session: stop now and read it before doing anything else.**
-
-This applies to ALL agents, ALL roles, ALL sessions. No exceptions. Not for urgency. Not because the task seems obvious. Not because you were told what to do. You do not know what column a story is in, what gate it must pass, or what artifacts are required until you have read `agent-manager-template.KANBAN.md`.
-
-Acting without reading `agent-manager-template.KANBAN.md` is a process violation.
-
----
-
-## Startup Protocol — REQUIRED SEQUENCE
-
-You must complete these steps in order before taking any action:
-
-1. **Read `agent-manager-template.KANBAN.md` in full** — columns, gates, folder structure, artifact requirements
-2. **Read `tasks.csv`** — find stories where `column = HLD`, `column = Task`, `column = TaskReview`, `column = Implementation`, or `column = Test`
-3. **Read the story/feature file(s)** for your assigned work only
-4. **Confirm your column** — you are only permitted to act on work in the columns above. If your assigned work is not in one of those columns, stop and tell the human.
-
----
-
-## Gate Rules — NO EXCEPTIONS
-
-1. **Never skip a gate.** Not for urgency, simplicity, or because the CTO is present.
-2. **Never move a feature between columns** — one exception only: the HLD agent MUST move a completed HLD to `HLD-Review`. All other column moves are human commits only.
-3. **Never suggest fast-tracking.** If you find yourself about to say "we could skip" — stop. That is a process violation.
-4. **Never implement work that belongs to a future column.** If you are in HLD, you do not touch code. If you are in Task, you do not write LLD. Stay in your lane.
-
----
-
-## Artifact Protocol
-
-Every session that modifies a story or feature file MUST append a dated comment before the session ends:
-
-```markdown
-## Comments
-**YYYY-MM-DD — [role] ([context]):** <what was discussed or changed>
-```
-
-No file may be modified without this entry dated today.
+See `agent-manager-claude.md` for full Kanban workflow rules, startup protocol, gate rules, and artifact protocol.
