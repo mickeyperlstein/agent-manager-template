@@ -1,34 +1,8 @@
 #!/bin/bash
 # push_template.sh
-# Bumps minor version, syncs current state to the main (template) branch.
-# Stages everything except Features/, meetings/, and tasks.csv, then force-pushes to main.
+# Wrapper script for push_template.py
 
 set -e
 
-VERSION_FILE="template_workflow/version.json"
-
-# Bump minor version
-echo "Bumping minor version..."
-echo "previous version: $(python3 -c "import json; print(json.load(open('$VERSION_FILE'))['version'])")"
-current=$(python3 -c "import json; v=json.load(open('$VERSION_FILE'))['version'].split('.'); v[2]=str(int(v[2])+1); print('.'.join(v))")
-echo "current version was: $current"
-python3 -c "import json; d=json.load(open('$VERSION_FILE')); d['version']='$current'; json.dump(d, open('$VERSION_FILE','w'))"
-echo "Version bumped to $current"
-
-# Stage everything
-git add .
-
-# Remove dev-specific files from the staging area (not needed in template branch)
-git restore --staged Features/ 2>/dev/null && echo "  Excluded Features/" || true
-git restore --staged meetings/ 2>/dev/null && echo "  Excluded meetings/" || true
-git restore --staged tasks.csv 2>/dev/null && echo "  Excluded tasks.csv" || true
-git restore --staged push_template.sh 2>/dev/null && echo "  Excluded push_template.sh" || true
-
-# Commit
-git commit -m "chore: release template v$current"
-
-# Force push to main
-git push origin HEAD:main --force
-
-echo ""
-echo "Done. main is now template v$current."
+# Run the Python script
+python3 push_template.py
