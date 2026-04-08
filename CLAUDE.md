@@ -1,5 +1,11 @@
 # Claude Code Rules
 
+> **Wrapper Pattern:** If you already have a `CLAUDE.md` in your project, you can use this file as a wrapper. Simply rename this file to `agent-manager-template.CLAUDE.md` and add this line to your existing `CLAUDE.md`:
+> ```
+> See agent-manager-template.CLAUDE.md for Kanban workflow rules.
+> ```
+> Or merge the two files by appending this content to your existing rules.
+
 ---
 
 ## ⛔ STOP — MANDATORY BEFORE ANY ACTION
