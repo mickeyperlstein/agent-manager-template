@@ -198,6 +198,30 @@ If you already have a project and want to add the agent-manager workflow:
 
 4. **Adapt your existing work**: Move any existing tasks/stories into `Features/1-Backlog/` following the story format.
 
+### Handling File Conflicts
+
+When adding the template to an existing project, you may have conflicting files:
+
+| Your Project | Template File | Resolution |
+|--------------|---------------|------------|
+| `CLAUDE.md` | `CLAUDE.md` | **Merge or rename.** Template uses `agent-manager-template.CLAUDE.md` if you want both. Or merge the Kanban rules into your existing file. |
+| `.gitignore` | N/A (no template `.gitignore`) | **Keep yours.** Add `meetings/`, `tasks.csv`, and `Features/**/temp_*` if not present. |
+| `.windsurfrules` | `.windsurfrules` | **Merge.** Add the Kanban startup protocol to your existing rules, or rename to keep both. |
+| `README.md` | `README.md` | **Keep yours.** Template renames to `agent-manager-template.README.md` to avoid conflict. |
+| `KANBAN.md` | `KANBAN.md` | **Keep yours.** Template renames to `agent-manager-template.KANBAN.md` to avoid conflict. |
+
+**Quick conflict resolution commands:**
+```bash
+# If you have an existing CLAUDE.md and want both
+git checkout template/main -- CLAUDE.md
+mv CLAUDE.md agent-manager-template.CLAUDE.md
+
+# Merge .gitignore entries (add these if not present)
+echo "meetings/" >> .gitignore
+echo "tasks.csv" >> .gitignore
+echo "Features/**/temp_*" >> .gitignore
+```
+
 ## Agent Lookup Order
 
 When commands like `/meeting` need to resolve a participant name to an agent file, the lookup order is:
