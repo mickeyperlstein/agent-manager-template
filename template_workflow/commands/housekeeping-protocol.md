@@ -4,81 +4,78 @@ When you read the Kanban board, **always run housekeeping first**. This ensures 
 
 ---
 
-## Step 1 — Prune Empty Epic Folders
+## Step 1 — Rebuild task state from folder structure
 
-An epic folder is empty if it contains no `.md` files.
+Scan Features/ and regenerate tasks.csv from current state:
 
-For every column `{column}` in `Features/1-Backlog` through `Features/9-Done`:
 ```bash
-for epic in Features/{column}/*/ ; do
-  rmdir "$epic" 2>/dev/null
+./template_workflow/scripts/folders_to_csv.py
+```
+
+This reads all `.md` files, extracts frontmatter, and rebuilds the authoritative task inventory.
+
+---
+
+## Step 2 — Detect stragglers via dry-run
+
+See what file moves would happen if the CSV and folders diverged:
+
+```bash
+./template_workflow/scripts/csv_to_folders.py --dry-run
+```
+
+If the output is empty, the board is clean. If files are listed as "Would move", you have stragglers.
+
+---
+
+## Step 3 — Prune empty epic folders
+
+An epic folder is empty if it contains no `.md` files. Remove them:
+
+```bash
+for col in Features/*/; do
+  for epic in "$col"*/; do
+    rmdir "$epic" 2>/dev/null
+  done
 done
 ```
 
 **How it works:**
-- `rmdir` succeeds (silently, `-2>/dev/null`) → folder was empty, it's removed ✓
-- `rmdir` fails (output suppressed) → folder has files, it's left alone ✓
-
-**Why:** Empty epic folders are cruft left behind when the last feature in an epic moved to a later stage.
+- `rmdir` succeeds → folder was empty, it's removed ✓
+- `rmdir` fails → folder has files, it's left alone ✓
 
 ---
 
-## Step 2 — Detect and Fix Stragglers
+## Step 4 — Fix stragglers (if any)
 
-A **straggler** is a feature stub or HLD file in an earlier stage, when evidence of later-stage work already exists (e.g., tasks have been broken down and moved to 4-Task).
+If Step 2 showed moves:
 
-### 2A — Find stragglers in 2-HLD and 3-HLD-Review
+1. **Edit tasks.csv** — change the `column` value for stragglers to their correct stage
+2. **Apply the fixes:**
+   ```bash
+   ./template_workflow/scripts/csv_to_folders.py
+   ```
+   This reads the corrected CSV and moves files via `git mv` to match.
 
-For each feature ID found in `Features/2-HLD/devops-bootstrap` or `Features/3-HLD-Review/devops-bootstrap`:
-1. Extract the ID (e.g., `0013` from `0013-features-cli-core.md`)
-2. Check if a folder exists: `Features/4-Task/devops-bootstrap/{id}-*/`
-3. If yes → the feature has passed HLD-Review and moved to tasks. Move the feature files forward:
-
-```bash
-# Example: 0013-features-cli-core is in 2-HLD or 3-HLD-Review
-# but 0013-features-cli-core/ folder exists in 4-Task
-git mv Features/2-HLD/devops-bootstrap/0013-* Features/4-Task/devops-bootstrap/0013-*/
-```
-
-### 2B — Find completed HLDs (need to move to HLD-Review)
-
-For each feature stub in `Features/2-HLD/devops-bootstrap`:
-1. Extract the ID
-2. Check if `{id}-HLD.md` exists in the same folder
-3. If yes (completed HLD, not yet reviewed) → move both to `3-HLD-Review`:
-
-```bash
-# Example: 0012-meeting-stub-template.md + 0012-meeting-stub-template-HLD.md
-# both exist in 2-HLD
-git mv Features/2-HLD/devops-bootstrap/0012-* Features/3-HLD-Review/devops-bootstrap/
-```
-
-### 2C — Remove duplicate files
-
-Check all columns for the same filename appearing in multiple stages:
-```bash
-# Example: 0015-meeting-workflow.md in both 2-HLD and 3-HLD-Review
-git rm Features/2-HLD/devops-bootstrap/0015-meeting-workflow.md  # keep the later stage copy
-```
+3. **Verify** — check `git status` to see the moves, then ask the human to confirm before committing.
 
 ---
 
-## Step 3 — Report Summary
+## Step 5 — Report
 
-After running Steps 1–2, print a brief report:
+Print a summary:
 
 ```
 ✓ Kanban Housekeeping Complete
 
-Pruned: [N] empty epic folders
-Moved: [N] stragglers forward
-  - {id} from {from-stage} → {to-stage}
-Removed: [N] duplicate files
+Task inventory rebuilt from Features/
+[N] empty folders pruned
+[N] stragglers fixed via git mv
 
 Board is clean. Proceeding to read Kanban state.
 ```
 
-If no housekeeping was needed:
+Or if clean:
 ```
 ✓ Kanban Housekeeping Complete
 (Board already clean — no stragglers, no empty folders)
@@ -90,10 +87,10 @@ Proceeding to read Kanban state.
 
 ## Important Notes
 
-- **Git moves, not manual copies:** Always use `git mv` for file reorganization, never copy-paste
-- **Idempotent:** If you run housekeeping twice in a row, the second run should find a clean board
-- **Commits:** Do NOT commit housekeeping changes as you go. Report what would be moved, let the human confirm before committing (they may have intentional stragglers)
-- **Test with `git status`** before committing to see all staged changes
+- **Scripts are authoritative:** folders_to_csv.py and csv_to_folders.py use shared column map from `kanban.py`
+- **Dry-run first:** Always check what would move with `--dry-run` before applying changes
+- **Don't commit:** Report the moves and let the human confirm before you commit
+- **Idempotent:** Running housekeeping twice in a row should find a clean board the second time
 
 ---
 
@@ -102,4 +99,4 @@ Proceeding to read Kanban state.
 Run this protocol:
 - **Every startup** as part of the startup protocol (Step 1a)
 - **Manually** via `/housekeeping` command when the human asks for a board cleanup
-- **Before reading the task board** to ensure you're seeing clean state
+- **Before reading the task board** to ensure you're seeing clean, accurate state

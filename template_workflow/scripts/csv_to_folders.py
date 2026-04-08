@@ -1,26 +1,14 @@
 #!/usr/bin/env python3
 """
 csv_to_folders.py - Read tasks.csv and move story files to correct column folders.
-Usage: python3 scripts/csv_to_folders.py
+Usage: python3 scripts/csv_to_folders.py [--dry-run]
 """
 
 import csv
-import shutil
+import subprocess
 import sys
 from pathlib import Path
-
-# Map column values to folder names
-COLUMN_TO_FOLDER = {
-    "Backlog": "1-Backlog",
-    "HLD": "2-HLD",
-    "TaskReview": "3-TaskReview",
-    "InProgress": "4-InProgress",
-    "Testing-Agent": "5-Testing-Agent",
-    "Testing-Manual": "6-Testing-Manual",
-    "Verified": "7-Verified",
-    "Review": "8-Review",
-    "Done": "9-Done",
-}
+from kanban import COLUMNS, repo_root
 
 
 def find_story_file(features_dir: Path, story_id: str) -> Path:
@@ -47,49 +35,54 @@ def get_column_from_path(features_dir: Path, file_path: Path) -> str:
 
 
 def move_story(features_dir: Path, story_id: str, target_column: str, path: str = '', dry_run: bool = False) -> bool:
-    """Move a story file to the correct folder. Returns True if moved."""
-    target_folder = COLUMN_TO_FOLDER.get(target_column)
+    """Move a story file to the correct folder using git mv. Returns True if moved."""
+    target_folder = COLUMNS.get(target_column)
     if not target_folder:
         print(f"Error: Unknown column '{target_column}' for story {story_id}", file=sys.stderr)
         return False
-    
+
     current_file = find_story_file(features_dir, story_id)
     target_dir = features_dir / target_folder
-    
+
     if not target_dir.exists():
         print(f"Error: Target folder '{target_folder}' does not exist", file=sys.stderr)
         return False
-    
+
     if current_file is None:
         # Story in CSV but no file exists - this is a "create" case
         print(f"Story {story_id} not found on disk (would create in {target_folder})", file=sys.stderr)
         return False
-    
+
     current_column = get_column_from_path(features_dir, current_file)
-    
+
     if current_column == target_column:
         return False  # Already in correct folder
-    
+
     # Move file to target folder
     # Build target path including subdirectory
     if path:
         target_dir = target_dir / path
         target_dir.mkdir(parents=True, exist_ok=True)
-    
+
     target_file = target_dir / current_file.name
-    
+
     if dry_run:
         print(f"Would move: {current_file.relative_to(features_dir.parent)} -> {target_file.relative_to(features_dir.parent)}")
         return True
-    
+
     # Check for name collision
     if target_file.exists():
         print(f"Error: File already exists at {target_file}", file=sys.stderr)
         return False
-    
-    shutil.move(str(current_file), str(target_file))
-    print(f"Moved: {current_file.name} -> {target_folder}/")
-    return True
+
+    # Use git mv to keep version control
+    try:
+        subprocess.run(['git', 'mv', str(current_file), str(target_file)], check=True, capture_output=True)
+        print(f"Moved: {current_file.name} -> {target_folder}/")
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error moving {current_file.name}: {e.stderr.decode()}", file=sys.stderr)
+        return False
 
 
 def sync_csv_to_folders(csv_path: Path, features_dir: Path, dry_run: bool = False):
@@ -118,10 +111,10 @@ def main():
     parser = argparse.ArgumentParser(description='Sync tasks.csv to Features/ folder structure')
     parser.add_argument('--dry-run', action='store_true', help='Show what would be done without making changes')
     args = parser.parse_args()
-    
-    repo_root = Path(__file__).parent.parent
-    csv_path = repo_root / 'tasks.csv'
-    features_dir = repo_root / 'Features'
+
+    root = repo_root()
+    csv_path = root / 'tasks.csv'
+    features_dir = root / 'Features'
     
     if not csv_path.exists():
         print(f"Error: {csv_path} not found", file=sys.stderr)

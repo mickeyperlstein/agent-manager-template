@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 folders_to_csv.py - Scan Features/ folder structure and rebuild tasks.csv from story file frontmatter.
-Usage: python3 scripts/folders_to_csv.py > tasks.csv
+Usage: python3 scripts/folders_to_csv.py [--dry-run]
 """
 
 import os
@@ -9,19 +9,7 @@ import re
 import csv
 import sys
 from pathlib import Path
-
-# Map folder names to column values
-COLUMN_MAP = {
-    "1-Backlog": "Backlog",
-    "2-HLD": "HLD",
-    "3-HLD-Review": "HLD-Review",
-    "4-Task": "Task",
-    "5-TaskReview": "TaskReview",
-    "6-Implementation": "Implementation",
-    "7-Test": "Test",
-    "8-Review": "Review",
-    "9-Done": "Done",
-}
+from kanban import FOLDER_TO_COLUMN, repo_root
 
 FRONTMATTER_PATTERN = re.compile(r'^---\s*\n(.*?)\n---\s*\n', re.DOTALL)
 
@@ -67,12 +55,12 @@ def extract_story_from_filename(filepath: Path) -> str:
 def scan_features(features_dir: Path) -> list:
     """Scan Features/ directory and extract story data from all .md files."""
     stories = []
-    
+
     for folder in features_dir.iterdir():
         if not folder.is_dir():
             continue
-        
-        column = COLUMN_MAP.get(folder.name)
+
+        column = FOLDER_TO_COLUMN.get(folder.name)
         if not column:
             continue
         
@@ -102,30 +90,37 @@ def scan_features(features_dir: Path) -> list:
     return sorted(stories, key=lambda x: x['id'])
 
 
-def write_csv(stories: list, output_path: Path = None):
-    """Write stories to CSV format."""
+def write_csv(stories: list, output_path: Path = None, dry_run: bool = False):
+    """Write stories to CSV format. If dry_run, always output to stdout."""
     fieldnames = ['id', 'epic', 'feature', 'story', 'status', 'assignee', 'column', 'type', 'review_gate', 'path']
-    
-    if output_path:
+
+    if dry_run or output_path is None:
+        # Always print to stdout in dry-run or when no output path specified
+        writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(stories)
+    else:
         with open(output_path, 'w', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(stories)
-    else:
-        writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(stories)
 
 
 def main():
-    repo_root = Path(__file__).parent.parent.parent
-    print("repo_root:", repo_root)
-    features_dir = repo_root / 'Features'
-    output_path = repo_root / 'tasks.csv'
-    
+    import argparse
+    parser = argparse.ArgumentParser(description='Scan Features/ and rebuild tasks.csv')
+    parser.add_argument('--dry-run', action='store_true', help='Print CSV to stdout instead of writing file')
+    args = parser.parse_args()
+
+    root = repo_root()
+    features_dir = root / 'Features'
+    output_path = root / 'tasks.csv'
+
     stories = scan_features(features_dir)
-    write_csv(stories, output_path)
-    print(f"Rebuilt {output_path} with {len(stories)} stories", file=sys.stderr)
+    write_csv(stories, output_path, dry_run=args.dry_run)
+
+    if not args.dry_run:
+        print(f"Rebuilt {output_path} with {len(stories)} stories", file=sys.stderr)
 
 
 if __name__ == '__main__':
