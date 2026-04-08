@@ -40,26 +40,19 @@ git remote add template https://github.com/mickeyperlstein/agent-manager-templat
 git fetch template main
 ```
 
-### Step 2: Checkout specific template files
+### Step 2: Checkout all template files
 
-Only pull the safe template files (not Features/, meetings/, or tasks.csv, which are project-specific):
+The `main` branch is guaranteed safe — `push_template.sh` always excludes Features/, meetings/, and tasks.csv. Pull everything:
 
 ```bash
-git checkout template/main -- \
-  template_workflow/ \
-  setup.sh \
-  agent-manager-claude.md \
-  agent-manager-cline.md \
-  agent-manager-template.KANBAN.md \
-  .claude/commands/ \
-  .windsurf/workflows/ \
-  .clinerules \
-  .windsurfrules
+git checkout template/main -- .
 ```
 
-### Step 3: Merge agent rules
+This pulls all template files and preserves any existing project files (Features/, meetings/, tasks.csv won't exist yet if you don't have them).
 
-If you already have `CLAUDE.md`, `.clinerules`, or `.windsurfrules`:
+### Step 3: Handle agent rule conflicts (if any)
+
+If you already have `CLAUDE.md`, `.clinerules`, or `.windsurfrules`, git will show conflicts.
 
 The template files contain `### AGENT_MANAGER_TEMPLATE_START` and `### AGENT_MANAGER_TEMPLATE_END` markers for easy merging.
 
@@ -117,20 +110,13 @@ If you already have the template and want to pull the latest version:
 git fetch template main
 
 # Review what changed
-git diff HEAD template/main -- template_workflow/
+git diff HEAD template/main
 
-# Pull just the template files (not Features/, meetings/, tasks.csv)
-git checkout template/main -- \
-  template_workflow/ \
-  agent-manager-template.KANBAN.md \
-  agent-manager-claude.md \
-  agent-manager-cline.md \
-  setup.sh
+# Pull all template files (Features/, meetings/, tasks.csv are excluded by push_template.sh)
+git checkout template/main -- .
 
-# Review and merge agent rule changes (if any)
-git diff HEAD agent-manager-claude.md
-git diff HEAD .clinerules
-git diff HEAD .windsurfrules
+# Resolve conflicts (if any) in CLAUDE.md, .clinerules, .windsurfrules
+# These files have markers for easy merging
 
 # Commit the update
 git commit -m "Update agent-manager-template to latest version"
@@ -172,18 +158,19 @@ Or run `setup.sh` which does this automatically.
 
 ## Troubleshooting
 
-**Q: Git won't let me checkout specific files from template/main**
-- Ensure you ran `git fetch template main` first
-- Try: `git checkout -b temp template/main` then `git checkout HEAD -- <files>`, then `git checkout dev`
+**Q: Checkout says "would overwrite" my files**
+- You have untracked files with the same names. Commit or stash them first: `git stash`
+- Or specify only the files you want: `git checkout template/main -- template_workflow/`
 
 **Q: I have conflicts in CLAUDE.md or .clinerules**
-- Both files use marker comments (`### AGENT_MANAGER_TEMPLATE_START/END`)
-- Copy the template section into your file between the markers, or keep them separate (rename template to `agent-manager-template.CLAUDE.md`)
+- Resolve manually — look for `<<<<<<< HEAD` markers
+- Files use `### AGENT_MANAGER_TEMPLATE_START/END` comments to show template sections
+- Keep both versions (yours + template) or merge the template section into your file
 
 **Q: setup.sh says "command not found"**
 - Ensure you're in the project root (where setup.sh is)
 - Make it executable: `chmod +x setup.sh`
 
 **Q: Which branch do I pull from?**
-- Always use `main` (the template branch, kept clean by `push_template.sh`)
-- Never pull `dev` (the working branch with examples)
+- Always use `main` (kept clean by `push_template.sh`, excludes Features/ and project files)
+- Never pull from `dev` (the working branch with examples, has project-specific files)
