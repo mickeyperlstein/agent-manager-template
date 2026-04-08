@@ -2,3 +2,4 @@ test_area/**
 
 # MacOs
 .DS_Store
+__pycache__
