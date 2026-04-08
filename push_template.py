@@ -10,6 +10,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+
 def run_command(cmd, capture_output=True, check=True):
     """Run a shell command and return result."""
     try:
@@ -23,6 +24,23 @@ def run_command(cmd, capture_output=True, check=True):
             sys.exit(1)
         return e.stdout.strip(), e.stderr.strip()
 
+def BumpPatchNumber(version):
+    parts = version.split('.')
+    parts[2] = str(int(parts[2]) + 1)
+    return '.'.join(parts)
+    
+    >>> BumpPatchNumber("1.2.3")
+    '1.2.4'
+
+def save_to_file(file_path, data):
+    with open(file_path, 'w') as f:
+        json.dump(data, f, indent=2)
+
+def load_from_file(file_path):
+    with open(file_path, 'r') as f:
+        version_data = json.load(f)
+    return version_data['version']
+
 def main():
     import sys
     
@@ -30,35 +48,27 @@ def main():
     test_mode = "--test" in sys.argv
     
     VERSION_FILE = "template_workflow/version.json"
+    # Read current version
+    version_data = load_from_file(VERSION_FILE)
+    current_version = version_data['version']
+    print(f"current template version: {current_version}")
     
-    # Bump minor version (skip in test mode)
+    # Bump version (skip in test mode)
     if not test_mode:
-        print("Bumping minor version...")
+        print("Bumping version...")
+
+        new_version = BumpPatchNumber(current_version)
         
-        # Read current version
-        with open(VERSION_FILE, 'r') as f:
-            version_data = json.load(f)
-        current_version = version_data['version']
-        print(f"previous version: {current_version}")
-        
-        # Increment patch version
-        parts = current_version.split('.')
-        parts[2] = str(int(parts[2]) + 1)
-        new_version = '.'.join(parts)
-        print(f"current version was: {new_version}")
-        
-        # Update version file
-        version_data['version'] = new_version
-        with open(VERSION_FILE, 'w') as f:
-            json.dump(version_data, f, indent=2)
+        version_file_data = version_data.copy()
+        version_file_data['version'] = new_version
+
+        save_to_file(VERSION_FILE, version_file_data)
         print(f"Version bumped to {new_version}")
     else:
         print("TEST MODE: Skipping version bump")
         # Read current version for display
-        with open(VERSION_FILE, 'r') as f:
-            version_data = json.load(f)
+        version_data = load_from_file(VERSION_FILE)
         new_version = version_data['version']
-        print(f"Using current version: {new_version}")
     
     # Stage everything
     print("Staging all files...")
@@ -82,16 +92,17 @@ def main():
         elif not stderr:
             print(f"  Excluded {exclusion}")
     
-    # Also exclude any files directly in Features directory
-    features_dir = Path("Features")
-    if features_dir.exists():
-        for item in features_dir.iterdir():
-            if item.is_dir():
-                stdout, stderr = run_command(f"git restore --staged {item}", check=False)
-                if stderr and "did not match" not in stderr:
-                    print(f"  Excluded {item}/")
-                elif not stderr:
-                    print(f"  Excluded {item}/")
+    # Also exclude any files in excluded directories
+    for d in exclusions if d.endswith('/'):
+        features_dir = Path(d)
+        if features_dir.exists():
+            for item in features_dir.iterdir():
+                if item.is_dir():
+                    stdout, stderr = run_command(f"git restore --staged {item}", check=False)
+                    if stderr and "did not match" not in stderr:
+                        print(f"  Excluded {item}/")
+                    elif not stderr:
+                        print(f"  Excluded {item}/")
     
     # Commit and push (skip in test mode)
     if not test_mode:
