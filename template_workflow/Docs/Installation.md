@@ -4,45 +4,35 @@ This guide covers three scenarios: **new projects**, **existing projects**, and 
 
 ---
 
-## Scenario 1: New Project (Cleanest)
+## Scenario 1: New Project
 
 If you're starting a new project and want the full template:
 
 ```bash
 # Clone the template
-git clone https://github.com/mickeyperlstein/agent-manager-template.git my-project
+mkdir my-project
 cd my-project
 
 # Remove template's git history and start fresh
-rm -rf .git
 git init
-git add .
-git commit -m "Initial commit from agent-manager-template"
 
-# Initialize the Kanban structure
-bash setup.sh
-
-# Run onboarding for your agent (Claude, Windsurf, or Cline)
-./template_workflow/scripts/claude_onboarding.sh
-# OR: ./template_workflow/scripts/windsurf_onboarding.sh
-# OR: ./template_workflow/scripts/cline_onboarding.sh
 ```
-
+# continue to next scenario (You now have a working repo/existing Project) 
 ---
 
-## Scenario 2: Existing Project (Recommended)
+## Scenario 2: In your existing project
 
-Add the template to your existing project **without overwriting your code**:
+Add the template to your existing project **this will preserve all existing files in your code**:
 
-### Step 1: Add template as a remote
+### Step 1: Add template as a remote called "template"
 ```bash
 git remote add template https://github.com/mickeyperlstein/agent-manager-template.git
-git fetch template main
 ```
 
-### Step 2: Checkout all template files
+### Step 2: Checkout all template files from "template" remote
 
 ```bash
+git fetch template main
 git checkout template/main -- .
 ```
 
@@ -80,17 +70,15 @@ bash setup.sh
 
 This creates the Features/ column folders and makes scripts executable.
 
-### Step 5: Update .gitignore
-
-Add these lines to `.gitignore` if not present:
-```
-meetings/
-Features/**/temp_*
-.DS_Store
-__pycache__
-```
-
 **Note:** `tasks.csv` is tracked in git so it can be synced to Google Drive, GitHub Projects, or other external systems. Do not ignore it.
+
+### Step 5: Install ai agents
+
+    # Run onboarding for your agent (Claude, Windsurf, or Cline)
+    ./template_workflow/scripts/claude_onboarding.sh
+    ./template_workflow/scripts/windsurf_onboarding.sh
+    ./template_workflow/scripts/cline_onboarding.sh
+
 
 ### Step 6: Commit
 
@@ -109,7 +97,7 @@ If you already have the template and want to pull the latest version:
 # Fetch latest from template repo
 git fetch template main
 
-# Review what changed
+# Review what changed if you are cautious
 git diff HEAD template/main
 
 # Pull all template files (Features/, meetings/, tasks.csv are excluded by push_template.sh)
