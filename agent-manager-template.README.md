@@ -124,13 +124,49 @@ Agents never move stories. Humans commit all column transitions.
 
 ### Getting Started
 
-1. **Use this template** to create your project repo
-2. **Run onboarding** to install Kanban rules:
+#### New Projects (Use This Template)
+
+1. **Use this template** to create your project repo on GitHub
+2. **Clone your new repo** and run onboarding to install Kanban rules:
    ```bash
    ./scripts/windsurf_onboarding.sh
    ```
 3. **Create feature stubs** in `Features/1-Backlog/{epic}/0001-feature-name.md` (stories are written later, as output of HLD)
 4. **Move stories** through columns via git mv and commit
+
+#### Existing Projects (Add to Repo)
+
+If you already have a project and want to add the agent-manager workflow:
+
+1. **Download the template files** into your project root:
+   ```bash
+   # From the template repo, copy core files
+   curl -L https://github.com/mickeyperlstein/agent-manager-template/raw/main/template_workflow.zip | unzip -d your-project/
+   ```
+
+2. **Or manually copy** the required structure:
+   ```
+   your-existing-project/
+   ├── template_workflow/        # Copy from template
+   │   ├── commands/
+   │   ├── agents/
+   │   └── templates/
+   ├── Features/                   # Create or adapt existing
+   ├── ai/agents/                  # Optional: project-level agent overrides
+   └── agent-manager-template.KANBAN.md  # Rename if conflicts with your KANBAN.md
+   ```
+
+3. **Initialize the workflow**:
+   ```bash
+   # Create Features/ structure if it doesn't exist
+   mkdir -p Features/{1-Backlog,2-HLD,3-HLD-Review,4-Task,5-TaskReview,6-Implementation,7-Test,8-Review,9-Done}
+   
+   # Run onboarding for your AI tool
+   ./template_workflow/scripts/windsurf_onboarding.sh
+   # or for Claude: ./template_workflow/scripts/claude_onboarding.sh
+   ```
+
+4. **Adapt your existing work**: Move any existing tasks/stories into `Features/1-Backlog/` following the story format.
 
 ## Agent Lookup Order
 
