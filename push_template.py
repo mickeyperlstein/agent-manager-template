@@ -10,6 +10,15 @@ import subprocess
 import sys
 from pathlib import Path
 
+# Files and directories to exclude
+exclusions = [
+    "Features/",
+    "meetings/", 
+    "tasks.csv",
+    "push_template.sh",
+    "push_template.py"
+]
+
 
 def run_command(cmd, capture_output=True, check=True):
     """Run a shell command and return result."""
@@ -28,6 +37,30 @@ def BumpPatchNumber(version):
     parts = version.split('.')
     parts[2] = str(int(parts[2]) + 1)
     return '.'.join(parts)
+
+def unstage(path):
+    """Walk directory or return single file list for unstaging."""
+    import os
+    files_to_unstage = []
+    
+    if not os.path.exists(path):
+        print(f"Warning: {path} does not exist, skipping")
+        return files_to_unstage
+    
+    if os.path.isfile(path):
+        # Single file
+        return [path]
+    
+    # Directory - walk it
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            filepath = os.path.join(root, file)
+            files_to_unstage.append(filepath)
+        for d in dirs:
+            dirpath = os.path.join(root, d)
+            files_to_unstage.append(dirpath)
+    
+    return files_to_unstage
 
 def save_to_file(file_path, data):
     with open(file_path, 'w') as f:
@@ -71,35 +104,21 @@ def main():
     print("Staging all files...")
     run_command("git add .")
     
-    # Files and directories to exclude
-    exclusions = [
-        "Features/",
-        "meetings/", 
-        "tasks.csv",
-        "push_template.sh",
-        "push_template.py"
-    ]
-    
-    # Unstage exclusions
-    print("Excluding dev-specific files...")
+    # Collect all files to unstage
+    all_files_to_unstage = []
     for exclusion in exclusions:
-        stdout, stderr = run_command(f"git restore --staged {exclusion}", check=False)
-        if stderr and "did not match" not in stderr:
-            print(f"  Excluded {exclusion}")
-        elif not stderr:
-            print(f"  Excluded {exclusion}")
+        files = unstage(exclusion)
+        all_files_to_unstage.extend(files)
     
-    # Also exclude any files in excluded directories
-    for d in [exclusion for exclusion in exclusions if exclusion.endswith('/')]:
-        features_dir = Path(d)
-        if features_dir.exists():
-            for item in features_dir.iterdir():
-                if item.is_dir():
-                    stdout, stderr = run_command(f"git restore --staged {item}", check=False)
-                    if stderr and "did not match" not in stderr:
-                        print(f"  Excluded {item}/")
-                    elif not stderr:
-                        print(f"  Excluded {item}/")
+    # Batch unstage in groups of 3
+    print(f"Excluding {len(all_files_to_unstage)} dev-specific files...")
+    batch_size = 3
+    for i in range(0, len(all_files_to_unstage), batch_size):
+        batch = all_files_to_unstage[i:i+batch_size]
+        files_str = ' '.join(f'"{f}"' for f in batch)
+        run_command(f"git restore --staged {files_str}", check=False)
+    
+    print(f"  Excluded {len(all_files_to_unstage)} files from main")
     
     # Commit and push (skip in test mode)
     if not test_mode:
