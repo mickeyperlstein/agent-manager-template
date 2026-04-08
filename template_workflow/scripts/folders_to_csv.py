@@ -14,11 +14,11 @@ from pathlib import Path
 COLUMN_MAP = {
     "1-Backlog": "Backlog",
     "2-HLD": "HLD",
-    "3-TaskReview": "TaskReview",
-    "4-InProgress": "InProgress",
-    "5-Testing-Agent": "Testing-Agent",
-    "6-Testing-Manual": "Testing-Manual",
-    "7-Verified": "Verified",
+    "3-HLD-Review": "HLD-Review",
+    "4-Task": "Task",
+    "5-TaskReview": "TaskReview",
+    "6-Implementation": "Implementation",
+    "7-Test": "Test",
     "8-Review": "Review",
     "9-Done": "Done",
 }
