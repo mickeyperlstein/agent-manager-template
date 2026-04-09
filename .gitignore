@@ -3,3 +3,4 @@ test_area/**
 # MacOs
 .DS_Store
 __pycache__
+template_workflow/tests/__pycache__

@@ -107,7 +107,7 @@ Contains the full workflow, organized into steps:
 |------|------|-------------|
 | 0a | Resume (optional) | If `--resume`: list recent meetings, let user pick, confirm/modify participant roster (add/remove), then jump to Step 3.5 |
 | 0b | Working meeting (optional) | If `--working`: summarize current conversation, prefill meeting file with prior context, skip to Step 1 with context pre-loaded (see Working Meeting Mode below) |
-| 1 | Validate participants | Resolve each name to an agent `.md` file (project-local first, then `~/ai/agents/`) |
+| 1 | Validate participants | Resolve each name to an agent `.md` file (project-local first, then `~/ai_information/agents/`) |
 | 2 | Create temp meeting file | Generate hex token, create `meetings/temp_meeting_<token>.md` with prefilled template |
 | 3 | Save and clean up | User confirms → rename to `meetings/YYYY-MM-DD_<slug>.md`, delete temp file |
 | 3.5 | Upload to participants | Include full meeting file content in each sub-agent's spawning prompt |
@@ -118,9 +118,9 @@ Contains the full workflow, organized into steps:
 
 **3. Agent Lookup Order**
 
-1. `<project-root>/ai/agents/<name>.md` (project-level overrides — highest priority)
+1. `<project-root>/ai_information/agents/<name>.md` (project-level overrides — highest priority)
 2. `<project-root>/template_workflow/agents/<name>.md` (template defaults)
-3. `~/ai/agents/<name>.md` (user-global agents)
+3. `~/ai_information/agents/<name>.md` (user-global agents)
 4. Speculate common AI tool folders (`~/.claude/`, `~/.windsurf/`, `~/.cursor/`, etc.)
 5. If not found: stop, report, offer solutions
 
@@ -323,7 +323,7 @@ Updates already made as part of this HLD:
 
 | Doc | What changed |
 |-----|-------------|
-| `README.md` | Added Agent Lookup Order table (4 priority levels), Commands table (`/meeting`, `--working`, `--resume`), updated Repository Structure to show `template_workflow/`, `ai/agents/`, `meetings/` |
+| `README.md` | Added Agent Lookup Order table (4 priority levels), Commands table (`/meeting`, `--working`, `--resume`), updated Repository Structure to show `template_workflow/`, `ai_information/agents/`, `meetings/` |
 | `template_workflow/Agent-HowTos/HLD.md` | Added section 6 (Documentation) — HLDs must now update affected docs before moving to HLD-Review |
 
 No changes needed to:

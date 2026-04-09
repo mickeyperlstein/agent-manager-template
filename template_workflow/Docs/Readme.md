@@ -93,9 +93,9 @@ When commands like `/meeting` need to find an agent, the lookup order is:
 
 | Priority | Path |
 |----------|------|
-| 1 | `<project-root>/ai/agents/<name>.md` — project-level overrides |
+| 1 | `<project-root>/ai_information/agents/<name>.md` — project-level overrides |
 | 2 | `<project-root>/template_workflow/agents/<name>.md` — template defaults |
-| 3 | `~/ai/agents/<name>.md` — user-global agents |
+| 3 | `~/ai_information/agents/<name>.md` — user-global agents |
 | 4 | `~/.claude/`, `~/.windsurf/`, etc. — AI tool config folders |
 
 ---
@@ -119,7 +119,7 @@ When commands like `/meeting` need to find an agent, the lookup order is:
 │   ├── agents/                  # Template agent definitions
 │   ├── scripts/                 # CSV sync, onboarding
 │   └── Agent-HowTos/            # Detailed role guides
-├── ai/agents/                   # Project-level agent overrides
+├── ai_information/agents/                   # Project-level agent overrides
 ├── meetings/                    # Meeting artifacts (auto-created)
 ├── CLAUDE.md                    # Claude Code rules
 ├── .clinerules                  # Cline rules

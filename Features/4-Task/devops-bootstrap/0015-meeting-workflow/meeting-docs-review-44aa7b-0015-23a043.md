@@ -20,7 +20,7 @@ Review all documentation changes made as part of the 0015 meeting workflow featu
 1. **`README.md`**
    - [ ] Agent Lookup Order table — 4 priority levels correct and in right order
    - [ ] Commands table — `/meeting`, `--working`, `--resume` descriptions accurate
-   - [ ] Repository Structure — `template_workflow/`, `ai/agents/`, `meetings/` present
+   - [ ] Repository Structure — `template_workflow/`, `ai_information/agents/`, `meetings/` present
    - [ ] Documentation list — `template_workflow/commands/` included
 
 2. **`template_workflow/Agent-HowTos/HLD.md`**

@@ -45,9 +45,9 @@ A working meeting converts the current conversation into a structured meeting. I
 
 For each participant name in the argument list, search for their agent file in this order:
 
-1. `<project-root>/ai/agents/<name>.md` (project-level overrides — highest priority)
+1. `<project-root>/ai_information/agents/<name>.md` (project-level overrides — highest priority)
 2. `<project-root>/template_workflow/agents/<name>.md` (template defaults)
-3. `~/ai/agents/<name>.md` (user-global agents)
+3. `~/ai_information/agents/<name>.md` (user-global agents)
 4. Speculate common AI tool folders: `~/.claude/`, `~/.windsurf/`, `~/.cursor/`, `~/.cline/` — look for `agents/<name>.md` or similar paths
 
 Use whichever is found first. If multiple files match for the same participant, present numbered options with a brief diff of key differences (role, description, model). Wait for the user to choose.

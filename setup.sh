@@ -31,8 +31,14 @@ chmod +x template_workflow/scripts/*.sh
 
 echo "  Scripts ready at template_workflow/scripts/"
 
+echo "create dependant folders"
+mkdir ai_information
+
 echo ""
 echo "Done. Next steps:"
-echo "  1. Add your first feature stub to Features/1-Backlog/{feature}.md"
+echo "  1. Tell AI to create your first feature in Features/1-Backlog/{feature}.md"
 echo "  2. Read template_workflow/Agent-HowTos/Kanban.md for the workflow"
 echo "  3. Configure your agent rules in CLAUDE.md / .clinerules / .windsurfrules"
+echo "  4. Vibe move the features adn tasks from stage to stage"
+echo "  5. When Reviewing, use commands like 'Start to review <hash>' etc."
+

@@ -12,9 +12,9 @@ As a project maintainer, I want the agent lookup priority order to be configurab
 ## Background
 Currently, the agent lookup order is hardcoded in `README.md` lines 135-146 and referenced in `meeting-protocol.md` Step 1:
 
-1. `<project-root>/ai/agents/<name>.md` (project-level overrides)
+1. `<project-root>/ai_information/agents/<name>.md` (project-level overrides)
 2. `<project-root>/template_workflow/agents/<name>.md` (template defaults)
-3. `~/ai/agents/<name>.md` (user-global agents)
+3. `~/ai_information/agents/<name>.md` (user-global agents)
 4. `~/.claude/`, `~/.windsurf/`, etc. (AI tool folders — speculative fallback)
 
 This is a "priority matrix" that users may want to customize per-project. Making it configurable increases flexibility without breaking the template. i.e. open-closed principle
@@ -22,7 +22,7 @@ This is a "priority matrix" that users may want to customize per-project. Making
 ## Scope
 
 ### CONFIG file design
-- Location: `<project-root>/ai/config.yaml` (or `.json` — TBD in HLD)
+- Location: `<project-root>/ai_information/config.yaml` (or `.json` — TBD in HLD)
 - Schema: Ordered list of lookup sources with optional paths and conditions
 - Default behavior: If no config file exists, use current hardcoded priority matrix
 - Override capability: Allow projects to add, remove, or reorder lookup sources
@@ -31,13 +31,13 @@ This is a "priority matrix" that users may want to customize per-project. Making
 ```yaml
 agent_lookup_order:
   - source: project_override
-    path: ai/agents
+    path: ai_information/agents
     priority: 1
   - source: template_default
     path: template_workflow/agents
     priority: 2
   - source: user_global
-    path: ~/ai/agents
+    path: ~/ai_information/agents
     priority: 3
   - source: ai_tool_folders
     paths: [~/.claude, ~/.windsurf, ~/.cursor, ~/.cline]
@@ -46,18 +46,18 @@ agent_lookup_order:
 ```
 
 ### Meeting protocol update
-- Step 1 in `meeting-protocol.md` checks for `ai/config.yaml` first
+- Step 1 in `meeting-protocol.md` checks for `ai_information/config.yaml` first
 - If found: use configured lookup order
 - If not found: use hardcoded fallback (current behavior)
 - Document the config file option in README.md
 
 ### Backward compatibility
-- No breaking changes — existing projects without `ai/config.yaml` continue to work
+- No breaking changes — existing projects without `ai_information/config.yaml` continue to work
 - Template `template_workflow/agents/` remains the SOT for defaults
 
 ## Acceptance Criteria
 - [ ] HLD defines config file format (YAML vs JSON), schema, and error handling
-- [ ] `ai/config.yaml` (or chosen format) is parsed and validated on `/meeting` invocation
+- [ ] `ai_information/config.yaml` (or chosen format) is parsed and validated on `/meeting` invocation
 - [ ] Custom lookup order is respected when resolving agent files
 - [ ] Fallback to hardcoded order when config file is absent
 - [ ] README.md updated to document the configuration option

@@ -18,7 +18,7 @@ Ported from `perli_old/.windsurf/workflows/meeting.md`. The original was Windsur
 ### Canonical workflow (`template_workflow/commands/meeting.md`)
 - Full meeting lifecycle: validate participants, create temp file, save final file, spawn sub-agents, run meeting, close with decisions
 - Resume support (`--resume`) — list recent meetings, reload context
-- Participant lookup: search project-local agents first, then `~/ai/agents/`
+- Participant lookup: search project-local agents first, then `~/ai_information/agents/`
 - Meeting file format: participants, topic, goal, relevant info, agenda, notes, rolling summary, decisions
 - MOD protocol: first participant played by host agent, remaining spawned as sub-agents
 - Routing: `LABEL:` prefix for directed messages, no prefix for broadcast, `MOD:` for facilitator
