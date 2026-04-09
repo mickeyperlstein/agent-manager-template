@@ -5,4 +5,5 @@
 set -e
 
 # Run the Python script
-python3 push_template.py
+ARGS1="$@"
+python3 push_template.py $ARGS1
