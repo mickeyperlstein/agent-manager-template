@@ -9,7 +9,7 @@ Usage: `/start` or `/start <task-id>`
 ### Step 0 — Housekeeping
 
 Before reading the Kanban board, run `/housekeeping` to ensure the board is clean:
-- Prune empty epic folders
+- Prune empty epic folders, make sure to not delete the columns (even when emoty)
 - Move any stragglers to their correct stages
 - Report what was cleaned
 

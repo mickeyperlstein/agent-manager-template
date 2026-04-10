@@ -60,40 +60,18 @@ If an agent file is not found: **stop immediately**. Tell the user exactly which
 
 1. Get the current Unix timestamp in seconds, convert to hex, truncate to 6 characters. This is the `<token>`.
 2. Create `<project-root>/meetings/temp_meeting_<token>.md`. If the `meetings/` folder doesn't exist, create it first.
-3. Prefill the file from context:
+3. Load the template from `template_workflow/templates/meeting-stub.md` and prefill from context:
+   - **Participants:** List participants with labels, roles, and agent file paths
+   - **Topic:** One sentence (or leave blank if to be filled in by user)
+   - **Goal:** What decision or output do we leave with? (or leave blank)
+   - **Relevant Info:** Prior conversation context, especially for `--working` mode (or leave blank)
+   - **Agenda:** Items in order (or leave blank)
+   - **Notes:** Section header only; populated during meeting
+   - **Rolling Summary:** Section header only; updated every ~5 exchanges
+   - **Decisions:** Section header only; populated at end
+   - **Action Items:** Section header only; populated at end
 
-```markdown
-# Meeting: <prefill from command context or leave blank>
-Date: <today YYYY-MM-DD>  Time: <current time HH:MM>
-
-## Participants
-- MOD + <first participant LABEL>: <Actual Model> — playing [first participant role] + facilitator (agent recommends: <Model from agent file>)
-- <LABEL>: <Actual Model> <agent name> — <one line from agent description> — `<path where agent file was found>` (agent recommends: <Model from agent file>)
-- (repeat for each remaining participant)
-
-## Topic
-<prefill if obvious from context, otherwise leave blank>
-
-## Goal
-<prefill if obvious, otherwise leave blank>
-
-## Relevant Info
-<prefill if there is prior conversation context (especially for --working mode), otherwise leave blank>
-
-## Agenda
-<prefill if obvious, otherwise leave blank>
-
-## Notes
-(live notes — updated during the meeting)
-
-## Rolling Summary
-(updated every ~5 exchanges)
-
-## Decisions
-(populated at end of meeting)
-```
-
-**For `--working` mode:** the `## Relevant Info` and `## Notes` sections are already prefilled from Step 0b with the prior-context summary. Merge rather than overwrite.
+**For `--working` mode:** the `## Relevant Info` and `## Notes` sections are prefilled from Step 0b with the prior-context summary. Merge with template rather than overwrite.
 
 4. Show the prefilled file to the user and ask them to review/complete:
    - **Topic** — one sentence
@@ -214,3 +192,8 @@ On `/end-meeting` or when the user declares the meeting over:
 5. For each action item:
    - Note it clearly in the decisions output so the human can create tasks or assign work
    - Include meeting file path as reference
+
+---
+
+## Comments
+**2026-04-11 — Claude (0012 completion):** Updated Step 2 to reference `template_workflow/templates/meeting-stub.md` as the source of truth for meeting structure instead of hardcoding the structure inline. Ensures agents use the template (with all sections including Action Items) rather than recreating it.

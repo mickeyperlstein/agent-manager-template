@@ -43,3 +43,10 @@ Date: <YYYY-MM-DD>  Time: <HH:MM>
 
 ## Decisions
 (populated at end of meeting)
+
+## Action Items
+- [ ] <action> (@person)
+- [ ] <action> (@person)
+
+## Comments
+**YYYY-MM-DD — [role] ([context]):** <what was discussed or changed>
