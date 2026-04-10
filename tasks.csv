@@ -17,7 +17,7 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 0017,,,kanban housekeeping,backlog,architect,Backlog,task,no,devops-bootstrap/stories
 0018,,,sync config HLD,HLD-Review,,HLD-Review,feature,yes,devops-bootstrap
 0018,,,kanban sync config HLD,HLD,,Task,feature,yes,devops-bootstrap/0018-kanban-sync-config
-0019,,,4char hash ids,HLD,architect,HLD-Review,task,yes,devops-bootstrap
+0019,,,4char hash ids,HLD,architect,Task,task,yes,devops-bootstrap
 0640af,23a043,bd72df,to folders 0640af bd72df 23a043,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
 06ef91,23a043,95d961,entrypoint 06ef91 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 074028,23a043,95d961,id command 074028 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
