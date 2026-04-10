@@ -8,11 +8,11 @@ This file contains the Kanban workflow rules for Claude Code agents.
 
 **You have not earned the right to act in this repo yet.**
 
-Before you write a single line, move a single file, or make any suggestion — you must read `agent-manager-template.KANBAN.md` in full. Not skim it. Read it.
+Before you write a single line, move a single file, or make any suggestion — you must read `template_workflow/Agent-HowTos/Kanban.md` in full. Not skim it. Read it.
 
-**If you have not read `agent-manager-template.KANBAN.md` in this session: stop now and read it before doing anything else.**
+**If you have not read `template_workflow/Agent-HowTos/Kanban.md` in this session: stop now and read it before doing anything else.**
 
-This applies to ALL agents, ALL roles, ALL sessions. No exceptions. Not for urgency. Not because the task seems obvious. Not because you were told what to do. You do not know what column a story is in, what gate it must pass, or what artifacts are required until you have read `agent-manager-template.KANBAN.md`.
+This applies to ALL agents, ALL roles, ALL sessions. No exceptions. Not for urgency. Not because the task seems obvious. Not because you were told what to do. You do not know what column a task is in, what gate it must pass, or what artifacts are required until you have read `template_workflow/Agent-HowTos/Kanban.md`.
 
 Acting without reading `agent-manager-template.KANBAN.md` is a process violation.
 
@@ -25,7 +25,7 @@ You must complete these steps in order before taking any action:
 1. **Read `agent-manager-template.KANBAN.md` in full** — columns, gates, folder structure, artifact requirements
 1a. **Run `/housekeeping`** — prune empty folders and move stragglers to correct stages before reading board state
 2. **Read `tasks.csv`** — find stories where `column = HLD`, `column = Task`, `column = TaskReview`, `column = Implementation`, or `column = Test`
-3. **Read the story/feature file(s)** for your assigned work only
+3. **Read the task/feature file(s)** for your assigned work only
 4. **Confirm your column** — you are only permitted to act on work in the columns above. If your assigned work is not in one of those columns, stop and tell the human.
 
 ---
@@ -41,7 +41,7 @@ You must complete these steps in order before taking any action:
 
 ## Artifact Protocol
 
-Every session that modifies a story or feature file MUST append a dated comment before the session ends:
+Every session that modifies a task or feature file MUST append a dated comment before the session ends:
 
 ```markdown
 ## Comments

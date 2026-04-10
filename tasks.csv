@@ -1,4 +1,4 @@
-id,epic,feature,story,status,assignee,column,type,review_gate,path
+id,epic,feature,task,status,assignee,column,type,review_gate,path
 0002,,,csv two way sync,backlog,architect,Task,story,yes,devops-bootstrap
 0003,,,github repo,backlog,architect,HLD,story,yes,devops-bootstrap
 0004,,,github projects kanban,backlog,architect,Backlog,story,yes,devops-bootstrap/stories
@@ -15,6 +15,7 @@ id,epic,feature,story,status,assignee,column,type,review_gate,path
 0015,,,meeting workflow,backlog,architect,Backlog,story,yes — Mickey manually runs a meeting end-to-end,devops-bootstrap/stories
 0016,,,configurable agent lookup,backlog,architect,Backlog,story,yes — HLD reviewed for config format and backward compatibility,devops-bootstrap/stories
 0017,,,kanban housekeeping,backlog,architect,Backlog,story,no,devops-bootstrap/stories
+0018,,,csv/folder sync authority config,backlog,architect,HLD,feature,yes,Features/2-HLD/kanban-sync-config-HLD.md
 0640af,23a043,bd72df,to folders 0640af bd72df 23a043,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
 06ef91,23a043,95d961,entrypoint 06ef91 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 074028,23a043,95d961,id command 074028 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core

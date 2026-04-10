@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-csv_to_folders.py - Read tasks.csv and move story files to correct column folders.
+csv_to_folders.py - Read tasks.csv and move task files to correct column folders.
 Usage: python3 scripts/csv_to_folders.py [--dry-run]
 """
 
@@ -11,13 +11,13 @@ from pathlib import Path
 from kanban import COLUMNS, repo_root
 
 
-def find_story_file(features_dir: Path, story_id: str) -> Path:
-    """Find a story file by ID anywhere in Features/."""
+def find_task_file(features_dir: Path, task_id: str) -> Path:
+    """Find a task file by ID anywhere in Features/."""
     for folder in features_dir.iterdir():
         if not folder.is_dir():
             continue
         for md_file in folder.rglob('*.md'):
-            if md_file.stem.startswith(f"{story_id}-"):
+            if md_file.stem.startswith(f"{task_id}-"):
                 return md_file
     return None
 
@@ -34,14 +34,14 @@ def get_column_from_path(features_dir: Path, file_path: Path) -> str:
     return ''
 
 
-def move_story(features_dir: Path, story_id: str, target_column: str, path: str = '', dry_run: bool = False) -> bool:
-    """Move a story file to the correct folder using git mv. Returns True if moved."""
+def move_task(features_dir: Path, task_id: str, target_column: str, path: str = '', dry_run: bool = False) -> bool:
+    """Move a task file to the correct folder using git mv. Returns True if moved."""
     target_folder = COLUMNS.get(target_column)
     if not target_folder:
-        print(f"Error: Unknown column '{target_column}' for story {story_id}", file=sys.stderr)
+        print(f"Error: Unknown column '{target_column}' for task {task_id}", file=sys.stderr)
         return False
 
-    current_file = find_story_file(features_dir, story_id)
+    current_file = find_task_file(features_dir, task_id)
     target_dir = features_dir / target_folder
 
     if not target_dir.exists():
@@ -49,8 +49,8 @@ def move_story(features_dir: Path, story_id: str, target_column: str, path: str 
         return False
 
     if current_file is None:
-        # Story in CSV but no file exists - this is a "create" case
-        print(f"Story {story_id} not found on disk (would create in {target_folder})", file=sys.stderr)
+        # Task in CSV but no file exists - this is a "create" case
+        print(f"Task {task_id} not found on disk (would create in {target_folder})", file=sys.stderr)
         return False
 
     current_column = get_column_from_path(features_dir, current_file)
@@ -86,29 +86,29 @@ def move_story(features_dir: Path, story_id: str, target_column: str, path: str 
 
 
 def sync_csv_to_folders(csv_path: Path, features_dir: Path, dry_run: bool = False):
-    """Read CSV and move all stories to their target folders."""
+    """Read CSV and move all tasks to their target folders."""
     moves = 0
-    
+
     with open(csv_path, 'r', newline='') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            story_id = row.get('id', '').strip()
+            task_id = row.get('id', '').strip()
             target_column = row.get('column', '').strip()
-            
-            story_path = row.get('path', '').strip()
-            
-            if not story_id or not target_column:
+
+            task_path = row.get('path', '').strip()
+
+            if not task_id or not target_column:
                 continue
-            
-            if move_story(features_dir, story_id, target_column, story_path, dry_run):
+
+            if move_task(features_dir, task_id, target_column, task_path, dry_run):
                 moves += 1
-    
+
     return moves
 
 
 def main():
     import argparse
-    parser = argparse.ArgumentParser(description='Sync tasks.csv to Features/ folder structure')
+    parser = argparse.ArgumentParser(description='Sync tasks.csv to Features/ folder structure (move task files to columns)')
     parser.add_argument('--dry-run', action='store_true', help='Show what would be done without making changes')
     args = parser.parse_args()
 

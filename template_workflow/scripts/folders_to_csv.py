@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-folders_to_csv.py - Scan Features/ folder structure and rebuild tasks.csv from story file frontmatter.
+folders_to_csv.py - Scan Features/ folder structure and rebuild tasks.csv from task file frontmatter.
 Usage: python3 scripts/folders_to_csv.py [--dry-run]
 """
 
@@ -43,8 +43,8 @@ def get_relative_path(features_dir: Path, md_file: Path, column_folder: str) -> 
         return ''
 
 
-def extract_story_from_filename(filepath: Path) -> str:
-    """Extract story name from filename (e.g., 0001-agent-manager-repo.md -> agent-manager-repo)."""
+def extract_task_from_filename(filepath: Path) -> str:
+    """Extract task name from filename (e.g., 0001-agent-manager-repo.md -> agent-manager-repo)."""
     name = filepath.stem
     if '-' in name:
         parts = name.split('-', 1)
@@ -53,8 +53,8 @@ def extract_story_from_filename(filepath: Path) -> str:
 
 
 def scan_features(features_dir: Path) -> list:
-    """Scan Features/ directory and extract story data from all .md files."""
-    stories = []
+    """Scan Features/ directory and extract task data from all .md files."""
+    tasks = []
 
     for folder in features_dir.iterdir():
         if not folder.is_dir():
@@ -63,36 +63,36 @@ def scan_features(features_dir: Path) -> list:
         column = FOLDER_TO_COLUMN.get(folder.name)
         if not column:
             continue
-        
+
         for md_file in folder.rglob('*.md'):
             content = md_file.read_text()
             fm = parse_frontmatter(content)
-            
+
             if not fm or 'id' not in fm:
                 continue
             
-            story_name = extract_story_from_filename(md_file)
+            task_name = extract_task_from_filename(md_file)
             rel_path = get_relative_path(features_dir, md_file, folder.name)
-            
-            stories.append({
+
+            tasks.append({
                 'id': fm.get('id', ''),
                 'epic': fm.get('epic', ''),
                 'feature': fm.get('feature', ''),
-                'story': story_name,
+                'task': task_name,
                 'status': fm.get('status', 'backlog'),
                 'assignee': fm.get('assignee', ''),
                 'column': column,
-                'type': fm.get('type', 'story'),
+                'type': fm.get('type', 'task'),
                 'review_gate': fm.get('review_gate', 'no'),
                 'path': rel_path,
             })
-    
-    return sorted(stories, key=lambda x: x['id'])
+
+    return sorted(tasks, key=lambda x: x['id'])
 
 
 def write_csv(stories: list, output_path: Path = None, dry_run: bool = False):
-    """Write stories to CSV format. If dry_run, always output to stdout."""
-    fieldnames = ['id', 'epic', 'feature', 'story', 'status', 'assignee', 'column', 'type', 'review_gate', 'path']
+    """Write tasks to CSV format. If dry_run, always output to stdout."""
+    fieldnames = ['id', 'epic', 'feature', 'task', 'status', 'assignee', 'column', 'type', 'review_gate', 'path']
 
     if dry_run or output_path is None:
         # Always print to stdout in dry-run or when no output path specified
@@ -122,11 +122,11 @@ def main():
         features_dir = root / 'Features'
         output_path = root / 'tasks.csv'
 
-    stories = scan_features(features_dir)
-    write_csv(stories, output_path, dry_run=args.dry_run)
+    tasks = scan_features(features_dir)
+    write_csv(tasks, output_path, dry_run=args.dry_run)
 
     if not args.dry_run:
-        print(f"Rebuilt {output_path} with {len(stories)} stories", file=sys.stderr)
+        print(f"Rebuilt {output_path} with {len(tasks)} tasks", file=sys.stderr)
 
 
 if __name__ == '__main__':

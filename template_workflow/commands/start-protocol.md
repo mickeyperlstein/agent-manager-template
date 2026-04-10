@@ -18,7 +18,7 @@ This ensures you're reading accurate board state.
 ### Step 1 — Orient
 
 Read in this order (stop and report if any file is missing):
-1. `KANBAN.md` — columns, gates, rules
+1. `template_workflow/Agent-HowTos/Kanban.md` — columns, gates, rules
 2. `tasks.csv` — find your work
 
 ### Step 2 — Find the task

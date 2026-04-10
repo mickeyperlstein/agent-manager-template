@@ -2,7 +2,7 @@
 
 **SOT:** `tasks.csv` — run `template_workflow/scripts/folders_to_csv.py` to sync folders → CSV.
 **Agents:** read CSV on startup, act on stories where `column = HLD`, `column = Task`, `column = TaskReview`, or `column = Test`.
-**CTO gate:** only a human may commit a story from TaskReview → Implementation.
+**CTO gate:** only a human may commit a task from TaskReview → Implementation.
 
 ## HARD RULES — no exceptions
 
