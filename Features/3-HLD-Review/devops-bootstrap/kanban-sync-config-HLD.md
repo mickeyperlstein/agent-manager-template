@@ -193,6 +193,35 @@ The following tasks will be created in `Features/4-Task/devops-bootstrap/0018-ka
 
 ---
 
+# Review 2026-04-11
+
+## Participants
+- Presenter: Architect
+- Reviewers: architect-reviewer, PM, Mickey (human)
+
+## Questions & Answers
+- Q (Mickey): Why not run both scripts non-destructively and keep dual states in sync?
+- A (Presenter): Authority model is simpler and provides operational clarity. Avoids merge/reconcile complexity.
+- Q (ARCH-R): What happens to the Features/ folder state during reconciliation if CSV is SOT?
+- A (Presenter): Folders get overwritten, not deleted. Should clarify operator expectations in task docs.
+- Q (PM): Are operators actively losing data today, or is this a theoretical hazard?
+- A (Presenter): HLD identifies risk but doesn't cite real incidents; actual observed issue is orphan folders.
+
+## Rolling Summary
+- Problem framed as "critical data loss hazard," but actual observed issue is orphan folders, not data loss
+- Full authority-config solution may be over-scoped for the current pain point
+- Architecture is sound, but scope should be reconsidered to match real problem
+
+## Decisions
+- Outcome: Deferred — Not Accepted as-is
+- Actual pain point is orphan folders; revise HLD to scope for that rather than general authority model
+- Kanban movement: 3-HLD-Review → 2-HLD
+- Rescope when orphan cleanup requirements are clearer
+
+---
+
 ## Comments
 
 **2026-04-09 — architect (HLD):** Designed authority-based sync system to prevent data loss. Default SOT is CSV (matches existing Kanban.md doctrine). Sync scripts will validate and reject operations that violate authority. Documentation updates ensure agents know the policy.
+
+**2026-04-11 — review (deferral):** Reviewed against observed problem (orphan folders vs. theoretical data loss). Full authority config may over-scope. Defer to 2-HLD for rescoping focused on orphan cleanup.
