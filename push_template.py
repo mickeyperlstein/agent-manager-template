@@ -159,7 +159,9 @@ def main():
     if approved_files:
         run_command(f'git commit -m "chore: release template v{new_version}"')
         run_command("git push origin HEAD:main --force")
-        print(f"\nDone. main is now template v{new_version}.")
+        
+        if current_version != new_version:
+            print(f"\nDone. main is now template v{new_version}.")
     else:
         print("\nNo files to commit.")
         sys.exit(1)
