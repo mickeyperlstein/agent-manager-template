@@ -2,7 +2,7 @@
 """
 push_template.py
 Bumps minor version, syncs current state to the main (template) branch.
-Stages everything except Features/, meetings/, and tasks.csv, then force-pushes to main.
+Uses git status to collect files, filters out excluded items, then stages only approved files.
 """
 
 import json
@@ -11,19 +11,24 @@ import sys
 from pathlib import Path
 
 # Files and directories to exclude
-exclusions = [
-    "Features/",
-    "meetings/", 
-    "tasks.csv",
-    "push_template.sh",
-    "push_template.py"
+EXCLUSIONS = [
+    "/Features/",
+    "/meetings/",
+    "/tasks.csv",
+    "/push_template.sh",
+    "/push_template.py"
 ]
 
+test_mode = False
 
 def run_command(cmd, capture_output=True, check=True):
     """Run a shell command and return result."""
     try:
-        result = subprocess.run(cmd, shell=True, capture_output=capture_output, 
+        if test_mode:
+            print ("ECHO: " + cmd)
+            return
+        
+        result = subprocess.run(cmd, shell=True, capture_output=capture_output,
                               text=True, check=check)
         return result.stdout.strip(), result.stderr.strip()
     except subprocess.CalledProcessError as e:
@@ -33,107 +38,131 @@ def run_command(cmd, capture_output=True, check=True):
             sys.exit(1)
         return e.stdout.strip(), e.stderr.strip()
 
-def BumpPatchNumber(version):
+def should_exclude(filepath):
+    """Check if file matches any exclusion pattern."""
+    for exclusion in EXCLUSIONS:
+        # Handle both directory (Features/) and exact file (push_template.py) matches
+        if exclusion.endswith('/'):
+            # Directory: check prefix
+            if filepath.startswith(exclusion):
+                return True
+        else:
+            # File: check exact match or as filename
+            if filepath == exclusion or filepath.endswith('/' + exclusion):
+                return True
+    return False
+
+def get_git_status_files():
+    """Get modified and untracked files from git status."""
+    stdout, _ = run_command("git status --porcelain", check=False)
+    files = []
+
+    for line in stdout.split('\n'):
+        if not line.strip():
+            continue
+        # Format: XY filename (X = staged status, Y = working tree status, then space, then filename)
+        # Examples: " M file.txt" (modified), "?? file.txt" (untracked), "M file.txt" (can be just status + space + file)
+        filepath = line[3:] if len(line) > 3 and line[2] == ' ' else line[2:]
+
+        if filepath:
+            files.append(filepath)
+
+    return files
+
+def bump_patch_version(version):
+    """Bump the patch version."""
     parts = version.split('.')
     parts[2] = str(int(parts[2]) + 1)
     return '.'.join(parts)
 
-def unstage(path):
-    """Walk directory or return single file list for unstaging."""
-    import os
-    files_to_unstage = []
-    
-    if not os.path.exists(path):
-        print(f"Warning: {path} does not exist, skipping")
-        return files_to_unstage
-    
-    if os.path.isfile(path):
-        # Single file
-        return [path]
-    
-    # Directory - walk it
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            filepath = os.path.join(root, file)
-            files_to_unstage.append(filepath)
-        for d in dirs:
-            dirpath = os.path.join(root, d)
-            files_to_unstage.append(dirpath)
-    
-    return files_to_unstage
-
 def save_to_file(file_path, data):
+    """Save data to JSON file."""
     with open(file_path, 'w') as f:
         json.dump(data, f, indent=2)
 
 def load_from_file(file_path):
+    """Load data from JSON file."""
     with open(file_path, 'r') as f:
-        version_data = json.load(f)
-    return version_data
+        return json.load(f)
 
 def main():
-    import sys
-    
-    # Check for test flag
     test_mode = "--test" in sys.argv
-    
+
     VERSION_FILE = "template_workflow/version.json"
+
     # Read current version
     version_data = load_from_file(VERSION_FILE)
     current_version = version_data['version']
-    print(f"current template version: {current_version}")
-    
+    print(f"Current template version: {current_version}")
+
     # Bump version (skip in test mode)
     if not test_mode:
-        print("Bumping version...")
-
-        new_version = BumpPatchNumber(current_version)
-        
-        version_file_data = version_data.copy()
-        version_file_data['version'] = new_version
-
-        save_to_file(VERSION_FILE, version_file_data)
+        new_version = bump_patch_version(current_version)
+        version_data['version'] = new_version
+        save_to_file(VERSION_FILE, version_data)
         print(f"Version bumped to {new_version}")
     else:
+        new_version = current_version
         print("TEST MODE: Skipping version bump")
-        # Read current version for display
-        version_data = load_from_file(VERSION_FILE)
-        new_version = version_data['version']
+
+    # Get files from git status
+    print("\nScanning git status...")
+    all_files = get_git_status_files()
+
+    if not all_files:
+        print("No changes to commit.")
+        return
+
+
+    # Filter out excluded items
+    approved_files = [f for f in all_files if not should_exclude(f)]
+    for i, f in enumerate(approved_files, 1):
+        print(f"{i}. /{f}")
     
-    # Stage everything
-    print("Staging all files...")
-    run_command("git add .")
+    excluded_files = [f for f in all_files if should_exclude(f)]
     
-    # Collect all files to unstage
-    all_files_to_unstage = []
-    for exclusion in exclusions:
-        files = unstage(exclusion)
-        all_files_to_unstage.extend(files)
-    
-    # Batch unstage in groups of 3
-    print(f"Excluding {len(all_files_to_unstage)} dev-specific files...")
-    batch_size = 3
-    for i in range(0, len(all_files_to_unstage), batch_size):
-        batch = all_files_to_unstage[i:i+batch_size]
-        files_str = ' '.join(f'"{f}"' for f in batch)
-        run_command(f"git restore --staged {files_str}", check=False)
-    
-    print(f"  Excluded {len(all_files_to_unstage)} files from main")
-    
+    print("\nfiles/folders to be excluded:")
+    print("-" * 27)
+    for i, f in enumerate(excluded_files, 1):
+        print(f"{i}. /{f}")
+
+
+
+    # Clean output
+    print("\nfiles/folders to be excluded:")
+    print("-" * 27)
+    if excluded_files:
+        for i, f in enumerate(excluded_files, 1):
+            print(f"{i}. /{f}")
+    else:
+        print("none")
+
+    print("\nfiles to be pushed:")
+    print("-" * 19)
+    if approved_files:
+        for i, f in enumerate(approved_files, 1):
+            print(f"{i}. /{f}")
+    else:
+        print("none")
+
+    # Stage approved files
+    if approved_files:
+        # Quote filenames to handle spaces
+        files_str = ' '.join(f'"{f}"' for f in approved_files)
+        run_command(f"git add {files_str}")
+    else:
+        print("\nNo approved files to stage.")
+
+
     # Commit and push (skip in test mode)
-    if not test_mode:
-        # Commit
-        print(f"Committing template v{new_version}...")
+
+    if approved_files:
         run_command(f'git commit -m "chore: release template v{new_version}"')
-        
-        # Force push to main
-        print("Pushing to main branch...")
         run_command("git push origin HEAD:main --force")
-        
         print(f"\nDone. main is now template v{new_version}.")
     else:
-        print("TEST MODE: Skipping commit and push")
-        print("\nTest complete. Check 'git status' to see what would be staged.")
+        print("\nNo files to commit.")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
