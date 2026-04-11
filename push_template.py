@@ -106,7 +106,7 @@ def main():
     print("\nScanning git status...")
     all_files = get_git_status_files()
     if test_mode:
-        print("Files in status:")
+        print("\nFiles in status:")
         print("-" * 13)
         for i, f in enumerate(all_files, 1):
             print(f"{i}. /{f}")
@@ -117,7 +117,7 @@ def main():
 
 
     # Filter out excluded items
-    print("Approved files:")
+    print("\nApproved:")
     print("-" * 19)
     approved_files = [f for f in all_files if not should_exclude(f)]
     for i, f in enumerate(approved_files, 1):
@@ -125,7 +125,7 @@ def main():
     
     excluded_files = [f for f in all_files if should_exclude(f)]
     
-    print("\nfiles/folders to be excluded:")
+    print("\nExcluded:")
     print("-" * 27)
     for i, f in enumerate(excluded_files, 1):
         print(f"{i}. /{f}")
