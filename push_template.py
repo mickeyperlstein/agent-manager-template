@@ -19,15 +19,12 @@ EXCLUSIONS = [
     "/push_template.py"
 ]
 
-test_mode = False
-
-def run_command(cmd, capture_output=True, check=True):
+def run_command(cmd, capture_output=True, check=True, test_mode=False):
     """Run a shell command and return result."""
     try:
         if test_mode:
-            print ("ECHO: " + cmd)
-            return
-        
+            cmd = "echo " + cmd
+
         result = subprocess.run(cmd, shell=True, capture_output=capture_output,
                               text=True, check=check)
         return result.stdout.strip(), result.stderr.strip()
@@ -108,6 +105,11 @@ def main():
     # Get files from git status
     print("\nScanning git status...")
     all_files = get_git_status_files()
+    if test_mode:
+        print("Files in status:")
+        print("-" * 27)
+        for i, f in enumerate(all_files, 1):
+            print(f"{i}. /{f}")
 
     if not all_files:
         print("No changes to commit.")
