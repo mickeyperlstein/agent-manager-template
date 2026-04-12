@@ -19,15 +19,15 @@ Features/4-Task/{epic}/{feature}/
 
 ```markdown
 ---
-id: a3f9c1
-epic: 23a043
-feature: e9245d
+id: a3f9              ← 4-char hex
+epic: 49b5            ← 4-char hex
+feature: ccfb         ← 4-char hex
 title: Task title
 type: task
 assignee: agent
 review_gate: yes
 approved: no
-depends_on:
+depends_on:           ← comma-separated 4-char hex task IDs (if any)
 ---
 
 ## What
@@ -60,6 +60,13 @@ Black-box E2E scenarios. For each: identify every pipeline system affected and h
 
 ## TestPlan
 (added by Task agent)
+
+## Implementation Artifacts
+(added by developer during Implementation phase)
+- Source files: [list of file paths changed]
+- Test files: [list of test file paths]
+- Branch: [feature branch name]
+- PR/Commit: [link or reference]
 ```
 
 ## Agent Responsibilities

@@ -71,7 +71,10 @@ If an agent file is not found: **stop immediately**. Tell the user exactly which
    - **Decisions:** Section header only; populated at end
    - **Action Items:** Section header only; populated at end
 
+Ask the user to either fill the items themselves or to tell you discriptively what the problem is and what the background is. then find associated background info and assume --working status. 
+
 **For `--working` mode:** the `## Relevant Info` and `## Notes` sections are prefilled from Step 0b with the prior-context summary. Merge with template rather than overwrite.
+
 
 4. Show the prefilled file to the user and ask them to review/complete:
    - **Topic** — one sentence
@@ -79,7 +82,7 @@ If an agent file is not found: **stop immediately**. Tell the user exactly which
    - **Relevant Info** — context participants need (notes, links, code snippets)
    - **Agenda** — items in order (say "help me" and the agent drafts it)
 
-5. Wait for the user to confirm before proceeding.
+5. Ask the user to confirm before proceeding.
 
 ---
 

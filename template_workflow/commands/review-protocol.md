@@ -24,8 +24,6 @@ A review is a **collaborative critique meeting** where a Presenter defends their
 - The agent assigned to the specific HLD or Task file
 - The Presenter defends the work from the file itself — they come prepared
 
-Flow the wy the md wil isdiplayed may include commoentrs durecying the iutem review not unlike a real presentation.
-
 **Reviewers** (questioners):
 - All other participants explicitly named, or:
 - Default: relevant domain experts (e.g., for an HLD review, include security, ops, product if interested parties)
@@ -48,7 +46,7 @@ For each participant, validate their agent file (search order: project-level →
 
 ### Review Protocol — Injected Into Every Sub-Agent
 
-> You are in a review. A Presenter (the Owner) is defending their work. Your role is to ask tough questions to identify gaps, risks, or improvements.
+> You are in a review. A Presenter (the Owner) is defending their work. Your role is to ask tough questions to identify gaps, risks, or improvements dont forget testplans and documentation.
 >
 > Keep your expertise — but stay concise: 1-3 sentences per question or comment. No preamble, no summary.
 >

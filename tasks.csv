@@ -1,23 +1,23 @@
 id,epic,feature,task,status,assignee,column,type,review_gate,path
 0002,,,csv two way sync,backlog,architect,Task,task,yes,devops-bootstrap
 0003,,,github repo,backlog,architect,Done,task,yes,devops-bootstrap
-0004,,,github projects kanban,backlog,architect,Backlog,task,yes,devops-bootstrap/stories
-0005,,,sync stories to github projects,backlog,architect,Backlog,task,yes,devops-bootstrap/stories
-0006,,,research agent types,backlog,architect,Backlog,task,yes — output is a written report for Mickey,devops-bootstrap/stories
+0004,,,github projects kanban,backlog,architect,Backlog,task,yes,devops-bootstrap
+0005,,,sync stories to github projects,backlog,architect,Backlog,task,yes,devops-bootstrap
+0006,,,research agent types,backlog,architect,Backlog,task,yes — output is a written report for Mickey,devops-bootstrap
 0007,,,copy agents,backlog,architect,Done,task,yes,
-0008,,,claude agent wrappers,backlog,architect,Backlog,task,yes — Mickey manually tests each wrapper,devops-bootstrap/stories
-0009,,,windsurf wrappers,backlog,architect,Backlog,task,yes — Mickey manually tests each wrapper,devops-bootstrap/stories
-0010,,,cline wrappers,backlog,architect,Backlog,task,yes — Mickey manually tests each wrapper,devops-bootstrap/stories
-0011,,,mcp servers sync,backlog,architect,Backlog,task,yes,devops-bootstrap/stories
+0008,,,claude agent wrappers,backlog,architect,Backlog,task,yes — Mickey manually tests each wrapper,devops-bootstrap
+0009,,,windsurf wrappers,backlog,architect,Backlog,task,yes — Mickey manually tests each wrapper,devops-bootstrap
+0010,,,cline wrappers,backlog,architect,Backlog,task,yes — Mickey manually tests each wrapper,devops-bootstrap
+0011,,,mcp servers sync,backlog,architect,Backlog,task,yes,devops-bootstrap
 0012,,,meeting stub template,backlog,architect,Done,task,yes,devops-bootstrap
 0013,,,features cli core,backlog,architect,Task,task,yes,devops-bootstrap/0013-features-cli-core
 0014,,,features cli git,backlog,architect,Task,task,yes,devops-bootstrap/0014-features-cli-git
-0015,,,meeting workflow,backlog,architect,Backlog,task,yes — Mickey manually runs a meeting end-to-end,devops-bootstrap/stories
-0016,,,configurable agent lookup,backlog,architect,Backlog,task,yes — HLD reviewed for config format and backward compatibility,devops-bootstrap/stories
-0017,,,kanban housekeeping,backlog,architect,Backlog,task,no,devops-bootstrap/stories
+0015,,,meeting workflow,backlog,architect,Backlog,task,yes — Mickey manually runs a meeting end-to-end,devops-bootstrap
+0016,,,configurable agent lookup,backlog,architect,Backlog,task,yes — HLD reviewed for config format and backward compatibility,devops-bootstrap
+0017,,,kanban housekeeping,backlog,architect,Backlog,task,no,devops-bootstrap
 0018,,,sync config HLD,HLD-Review,,HLD-Review,feature,yes,devops-bootstrap
 0018,,,kanban sync config HLD,HLD,,Task,feature,yes,devops-bootstrap/0018-kanban-sync-config
-0019,,,4char hash ids,HLD,architect,Task,task,yes,devops-bootstrap
+0019,,,hash ids HLD,HLD,architect,HLD-Review,task,yes,devops-bootstrap
 0640af,23a043,bd72df,to folders 0640af bd72df 23a043,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
 06ef91,23a043,95d961,entrypoint 06ef91 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 074028,23a043,95d961,id command 074028 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
@@ -35,6 +35,7 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 73df4b,23a043,bd72df,howtos 73df4b bd72df 23a043,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
 801c74,b63578,0018,update 801c74 0018 b63578,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
 8166be,b63578,0018,to csv validation 8166be 0018 b63578,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
+83d1,478d,83d1,dashboard 83d1,backlog,architect,Backlog,feature,yes,usability-478d
 8978e7,23a043,95d961,git doc 8978e7 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
 8a9f1f,23a043,95d961,validation 8a9f1f 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 8bed76,23a043,bd72df,tests 8bed76 bd72df 23a043,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
@@ -45,6 +46,7 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 b96e84,23a043,95d961,commit b96e84 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
 c1546f,devops-bootstrap,0015,template c1546f 0015 23a043,TaskReview,agent,Task,task,yes,devops-bootstrap/0015-meeting-workflow
 c81980,23a043,e9245d,task files c81980 e9245d 23a043,backlog,agent,Done,task,no,devops-bootstrap/workflow-schema-update
+ccfb,49b5,ccfb,ai toc pipelines ccfb,backlog,architect,Backlog,feature,yes,ai-agnostic-prompting
 ce0a77,23a043,95d961,undo ce0a77 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
 cff174,23a043,95d961,push cff174 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
 d1efed,23a043,95d961,git group d1efed 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git

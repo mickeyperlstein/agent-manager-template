@@ -64,9 +64,9 @@ Documentation is a first-class deliverable, not an afterthought. If the HLD intr
 HLD agent creates task stub files alongside the HLD doc. Each stub file uses the filename convention:
 `{name}-{taskid}-{featureid}-{epicid}.md`
 
-Generate a hex id for each task:
+**All IDs must be 4-char hex.** Generate one for each task:
 ```bash
-python3 -c "import secrets; print(secrets.token_hex(3))"
+python3 -c "import secrets; print(secrets.token_hex(2))"
 ```
 
 Each stub must contain: What, Scope, Acceptance Criteria, Test Conditions, Definition of Done.

@@ -26,10 +26,9 @@
 | HLD-Review | Human | `Features/3-HLD-Review/` | `{feature}-HLD.md` |
 | Task | Agent | `Features/4-Task/{epic}/{feature}/` | `{feature}-HLD.md` + `{name}-{taskid}-{featureid}-{epicid}.md` files |
 | TaskReview | Agent (Architect) + Human | `Features/5-TaskReview/{epic}/{feature}/` | individual task files move here as completed |
-| Implementation | Agent | `Features/6-Implementation/{epic}/{feature}/` | individual task files move here after review |
-| Test | Agent → Human if needed | `Features/7-Test/{epic}/{feature}/` | individual task files move here |
-| Review | Human | `Features/8-Review/{epic}/{feature}/` | individual task files move here |
-| Done | Human | `Features/9-Done/{epic}/{feature}/` | individual task files move here |
+| Implementation | Agent | `Features/6-Implementation/{epic}/{feature}/` | agent writes code + unit tests (TDD) + integration/E2E tests |
+| Review | Human | `Features/7-Review/{epic}/{feature}/` | individual task files move here after implementation tests pass |
+| Done | Human | `Features/8-Done/{epic}/{feature}/` | individual task files move here after PR merged |
 
 ## Gates (Column Transitions)
 
@@ -40,8 +39,7 @@
 | `HLD-Review → Task` | Human | Human approves HLD |
 | `Task → TaskReview` | Agent | Per task file: agent adds LLD + Gherkin + TestPlan, moves file to TaskReview |
 | `TaskReview → Implementation` | **Human** | Per task file: human reviews LLD + Gherkin + TestPlan, commits move |
-| `Implementation → Test` | Agent | Agent routes automatically |
-| `Test → Review` | Human | Tests pass, human approves |
+| `Implementation → Review` | Agent | Unit tests pass (TDD), integration + E2E tests pass, code complete |
 | `Review → Done` | Human | PR merged |
 
 ## Filename Convention
@@ -51,9 +49,11 @@ Task files (and all items from Task column onwards) use:
 {name}-{taskid}-{featureid}-{epicid}.md
 ```
 - `name` — human-readable slug (shown first for readability in file explorer)
-- `taskid`, `featureid`, `epicid` — 3-byte hex, generated at creation, collision-free across agents and branches
+- `taskid`, `featureid`, `epicid` — **4-char hex**, generated at creation, collision-free across agents and branches
 
-Example: `folders-to-csv-385474-e9245d-23a043.md`
+Generate with: `python3 -c "import secrets; print(secrets.token_hex(2))"`
+
+Example: `build-tool-choice-a3f9-ccfb-49b5.md`
 
 ## Folder Lifecycle
 
@@ -69,10 +69,9 @@ Files move individually from Task onwards. `depends_on` controls ordering betwee
                {name}-{tid}-{fid}-{eid}.md
 
 5-TaskReview/{epic}/{feature}/           ← individual files move here as agent completes them
-6-Implementation/{epic}/{feature}/       ← individual files move here after human review
-7-Test/{epic}/{feature}/
-8-Review/{epic}/{feature}/
-9-Done/{epic}/{feature}/
+6-Implementation/{epic}/{feature}/       ← individual files move here after human review; agent writes code + tests (TDD)
+7-Review/{epic}/{feature}/               ← individual files move here after implementation tests pass
+8-Done/{epic}/{feature}/                 ← individual files move here after PR merged
 ```
 
 ## V-Model Alignment
