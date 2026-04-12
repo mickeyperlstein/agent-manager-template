@@ -23,7 +23,7 @@
 |---|---|---|---|
 | Backlog | Human | `Features/1-Backlog/` | `{feature}.md` |
 | HLD | Agent (Architect) | `Features/2-HLD/` | `{feature}-HLD.md` |
-| HLD-Review | Human | `Features/3-HLD-Review/` | `{feature}-HLD.md` |
+| HLD-Review | Human | `Features/3-HLD-Review/` | (empty after approval; HLD moves to Task) |
 | Task | Agent | `Features/4-Task/{epic}/{feature}/` | `{feature}-HLD.md` + `{name}-{taskid}-{featureid}-{epicid}.md` files |
 | TaskReview | Agent (Architect) + Human | `Features/5-TaskReview/{epic}/{feature}/` | individual task files move here as completed |
 | Implementation | Agent | `Features/6-Implementation/{epic}/{feature}/` | agent writes code + unit tests (TDD) + integration/E2E tests |
@@ -36,7 +36,7 @@
 |------|-------|---------------------|
 | `Backlog → HLD` | Human | Feature stub with clear scope |
 | `HLD → HLD-Review` | **HLD agent** | HLD doc complete |
-| `HLD-Review → Task` | Human | Human approves HLD |
+| `HLD-Review → Task` | Human | Human approves HLD; HLD moves to Task folder, task stubs created alongside |
 | `Task → TaskReview` | Agent | Per task file: agent adds LLD + Gherkin + TestPlan, moves file to TaskReview |
 | `TaskReview → Implementation` | **Human** | Per task file: human reviews LLD + Gherkin + TestPlan, commits move |
 | `Implementation → Review` | Agent | Unit tests pass (TDD), integration + E2E tests pass, code complete |
@@ -62,11 +62,12 @@ Files move individually from Task onwards. `depends_on` controls ordering betwee
 ```
 1-Backlog/   {feature}.md
 2-HLD/       {feature}-HLD.md
-3-HLD-Review/{feature}-HLD.md
+3-HLD-Review/                            ← human approves; HLD moves to Task
 4-Task/      {epic}/{feature}/
-               {feature}-HLD.md          ← reference, stays here
+               {feature}-HLD.md          ← moved here after approval; reference for agent
                {name}-{tid}-{fid}-{eid}.md
                {name}-{tid}-{fid}-{eid}.md
+               (all task stubs created together with HLD)
 
 5-TaskReview/{epic}/{feature}/           ← individual files move here as agent completes them
 6-Implementation/{epic}/{feature}/       ← individual files move here after human review; agent writes code + tests (TDD)
