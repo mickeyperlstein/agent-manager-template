@@ -15,7 +15,7 @@ depends_on:
 
 **What:** Automated script that maintains a clean checkout of main branch, merges dev commits, removes dev-only artifacts, and pushes clean template to origin/main. Replaces manual git filtering and .gitignore complexity.
 
-**Why:** Current push strategy pollutes main with template project artifacts (Features/, meetings/, tasks.csv). Downstream users get confused/unusable template. Script cleanly separates dev (full project) from main (clean distribution).
+**Why:** Current push strategy is using git status where it should be comparing between branches, and instead of complex branching diffs and reinventing git it makes more sense to just use the correct git workflow of checkout from main to a temp upsert then pull changes from dev  and then the existing script will work as planned because status will be "dirty'
 
 **Scope:**
 - Python script: `push_to_template.py`
@@ -36,7 +36,7 @@ depends_on:
 
 - [ ] Script creates/updates main cache folder safely
 - [ ] `git merge --ff-only` works and fails gracefully if not fast-forward
-- [ ] Removes all 5 artifact types: Features/, meetings/, tasks.csv, push_to_template.py, push_template.sh
+- [ ] Removes all 5 artifact types: Features/, meetings/, tasks.csv, push_to_template.py, push_template.sh and allows adding to this list i a central simple fashion
 - [ ] Commits removal with clear message
 - [ ] Pushes to origin/main successfully
 - [ ] Reports what was pushed (commit count, files removed)
@@ -54,7 +54,7 @@ depends_on:
 **Error path:** Someone manually edited main
 - Given: main was edited directly (not fast-forward)
 - When: `python3 push_to_template.py` runs
-- Then: `git merge --ff-only` fails; script exits with error; no push happens
+- Then: `git merge --ff-only` fails; script exits with error; no push happens log / stderr show error for user
 
 **Error path:** Push fails (permission, network)
 - Given: origin/main is unreachable
@@ -72,14 +72,13 @@ Feature: Push template artifacts to clean main branch
     And meetings/ contains 5 meeting files
     And tasks.csv has 57 rows
     When I run: python3 push_to_template.py
-    Then Features/ is removed from main
-    And meetings/ is removed from main
-    And tasks.csv is removed from main
-    And push_to_template.py is removed from main
-    And push_template.sh is removed from main
-    And 1 deletion commit is pushed to origin/main
+    Then Features/ is not in  main
+    And meetings/ is not in main
+    And tasks.csv is not in main
+    And push_to_template.py is not in main
+    And push_template.sh is not in main
     And script reports: "3 commits merged, 5 artifacts removed"
-
+    
   Scenario: Prevent pushing if main was manually edited
     Given main has been manually edited (not fast-forward)
     When I run: python3 push_to_template.py
@@ -96,7 +95,7 @@ Feature: Push template artifacts to clean main branch
 ```
 
 ## Definition of Done
-
+testing can be human run or automated via basic bash
 - [ ] Script written and tested locally
 - [ ] All Gherkin scenarios pass (happy + error paths)
 - [ ] Cache folder is safely created/updated (no overwrites)
