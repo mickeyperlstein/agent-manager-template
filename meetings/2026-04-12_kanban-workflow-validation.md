@@ -44,9 +44,11 @@ Confirm the exact timing of when items (task files, feature folders, HLD files) 
 - Updated 4 documentation files to enforce and explain 4-char hex ID standard
 
 ## Rolling Summary
-- Kanban workflow flow clarified
-- 4-char hex ID enforcement standardized
-- Backlog folder structure cleaned up
+- Kanban workflow: 9 columns, Implementation owns unit tests (TDD) + code + logging/monitoring; Test owns integration/E2E/system testing
+- 4-char hex ID enforcement standardized across all items (epics, features, tasks)
+- Backlog folder structure cleaned up (/stories/ removed)
+- Kanban Dashboard feature created: Flask backend, direct CSV manipulation, trigger sync on mutations
+- All changes committed; feature ready to move through workflow
 
 ## Decisions
 1. **9-column workflow confirmed:** Backlog → HLD → HLD-Review → Task → TaskReview → Implementation → Test → Review → Done
@@ -54,7 +56,7 @@ Confirm the exact timing of when items (task files, feature folders, HLD files) 
    - Column 7 (Test): owns integration + E2E + system testing (both automated and manual)
 2. **Action item:** Create Kanban Dashboard feature for usability epic
    - Epic: usability (478d)
-   - Feature: kanban-dashboard (83d1)
+   - Feature: kanban-dashboard (83d1) 
    - Purpose: Real-time visibility into Kanban state, query by epic/status/metadata, identify bottlenecks
    - Status: Added to Features/1-Backlog/usability-478d/ as feature stub
 
