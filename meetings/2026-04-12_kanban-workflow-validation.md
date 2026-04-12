@@ -49,7 +49,14 @@ Confirm the exact timing of when items (task files, feature folders, HLD files) 
 - Backlog folder structure cleaned up
 
 ## Decisions
-(populated at end of meeting)
+1. **9-column workflow confirmed:** Backlog → HLD → HLD-Review → Task → TaskReview → Implementation → Test → Review → Done
+   - Column 6 (Implementation): owns unit tests (TDD) + code + logging/monitoring infrastructure
+   - Column 7 (Test): owns integration + E2E + system testing (both automated and manual)
+2. **Action item:** Create Kanban Dashboard feature for usability epic
+   - Epic: usability (478d)
+   - Feature: kanban-dashboard (83d1)
+   - Purpose: Real-time visibility into Kanban state, query by epic/status/metadata, identify bottlenecks
+   - Status: Added to Features/1-Backlog/usability-478d/ as feature stub
 
 ## Comments
 **2026-04-12 — Architect (working meeting):** Capturing Kanban workflow clarification and 4-char hex ID enforcement work.
