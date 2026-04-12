@@ -43,6 +43,7 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 95f4b4,23a043,95d961,command 95f4b4 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 9868d2,b63578,0018,to folders validation 9868d2 0018 b63578,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
 993e26,23a043,e9245d,csv schema 993e26 e9245d 23a043,backlog,agent,Review,task,no,devops-bootstrap/workflow-schema-update
+a4c1,6099,a4c1,to template a4c1,backlog,architect,Backlog,feature,yes,devops-infrastructure-6099
 b96e84,23a043,95d961,commit b96e84 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
 c1546f,devops-bootstrap,0015,template c1546f 0015 23a043,TaskReview,agent,Task,task,yes,devops-bootstrap/0015-meeting-workflow
 c81980,23a043,e9245d,task files c81980 e9245d 23a043,backlog,agent,Done,task,no,devops-bootstrap/workflow-schema-update
