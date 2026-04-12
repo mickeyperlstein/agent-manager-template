@@ -25,6 +25,7 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 2d7440,23a043,95d961,doc update 2d7440 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 3075d4,devops-bootstrap,0015,protocol 3075d4 0015 23a043,TaskReview,agent,Task,task,yes,devops-bootstrap/0015-meeting-workflow
 351816,b63578,0018,update 351816 0018 b63578,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
+369f,6099,a4c1,push script 369f a4c1 6099,backlog,agent,Task,task,yes,devops-infrastructure-6099/push-to-template
 385474,23a043,bd72df,to csv 385474 bd72df 23a043,backlog,architect,TaskReview,task,yes,devops-bootstrap/csv-two-way-sync
 3cda27,23a043,bd72df,commit hook 3cda27 bd72df 23a043,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
 44aa7b,devops-bootstrap,0015,docs review 44aa7b 0015 23a043,Task,human,Task,task,yes,devops-bootstrap/0015-meeting-workflow
@@ -35,6 +36,7 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 73df4b,23a043,bd72df,howtos 73df4b bd72df 23a043,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
 801c74,b63578,0018,update 801c74 0018 b63578,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
 8166be,b63578,0018,to csv validation 8166be 0018 b63578,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
+82c4,6099,a4c1,push process 82c4 a4c1 6099,backlog,agent,Task,task,yes,devops-infrastructure-6099/push-to-template
 83d1,478d,83d1,dashboard 83d1,backlog,architect,Backlog,feature,yes,usability-478d
 8978e7,23a043,95d961,git doc 8978e7 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
 8a9f1f,23a043,95d961,validation 8a9f1f 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
@@ -43,8 +45,11 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 95f4b4,23a043,95d961,command 95f4b4 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 9868d2,b63578,0018,to folders validation 9868d2 0018 b63578,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
 993e26,23a043,e9245d,csv schema 993e26 e9245d 23a043,backlog,agent,Review,task,no,devops-bootstrap/workflow-schema-update
-a4c1,6099,a4c1,to template a4c1,backlog,architect,Backlog,feature,yes,devops-infrastructure-6099
+a4c1,6099,a4c1,to template HLD,backlog,architect,HLD-Review,feature,yes,devops-infrastructure-6099
+a4c1,6099,a4c1,to template HLD,backlog,architect,Task,feature,yes,devops-infrastructure-6099/push-to-template
 b96e84,23a043,95d961,commit b96e84 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
+baec,6099,a4c1,push workflow baec a4c1 6099,backlog,agent,Task,task,yes,devops-infrastructure-6099/push-to-template
+bb31,6099,a4c1,wrapper bb31 a4c1 6099,backlog,agent,Task,task,yes,devops-infrastructure-6099/push-to-template
 c1546f,devops-bootstrap,0015,template c1546f 0015 23a043,TaskReview,agent,Task,task,yes,devops-bootstrap/0015-meeting-workflow
 c81980,23a043,e9245d,task files c81980 e9245d 23a043,backlog,agent,Done,task,no,devops-bootstrap/workflow-schema-update
 ccfb,49b5,ccfb,ai toc pipelines ccfb,backlog,architect,Backlog,feature,yes,ai-agnostic-prompting
