@@ -21,8 +21,9 @@ depends_on: ""
 - [ ] Handles case where cache folder doesn't exist yet
 
 **Definition of Done:**
-- [ ] Function: cache_init() implemented
-- [ ] Unit tests pass (setup, stash, pop)
+- [x] Function: cache_init() implemented
+- [x] Function: cache_stash_pop() implemented
+- [x] Unit tests pass (5/5 tests passing)
 
 ## LLD (Low-Level Design)
 

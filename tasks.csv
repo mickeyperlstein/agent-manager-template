@@ -18,12 +18,12 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 0018,,,0018-kanban,HLD,,HLD-Review,feature,yes,devops-bootstrap
 0018,,,kanban,HLD-Review,,HLD-Review,feature,yes,devops-bootstrap
 0019,,,4char,HLD,architect,HLD-Review,task,yes,devops-bootstrap
-0518,6099,a4c1,testing,backlog,architect,Task,task,no,devops-infrastructure-6099/push-to-template
+0518,6099,a4c1,testing,backlog,architect,TaskReview,task,no,devops-infrastructure-6099/push-to-template
 0640af,23a043,bd72df,csv-to-folders,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
 06ef91,23a043,95d961,cli-entrypoint,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 074028,23a043,95d961,new-id-command,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 10552f,23a043,e9245d,update-agent-howtos,backlog,agent,Review,task,no,devops-bootstrap/workflow-schema-update
-2970,6099,a4c1,ci-integration,backlog,architect,Task,task,no,devops-infrastructure-6099/push-to-template
+2970,6099,a4c1,ci-integration,backlog,architect,TaskReview,task,no,devops-infrastructure-6099/push-to-template
 2d7440,23a043,95d961,kanban-doc-update,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 3075d4,devops-bootstrap,0015,meeting-protocol,TaskReview,agent,Task,task,yes,devops-bootstrap/0015-meeting-workflow
 351816,b63578,0018,housekeeping-update,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
@@ -34,7 +34,7 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 48ec37,b63578,0018,config-setup,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
 4e7564,devops-bootstrap,0015,meeting-e2e-test,Test,human,Task,task,yes — Mickey manually runs a meeting end-to-end,devops-bootstrap/0015-meeting-workflow
 537577,devops-bootstrap,0015,meeting-wrapper-claude,TaskReview,agent,Task,task,yes,devops-bootstrap/0015-meeting-workflow
-5829,6099,a4c1,merge-commit,backlog,architect,Task,task,no,devops-infrastructure-6099/push-to-template
+5829,6099,a4c1,merge-commit,backlog,architect,TaskReview,task,no,devops-infrastructure-6099/push-to-template
 6764ce,23a043,e9245d,update-kanban-md,backlog,agent,Review,task,no,devops-bootstrap/workflow-schema-update
 6eb3,6099,a4c1,cache-init,backlog,architect,TaskReview,task,no,devops-infrastructure-6099/push-to-template
 73df4b,23a043,bd72df,update-howtos,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
@@ -56,7 +56,7 @@ b96e84,23a043,95d961,git-commit,backlog,agent,Task,task,no,devops-bootstrap/0014
 baec,6099,a4c1,test-push-workflow,backlog,agent,Task,task,yes,devops-infrastructure-6099/push-to-template
 bb31,6099,a4c1,push-wrapper,backlog,agent,Task,task,yes,devops-infrastructure-6099/push-to-template
 c1546f,devops-bootstrap,0015,meeting-template,TaskReview,agent,Task,task,yes,devops-bootstrap/0015-meeting-workflow
-c773,6099,a4c1,push-error,backlog,architect,Task,task,no,devops-infrastructure-6099/push-to-template
+c773,6099,a4c1,push-error,backlog,architect,TaskReview,task,no,devops-infrastructure-6099/push-to-template
 c81980,23a043,e9245d,rename-task-files,backlog,agent,Done,task,no,devops-bootstrap/workflow-schema-update
 ccfb,49b5,ccfb,modular-ai,backlog,architect,Backlog,feature,yes,ai-agnostic-prompting
 ce0a77,23a043,95d961,git-undo,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
@@ -65,8 +65,8 @@ d1efed,23a043,95d961,cli-git-group,backlog,agent,Task,task,no,devops-bootstrap/0
 d28e7c,23a043,95d961,move-command,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 d2a50f,23a043,95d961,git-stage,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
 db4eaa,23a043,95d961,git-utils,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
-e329,6099,a4c1,whitelist-filter,backlog,architect,Task,task,no,devops-infrastructure-6099/push-to-template
+e329,6099,a4c1,whitelist-filter,backlog,architect,TaskReview,task,no,devops-infrastructure-6099/push-to-template
 e7453a,devops-bootstrap,0015,meeting-wrapper-windsurf,TaskReview,agent,Task,task,yes,devops-bootstrap/0015-meeting-workflow
-e80e,6099,a4c1,docs,backlog,architect,Task,task,no,devops-infrastructure-6099/push-to-template
+e80e,6099,a4c1,docs,backlog,architect,TaskReview,task,no,devops-infrastructure-6099/push-to-template
 fd2dbd,23a043,bd72df,migrate-ids,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
 s09,,,0001,backlog,architect,Done,task,yes,
