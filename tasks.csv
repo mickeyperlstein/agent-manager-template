@@ -15,8 +15,8 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 0015,,,meeting workflow,backlog,architect,Backlog,task,yes — Mickey manually runs a meeting end-to-end,devops-bootstrap
 0016,,,configurable agent lookup,backlog,architect,Backlog,task,yes — HLD reviewed for config format and backward compatibility,devops-bootstrap
 0017,,,kanban housekeeping,backlog,architect,Backlog,task,no,devops-bootstrap
+0018,,,kanban sync config HLD,HLD,,HLD-Review,feature,yes,devops-bootstrap
 0018,,,sync config HLD,HLD-Review,,HLD-Review,feature,yes,devops-bootstrap
-0018,,,kanban sync config HLD,HLD,,Task,feature,yes,devops-bootstrap/0018-kanban-sync-config
 0019,,,hash ids HLD,HLD,architect,HLD-Review,task,yes,devops-bootstrap
 0640af,23a043,bd72df,to folders 0640af bd72df 23a043,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
 06ef91,23a043,95d961,entrypoint 06ef91 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
@@ -41,12 +41,13 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 8978e7,23a043,95d961,git doc 8978e7 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
 8a9f1f,23a043,95d961,validation 8a9f1f 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 8bed76,23a043,bd72df,tests 8bed76 bd72df 23a043,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
+8f40,478d,,script hyphens,Task,architect,TaskReview,task,yes,usability-478d/8f40-script-hyphens
 92bcfd,23a043,e9245d,start workflow 92bcfd e9245d 23a043,backlog,agent,Review,task,no,devops-bootstrap/workflow-schema-update
 95f4b4,23a043,95d961,command 95f4b4 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0013-features-cli-core
 9868d2,b63578,0018,to folders validation 9868d2 0018 b63578,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
 993e26,23a043,e9245d,csv schema 993e26 e9245d 23a043,backlog,agent,Review,task,no,devops-bootstrap/workflow-schema-update
-a4c1,6099,a4c1,to template HLD,backlog,architect,HLD-Review,feature,yes,devops-infrastructure-6099
-a4c1,6099,a4c1,to template HLD,backlog,architect,Task,feature,yes,devops-infrastructure-6099/push-to-template
+a4c1,6099,a4c1,to template HLD,backlog,architect,Task,feature,yes,devops-infrastructure-6099
+a4c1,6099,a4c1,to template,backlog,architect,Task,feature,yes,devops-infrastructure-6099
 b96e84,23a043,95d961,commit b96e84 95d961 23a043,backlog,agent,Task,task,no,devops-bootstrap/0014-features-cli-git
 baec,6099,a4c1,push workflow baec a4c1 6099,backlog,agent,Task,task,yes,devops-infrastructure-6099/push-to-template
 bb31,6099,a4c1,wrapper bb31 a4c1 6099,backlog,agent,Task,task,yes,devops-infrastructure-6099/push-to-template
