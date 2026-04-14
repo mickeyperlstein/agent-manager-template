@@ -1,6 +1,6 @@
 # /meeting
 
-**BEFORE ANYTHING ELSE: read `template_workflow/commands/meeting-protocol.md` in full.**
+**BEFORE ANYTHING ELSE: read [meeting-protocol.md](../../template_workflow/commands/meeting-protocol.md) in full.**
 
 after reading the file and all its child ref links only then may you print "I have read the meeting protocol and will fulfill it"
 

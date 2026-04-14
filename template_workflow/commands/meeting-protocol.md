@@ -83,7 +83,6 @@ Ask the user to either fill the items themselves or to tell you discriptively wh
    - **Agenda** — items in order (say "help me" and the agent drafts it)
 
 5. Ask the user to confirm before proceeding.
-
 ---
 
 ## Step 3: Save and Clean Up

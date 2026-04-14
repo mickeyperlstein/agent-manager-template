@@ -41,16 +41,16 @@ Default: `SOT=csv` (matches existing Kanban.md statement "Source of Truth: tasks
 
 ### Config Location
 
-**In `.claude/config.json`** (or environment):
+**In `template_workflow/config.json`** (or environment):
 ```json
 {
   "kanban": {
-    "sot": "csv"  // or "folders"
+    "source_of_truth": "folders"  // or "csv"
   }
 }
 ```
 
-Rationale: `.claude/` is already the location for Claude Code settings/hooks; keeps all harness config in one place.
+Rationale: `template_workflow/` is already the location for template settings/hooks; keeps all harness config in one place.
 
 ### Sync Script Validation
 
@@ -90,9 +90,9 @@ This prevents accidental data loss during routine maintenance.
 
 ## 4. Alternatives Considered
 
-**A. No config, always default to CSV as SOT**
+**A. No config, always default to folders as SOT**
 - ✓ Simpler (no moving parts)
-- ✗ Inflexible; teams working in folders can't make that the source
+- ✗ Inflexible; teams working in folders will make that the source
 - ✗ Config exists in code comments, easy to forget
 
 **B. Detect SOT automatically (check which is newer)**

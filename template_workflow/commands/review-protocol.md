@@ -4,15 +4,18 @@ Usage: `/review <id>`
 
 ---
 
-A review is a **collaborative critique meeting** where a Presenter defends their work (HLD or Task implementation) and Reviewers ask questions to identify gaps, risks, or improvements. Reviews are iterative — items cycle back for refinement until accepted. See @meeting-protocol.md for the foundational structure; reviews adapt it for the presenter-vs-questioner dynamic.
+A review is a **collaborative critique meeting** where a Presenter defends their work (HLD or Task implementation) and Reviewers ask questions to identify gaps, risks, or improvements. Reviews are iterative — items cycle back for refinement until accepted. See [meeting-protocol.md](./meeting-protocol.md) for the foundational structure; reviews adapt it for the presenter-vs-questioner dynamic.
 
 ---
 
 ## Step 0: Load Review Context
 
 1. When `/review <id>` is called (or review is triggered):
-   - If `<id>` is specified, load the specific file (e.g., `HLDs/hld-0019.md`, `Tasks/task-0042.md`)
+   - If `<id>` is specified, resolve it:
+     - Check `tasks.csv` for a row where `id = <id>` (e.g., `/review 0018` → `kanban sync config HLD`)
+     - Or search for `<id>` as a filename pattern (e.g., `/review kanban-sync-config` → `kanban-sync-config-HLD.md`)
    - If no `<id>`, check the current context (user's open file) — if it's in `3-HLD-Review` or `3-TaskReview` folder, use that
+   - Locate the file in `Features/3-HLD-Review/` or `Features/3-TaskReview/` (or `Features/4-Task/` for task reviews)
    - Determine the **review type**: `HLD-Review` (architectural) or `Task-Review` (implementation)
    - Read the file entirely to understand what is being reviewed
 

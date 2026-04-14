@@ -47,15 +47,23 @@ def extract_task_from_filename(filepath: Path) -> str:
     """
     Extract task name from filename using parse_filename().
 
+    Handles both 4-segment format (with epicid/featureid) and 2-segment format.
     Preserves hyphens in task name for round-trip CSV consistency.
-    Example: my-task-123-456-789.md -> my-task (preserves hyphens)
+    Examples:
+    - my-task-123-456-789.md (4-seg) -> my-task
+    - my-task-123.md (2-seg) -> my-task
     """
     try:
         name, _, _, _ = parse_filename(filepath)
         return name
     except ValueError:
-        # Fallback for filenames that don't match kanban format
-        return filepath.stem
+        # Fallback for 2-segment filenames (common format: {id}-{name})
+        # Split on first hyphen and extract the name part (preserving hyphens)
+        stem = filepath.stem
+        if '-' in stem:
+            parts = stem.split('-', 1)
+            return parts[1]  # Return name part (2nd segment after ID)
+        return stem
 
 
 def scan_features(features_dir: Path) -> list:
