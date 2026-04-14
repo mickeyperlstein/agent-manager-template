@@ -9,7 +9,7 @@ import re
 import csv
 import sys
 from pathlib import Path
-from kanban import FOLDER_TO_COLUMN, repo_root
+from kanban import FOLDER_TO_COLUMN, repo_root, parse_filename
 
 FRONTMATTER_PATTERN = re.compile(r'^---\s*\n(.*?)\n---\s*\n', re.DOTALL)
 
@@ -44,12 +44,18 @@ def get_relative_path(features_dir: Path, md_file: Path, column_folder: str) -> 
 
 
 def extract_task_from_filename(filepath: Path) -> str:
-    """Extract task name from filename (e.g., 0001-agent-manager-repo.md -> agent-manager-repo)."""
-    name = filepath.stem
-    if '-' in name:
-        parts = name.split('-', 1)
-        return parts[1].replace('-', ' ')
-    return name
+    """
+    Extract task name from filename using parse_filename().
+
+    Preserves hyphens in task name for round-trip CSV consistency.
+    Example: my-task-123-456-789.md -> my-task (preserves hyphens)
+    """
+    try:
+        name, _, _, _ = parse_filename(filepath)
+        return name
+    except ValueError:
+        # Fallback for filenames that don't match kanban format
+        return filepath.stem
 
 
 def scan_features(features_dir: Path) -> list:

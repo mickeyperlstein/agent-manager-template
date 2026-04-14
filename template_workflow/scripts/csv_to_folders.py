@@ -8,17 +8,27 @@ import csv
 import subprocess
 import sys
 from pathlib import Path
-from kanban import COLUMNS, repo_root
+from kanban import COLUMNS, repo_root, parse_filename
 
 
 def find_task_file(features_dir: Path, task_id: str) -> Path:
-    """Find a task file by ID anywhere in Features/."""
+    """
+    Find a task file by parsing filename and matching taskid.
+
+    Searches all .md files and uses parse_filename() to extract the taskid,
+    which correctly handles task names with hyphens.
+    """
     for folder in features_dir.iterdir():
         if not folder.is_dir():
             continue
         for md_file in folder.rglob('*.md'):
-            if md_file.stem.startswith(f"{task_id}-"):
-                return md_file
+            try:
+                _, parsed_taskid, _, _ = parse_filename(md_file)
+                if parsed_taskid == task_id:
+                    return md_file
+            except ValueError:
+                # File doesn't match kanban format, skip it
+                continue
     return None
 
 
