@@ -94,14 +94,8 @@ def cache_init(cache_dir: str = None) -> str:
     git_dir = os.path.join(cache_dir, '.git')
     if not os.path.exists(git_dir):
         subprocess.run(['git', 'init'], cwd=cache_dir, check=True)
-        # Create initial commit so we can merge
-        readme = os.path.join(cache_dir, 'README.md')
-        with open(readme, 'w') as f:
-            f.write('Template cache')
         subprocess.run(['git', 'config', 'user.email', 'cache@example.com'], cwd=cache_dir, check=True)
         subprocess.run(['git', 'config', 'user.name', 'Cache'], cwd=cache_dir, check=True)
-        subprocess.run(['git', 'add', 'README.md'], cwd=cache_dir, check=True)
-        subprocess.run(['git', 'commit', '-m', 'initial'], cwd=cache_dir, check=True)
 
     # Step 3: Stash any existing work (preserve if interrupted)
     try:
@@ -275,8 +269,22 @@ def main() -> int:
     branch = os.environ.get('BRANCH', 'dev')
     version = os.environ.get('VERSION', '')
 
+    # Validate PUSH_DEV_REPO
     if not dev_repo:
         sys.stderr.write("error: PUSH_DEV_REPO environment variable not set\n")
+        return 1
+
+    if not os.path.exists(dev_repo):
+        sys.stderr.write(f"error: PUSH_DEV_REPO '{dev_repo}' does not exist\n")
+        return 1
+
+    if not os.path.isdir(dev_repo):
+        sys.stderr.write(f"error: PUSH_DEV_REPO '{dev_repo}' is not a directory\n")
+        return 1
+
+    # Verify it's a git repository
+    if not os.path.exists(os.path.join(dev_repo, '.git')):
+        sys.stderr.write(f"error: PUSH_DEV_REPO '{dev_repo}' is not a git repository\n")
         return 1
 
     if cache_folder is None:
