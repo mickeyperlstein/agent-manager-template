@@ -36,7 +36,7 @@ id,epic,feature,task,status,assignee,column,type,review_gate,path
 537577,devops-bootstrap,0015,meeting-wrapper-claude,TaskReview,agent,Task,task,yes,devops-bootstrap/0015-meeting-workflow
 5829,6099,a4c1,merge-commit,backlog,architect,Task,task,no,devops-infrastructure-6099/push-to-template
 6764ce,23a043,e9245d,update-kanban-md,backlog,agent,Review,task,no,devops-bootstrap/workflow-schema-update
-6eb3,6099,a4c1,cache-init,backlog,architect,Task,task,no,devops-infrastructure-6099/push-to-template
+6eb3,6099,a4c1,cache-init,backlog,architect,TaskReview,task,no,devops-infrastructure-6099/push-to-template
 73df4b,23a043,bd72df,update-howtos,backlog,architect,Task,task,yes,devops-bootstrap/csv-two-way-sync
 801c74,b63578,0018,docs-update,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
 8166be,b63578,0018,folders-to-csv-validation,Task,,Task,task,yes,devops-bootstrap/0018-kanban-sync-config
