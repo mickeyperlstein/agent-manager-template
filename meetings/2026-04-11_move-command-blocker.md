@@ -9,6 +9,7 @@ Date: 2026-04-11
 
 Understand why the `features move` command (task 0013) is blocking agent execution and design a path forward to unblock constant/agents.
 
+
 ## Relevant Info
 - Feature 0013 (features CLI core) is in Task column with multiple subtasks
 - Subtask d28e7c is the `features move` command implementation (currently in Task)
