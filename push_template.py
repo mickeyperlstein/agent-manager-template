@@ -12,11 +12,11 @@ from pathlib import Path
 
 # Files and directories to exclude
 EXCLUSIONS = [
-    "/Features/",
-    "/meetings/",
-    "/tasks.csv",
-    "/push_template.sh",
-    "/push_template.py"
+    "Features/",
+    "meetings/",
+    "tasks.csv",
+    "push_template.sh",
+    "push_template.py"
 ]
 
 def run_command(cmd, capture_output=True, check=True, test_mode=False):
@@ -159,8 +159,7 @@ def main():
 
 
     # Commit and push (skip in test mode)
-
-    if approved_files:
+    if not test_mode and approved_files:
         run_command(f'git commit -m "chore: release template v{new_version}"')
         run_command("git push origin HEAD:main --force")
         

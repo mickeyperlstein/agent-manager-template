@@ -6,6 +6,7 @@ Date: 2026-04-11
 - ARCH: architect — Senior software architect with distributed systems & DevOps expertise — `~/.claude/agents/architect.md`
 
 ## Goal
+
 Understand why the `features move` command (task 0013) is blocking agent execution and design a path forward to unblock constant/agents.
 
 ## Relevant Info

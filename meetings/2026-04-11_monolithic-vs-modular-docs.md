@@ -4,6 +4,7 @@ Date: 2026-04-11  Time:
 ## Participants
 - MOD + ARCH: Claude Haiku 4.5 — playing Architect + facilitator
 
+
 ## Topic
 Should documentation use monolithic files (like Kanban.md) or modular files with cross-references? especially in small sahared topics like formats, locations...
 
