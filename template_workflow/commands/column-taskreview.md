@@ -1,14 +1,12 @@
-# TaskReview
+# Column: TaskReview (5-TaskReview)
 
-## What is TaskReview?
+**What:** LLD review gate. Human reviews task files and commits move to Implementation.
 
-**TaskReview** is the LLD review gate. Individual task files arrive here from `Task` (agent moves them after adding LLD + Gherkin + TestPlan). A human reviews each file and commits the move to Implementation.
+**When to work here:** Human reviews each task file that arrives from Task column.
 
-## Who Acts Here
+**Agent role:** None — the work was done in Task column. Files auto-move here by agent after LLD/Gherkin/TestPlan added.
 
-**Human** reviews each task file. No agent action required at this column — the work was done in Task.
-
-**For non-technical reviewers:** focus on the plain-English summary in each task file — does the plan make sense? The LLD detail is there for completeness; you are not expected to read every line.
+---
 
 ## What is an LLD?
 
@@ -18,7 +16,9 @@ A task-level spec at C4 Level 3 (Component):
 - Data shapes (input/output types, validation)
 - Test coverage plan (unit / integration / container)
 
-## Add LLD to Each Task File
+---
+
+## LLD Template
 
 ```markdown
 ## LLD
@@ -54,12 +54,22 @@ Scenario: error path
 \`\`\`
 ```
 
+---
+
 ## TaskReview Checklist
 
 - [ ] LLD written for every task file
 - [ ] Gherkin covers happy path and key error paths
 - [ ] No open questions blocking implementation
 - [ ] Human has committed the move to Implementation
+
+---
+
+## For Non-Technical Reviewers
+
+Focus on the plain-English summary in each task file — does the plan make sense? The LLD detail is there for completeness; you are not expected to read every line.
+
+---
 
 ## After TaskReview
 

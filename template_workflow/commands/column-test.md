@@ -1,10 +1,18 @@
-# Test
+# Column: Test (7-Test)
 
-## Philosophy
+**What:** Agent verifies the implementation against the E2E scenarios defined in the task files.
+
+**When to work here:** Agent acts after implementation is complete and moved to Test column.
+
+---
+
+## Testing Philosophy
 
 A small, focused E2E suite beats hundreds of granular unit tests. The goal is regression protection — making sure nothing that worked before is broken. Aim for ~30 well-chosen E2E scenarios, not a test pyramid.
 
 Unit tests are only worth writing for genuinely complex, isolated logic (e.g. a pure parsing function). Everything else: E2E.
+
+---
 
 ## E2E Approach: Black-Box + Observable Output
 
@@ -18,6 +26,8 @@ Every assertion must be observable via one or more of:
 For server-side tests, logs and DB artifacts should align — the log says "I wrote X" and the DB confirms X is there. A test only passes when all expected observability points match.
 
 If you can't verify a test by reading logs, querying an artifact, or harness output — it is not a valid test.
+
+---
 
 ## Tooling and Pipeline Coverage
 
@@ -33,11 +43,7 @@ Use the same tools for testing as production monitoring. If the project has Graf
 
 If the code touches it, the test verifies it. No exceptions for "that's someone else's system." If it's in your pipeline, it's in your E2E.
 
-## What is the Test Column?
-
-The agent verifies the implementation against the E2E scenarios defined in the task files.
-
-**Column:** `7-Test`
+---
 
 ## Agent Responsibilities
 
@@ -48,6 +54,8 @@ The agent verifies the implementation against the E2E scenarios defined in the t
    - All pass → move folder to `8-Review`
    - Needs human judgment (UX, visual) → flag for human, leave in Test
    - Fail → move folder back to `6-Implementation` with failure notes in task file
+
+---
 
 ## Manual Testing — When the Human is Your Hands
 
@@ -64,6 +72,8 @@ The agent cannot assume the human knows the system. Write test instructions as i
 5. **Prerequisites first** — state what must be true before the test starts (repo, branch, open tool, existing files). Verify prerequisites before giving the first command.
 6. **Report template** — tell the human exactly what to report back: pass/fail per checkbox, any error messages (copy-paste), any unexpected behavior.
 
+---
+
 ## Checklist
 
 - [ ] Each scenario verified via logs or harness output
@@ -71,6 +81,8 @@ The agent cannot assume the human knows the system. Write test instructions as i
 - [ ] Regression suite passes
 - [ ] No known gaps
 - [ ] Failure notes written if routing back to Implementation
+
+---
 
 ## After Test
 

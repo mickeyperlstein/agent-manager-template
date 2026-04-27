@@ -71,7 +71,7 @@ Files move individually from Task onwards. `depends_on` controls ordering betwee
 
 5-TaskReview/{epic}/{feature}/           ← individual files move here as agent completes them
 6-Implementation/{epic}/{feature}/       ← individual files move here after human review; agent writes code + tests (TDD)
-7-Test -  E2E and systems, integration tests pass in - 8-Review/{epic}/{feature}/               ← individual files move here after implementation tests pass
+7-Review/{epic}/{feature}/               ← individual files move here after implementation tests pass
 8-Done/{epic}/{feature}/                 ← individual files move here after PR merged
 ```
 
@@ -85,10 +85,10 @@ A lean E2E suite (~30 well-chosen scenarios) beats a test pyramid. Tests exist t
 
 | V-Model Document | Kanban Equivalent | Where |
 |---|---|---|
-| Test Plan | Quality policy + workflow rules | `template_workflow/Agent-HowTos/Kanban.md`, `CLAUDE.md` |
+| Test Plan | Quality policy + workflow rules | Kanban-Workflow.md (this file) + CLAUDE.md |
 | Test Design Spec | Acceptance criteria + test conditions | Task column (task files) |
 | Test Case Spec | Gherkin scenarios + LLD test plan | TaskReview (task files) |
-| Test Procedure | Board workflow + quality gates | `template_workflow/Agent-HowTos/Kanban.md` gates |
+| Test Procedure | Board workflow + quality gates | Kanban-Workflow.md gates |
 | Test Suite | Automated test suites | Test column |
 | RTM | Task id → feature HLD link | task file `feature` field |
 | Test Execution Report | Kanban metrics (cycle time, CFD) | tasks.csv |
