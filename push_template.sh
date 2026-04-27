@@ -1,12 +1,23 @@
 #!/bin/bash
 # push_template.sh
-# Wrapper script for push_template.py
+# Wrapper script for remove_template_dev_internals.py
 
 set -e
 
 log() {
   echo -e "\033[32m$*\033[0m"
 }
+
+ORIGINAL_DIR=$(pwd)
+
+# Show help if no args
+if [ $# -eq 0 ]; then
+  # calling script with no args shows help
+  $ORIGINAL_DIR/remove_template_dev_internals.py
+  exit 0
+fi
+
+ARGS1="$@"
 
 # Set temp directory
 TEMP_DIR="$HOME/Documents/agent-manager-template-release"
@@ -23,7 +34,7 @@ git fetch origin
 log git merge latest changes from dev
 git merge origin/dev || true
 log remove template dev internals
-ARGS1="$@"
+
 $ORIGINAL_DIR/remove_template_dev_internals.py $ARGS1
 log git status
 git status

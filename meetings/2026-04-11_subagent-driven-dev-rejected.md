@@ -3,7 +3,7 @@ Date: 2026-04-10 Time: [current]
 
 ## Participants
 - MOD + ARCH: Claude — playing architect + facilitator
-- ARCH: architect — Senior software architect with deep expertise in distributed systems, Node.js, TypeScript, event-driven architecture — `~/.claude/agents/architect.md`
+- ARCH: architect — Senior software architect with deep expertise in distributed systems, Node.js,TypeScript, event-driven architecture — `~/.claude/agents/architect.md`
 
 ## Goal
 Review the proposed subagent-driven-development workflow and design how to integrate it into the agent-manager-template, ensuring it aligns with the existing Kanban workflow while providing task isolation, staged review, and commit discipline.

@@ -67,10 +67,18 @@ def get_git_status_files():
 
     return files
 
-def bump_patch_version(version):
-    """Bump the patch version."""
+def bump_version(version, bump_type="patch"):
+    """Bump version by major, minor, or patch."""
     parts = version.split('.')
-    parts[2] = str(int(parts[2]) + 1)
+    if bump_type == "major":
+        parts[0] = str(int(parts[0]) + 1)
+        parts[1] = "0"
+        parts[2] = "0"
+    elif bump_type == "minor":
+        parts[1] = str(int(parts[1]) + 1)
+        parts[2] = "0"
+    else:  # patch
+        parts[2] = str(int(parts[2]) + 1)
     return '.'.join(parts)
 
 def save_to_file(file_path, data):
@@ -102,8 +110,48 @@ def resolve_merge_conflicts():
     if conflicts_resolved:
         run_command('git commit -m "Merge origin/dev, resolve conflicts by removing excluded files"')
 
+def show_help():
+    """Display usage information."""
+    print()
+    print("Options:")
+    print("  --major    Bump major version (1.1.17 → 2.0.0)")
+    print("  --minor    Bump minor version (1.1.17 → 1.2.0)")
+    print("  --patch    Bump patch version (1.1.17 → 1.1.18) [default]")
+    print("  --test     Run in test mode (skip commit/push)")
+    print("  --latest   Show latest version in origin/main")
+    print()
+    print("  --help (or no args)    Show this help message")
+    print()
+
+def show_latest():
+    """Display the latest version from origin/main."""
+    try:
+        stdout, _ = run_command("git show origin/main:template_workflow/version.json", check=False)
+        if stdout:
+            data = json.loads(stdout)
+            print(f"Latest version in origin/main: {data.get('version', 'unknown')}")
+        else:
+            print("Could not fetch version from origin/main")
+    except Exception as e:
+        print(f"Error fetching latest version: {e}")
+
 def main():
+    if "--help" in sys.argv or (len(sys.argv) == 1):
+        show_help()
+        return
+
+    if "--latest" in sys.argv:
+        show_latest()
+        return
+
     test_mode = "--test" in sys.argv
+    bump_type = "patch"
+
+    # Parse version bump type from args
+    for arg in sys.argv[1:]:
+        if arg in ["--major", "--minor", "--patch"]:
+            bump_type = arg.lstrip("--")
+            break
 
     VERSION_FILE = Path("template_workflow/version.json").resolve()
 
@@ -117,7 +165,7 @@ def main():
 
     # Bump version (skip in test mode)
     if not test_mode:
-        new_version = bump_patch_version(current_version)
+        new_version = bump_version(current_version, bump_type)
         version_data['version'] = new_version
         save_to_file(VERSION_FILE, version_data)
         print(f"Version bumped to {new_version}")

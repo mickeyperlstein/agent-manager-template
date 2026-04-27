@@ -8,6 +8,7 @@
 - Test conditions (Gherkin)
 - Out of scope items
 
+
 ❌ **Missing:**
 - **Architecture/Layer Diagram** — didn't explicitly say "bash does X, Python does Y"
 - **Layer boundary rules** — didn't say "no git init in Python, no filtering in Bash"

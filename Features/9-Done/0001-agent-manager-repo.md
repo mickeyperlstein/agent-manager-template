@@ -8,7 +8,7 @@ review_gate: yes
 ---
 
 ## Story
-As the team, I want a GitHub repo `agent-manager-template` that houses all agent tooling (agent definitions, meeting workflow, CSV sync script, wrappers) so these tools can be maintained independently and consumed as an upstream by any project repo.
+I want a GitHub repo `agent-manager-template` that houses all agent tooling (agent definitions, meeting workflow, CSV sync script, wrappers) so these tools can be maintained independently and consumed as an upstream by any project repo.
 TEST LINE ADDED
 
 ## Acceptance Criteria
