@@ -24,6 +24,7 @@ When done, **the agent moves the file to `3-HLD-Review`**. This is the one colum
 ## 2. Goals
 
 ## 3. Architecture
+ Sequence or Activity Diagrams or C4 diagrams *must*
 ### C4 L1 — Context
 ### C4 L2 — Containers
 ### Components & Data Model

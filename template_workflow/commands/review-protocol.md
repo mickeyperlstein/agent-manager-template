@@ -31,9 +31,9 @@ A review is a **collaborative critique meeting** where a Presenter defends their
 - All other participants explicitly named, or:
 - Default: relevant domain experts (e.g., for an HLD review, include security, ops, product if interested parties)
 - Reviewers come to ask questions and identify issues
-
+- If Reviewer not specified, a Senior of the presenter agent will be spawned called Senior-{agent-name} like Senior-architect, Senior-Devops etc.
 **MOD** (facilitator):
-- You (Claude) — routes questions, documents Rolling Summary + Decisions, manages kanban outcomes
+- You (AI) — routes questions, documents Rolling Summary + Decisions, manages kanban outcomes
 
 For each participant, validate their agent file (search order: project-level → template defaults → user-global → common tool folders). Stop if any agent file is missing; ask the user to resolve before proceeding.
 
@@ -67,7 +67,7 @@ For each participant, validate their agent file (search order: project-level →
 
 Introduce the review:
 
-1. **File being reviewed:** Path, type (HLD-Review or Task-Review)
+1. **File being reviewed:** []() Path, type (HLD-Review or Task-Review) file for user to cmd-click and open
 2. **Participants:**
    - `MOD + PRESENTER: <Model> — [Presenter role] + facilitator`
    - `REVIEWER [LABEL]: <Model> — [role] — <agent file path>`
@@ -84,8 +84,7 @@ Introduce the review:
    - /resume — resume the review
    - /end-review — close the review and produce decisions
    ```
-
-4. **Invite opening context:** `PRESENTER: give us the 1-minute pitch on what this is and why it matters.`
+4. **Auto-pitch opening context:** The Presenter automatically gives a 1-minute pitch on what this is and why it matters. and make sure to highlight what stays and what changes in flows.
 
 ---
 

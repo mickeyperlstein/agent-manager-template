@@ -32,6 +32,40 @@ depends_on:
 - Cherry-picking specific commits
 - Rewriting history
 
+## Architecture & Layer Responsibilities
+
+**Two-layer design: Bash wrapper + Python core**
+
+```
+┌─────────────────────────────────────────────────┐
+│  push_template.sh (BASH wrapper)                │
+│  ├─ Check/create cache folder                  │
+│  ├─ git clone origin (if missing)              │
+│  ├─ git checkout main                          │
+│  ├─ git fetch origin                           │
+│  ├─ git pull origin/main                       │
+│  └─ Call: python3 push_template.py             │
+└─────────────────────────────────────────────────┘
+                        │
+                        ▼
+┌─────────────────────────────────────────────────┐
+│  push_template.py (PYTHON core logic)           │
+│  ├─ git merge --ff-only dev/dev                │
+│  ├─ git status → filter allowed files          │
+│  ├─ git add allowed_files_only                 │
+│  ├─ git commit -m "chore: merge dev..."        │
+│  └─ git push origin HEAD:main                  │
+└─────────────────────────────────────────────────┘
+```
+
+**Why this split?**
+- Bash handles infrastructure (clone, checkout, pull) — simple, transparent, shell-native
+- Python handles filtering logic (merge, filter, commit, push) — business logic, testable, recoverable
+
+**Invariant:** Cache always starts clean (Bash ensures this). Python only does merge+filter+commit+push.
+
+**Layer boundary rule:** No `git init` in Python. No filtering logic in Bash. Respect the split.
+
 ## Acceptance Criteria
 
 - [ ] Script creates/updates main cache folder safely

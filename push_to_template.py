@@ -94,8 +94,10 @@ def cache_init(cache_dir: str = None) -> str:
     git_dir = os.path.join(cache_dir, '.git')
     if not os.path.exists(git_dir):
         subprocess.run(['git', 'init'], cwd=cache_dir, check=True)
-        subprocess.run(['git', 'config', 'user.email', 'cache@example.com'], cwd=cache_dir, check=True)
-        subprocess.run(['git', 'config', 'user.name', 'Cache'], cwd=cache_dir, check=True)
+
+    # Always set config (idempotent, safe to run on existing repos)
+    subprocess.run(['git', 'config', 'user.email', 'cache@example.com'], cwd=cache_dir, check=True)
+    subprocess.run(['git', 'config', 'user.name', 'Cache'], cwd=cache_dir, check=True)
 
     # Step 3: Stash any existing work (preserve if interrupted)
     try:
@@ -299,11 +301,8 @@ def main() -> int:
         sys.stdout.write("Initializing cache folder...\n")
         cache_init(cache_folder)
 
-        # Step 2: Add dev repo as additional remote if not same as origin
-        try:
-            subprocess.run(['git', 'remote', 'remove', 'dev'], cwd=cache_folder, check=False, capture_output=True)
-        except subprocess.CalledProcessError:
-            pass
+        # Step 2: Remove any existing dev remote (safe to fail if not present)
+        subprocess.run(['git', 'remote', 'remove', 'dev'], cwd=cache_folder, check=False, capture_output=True)
 
         # Get dev_repo's origin as the cache origin
         try:
@@ -311,24 +310,15 @@ def main() -> int:
                                        cwd=dev_repo, check=True,
                                        capture_output=True, text=True).stdout.strip()
             # Update cache origin if needed
-            try:
-                subprocess.run(['git', 'remote', 'remove', 'origin'], cwd=cache_folder, check=False, capture_output=True)
-            except subprocess.CalledProcessError:
-                pass
+            subprocess.run(['git', 'remote', 'remove', 'origin'], cwd=cache_folder, check=False, capture_output=True)
             subprocess.run(['git', 'remote', 'add', 'origin', dev_origin], cwd=cache_folder, check=True, capture_output=True)
         except subprocess.CalledProcessError:
             # dev_repo might not have an origin, use it directly
-            try:
-                subprocess.run(['git', 'remote', 'remove', 'origin'], cwd=cache_folder, check=False, capture_output=True)
-            except subprocess.CalledProcessError:
-                pass
+            subprocess.run(['git', 'remote', 'remove', 'origin'], cwd=cache_folder, check=False, capture_output=True)
             subprocess.run(['git', 'remote', 'add', 'origin', dev_repo], cwd=cache_folder, check=True, capture_output=True)
 
         # Add dev_repo as a remote for fetching the dev branch
-        try:
-            subprocess.run(['git', 'remote', 'remove', 'dev'], cwd=cache_folder, check=False, capture_output=True)
-        except subprocess.CalledProcessError:
-            pass
+        subprocess.run(['git', 'remote', 'remove', 'dev'], cwd=cache_folder, check=False, capture_output=True)
         subprocess.run(['git', 'remote', 'add', 'dev', dev_repo], cwd=cache_folder, check=True, capture_output=True)
 
         # Step 3: Fetch and merge dev
@@ -344,8 +334,8 @@ def main() -> int:
         stage_allowed_files(cache_folder)
 
         if not commit_removal(cache_folder):
-            # Nothing to commit (no changes), which is fine
-            sys.stdout.write("Note: No changes to commit (dev already merged cleanly)\n")
+            # Nothing to commit (no template files changed), which is fine
+            sys.stdout.write("Note: No changes to commit after filtering (dev merged, no template files changed)\n")
 
         sys.stdout.write("Pushing to origin/main...\n")
         if not push_to_main(cache_folder):
