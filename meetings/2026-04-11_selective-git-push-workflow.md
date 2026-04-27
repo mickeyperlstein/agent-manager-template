@@ -38,19 +38,45 @@ Instead of `git add .` followed by removal, use `git status` to show a line-by-l
 - ARCH: Your proposal (git status → filter → git add approved) is cleaner, more direct
 - Clarified: Include untracked files in the filter (that's the point), but exclude Features/, meetings/, tasks.csv, push_template.py, push_template.sh
 - Exclusion list will be hardcoded at top of script for user review
+- User showed manual workflow: clone release, fetch origin/dev, merge/rebase, push
+- Clarified: No artifacts exist on main currently; Features/ and meetings/ are dev-only
+- ARCH critiqued approach for shell script (error handling, git state recovery, reset --hard is destructive)
+- User: Conflicts impossible—one-way flow, no convergent history. Should fail hard if conflict appears.
+- Decided: git merge --ff-only origin/dev (not rebase) — preserves history
+- User points out: push_template.py already does filtering via selective staging
+- Outstanding question: Replace push_template.py with separate cache approach, keep as-is, or wrap it?
 
 ## Rolling Summary
+
 **Phase 1 (2026-04-11):**
 Problem: Current push pollutes main with Features/, meetings/, tasks.csv. Downstream ops manually clean up.
 Solution: Replace git add . + unstage with git status → filter → git add. Include untracked files (intentional), exclude specific dirs/files.
 Decision: Approved. Proceed to implementation.
 
-**Phase 2 (2026-04-12 - RESUMED):**
+**Phase 2 (2026-04-12):**
 Implementation revealed new issues:
 - Current git status approach may not be detecting changes correctly
 - Question: should main branch be in separate folder for push operations?
 - Unclear how files will actually move during push
 - Need to reconsider git methodology: git status vs git diff --files or other approach
+
+**Phase 3 (2026-04-27):**
+Manual workflow tested successfully. Key findings:
+- Separate cache approach works: clone, fetch origin/dev, merge --ff-only, push
+- No artifact pollution—Features/, meetings/ don't exist on main
+- Symlinks preserved correctly across clone
+- Git merge --ff-only chosen over rebase (preserves history)
+- Conflicts impossible (one-way flow, no convergent history)
+- Outstanding: push_template.py already handles filtering. Decision needed: replace with cache approach, or wrap existing script?
+
+**Phase 3 (2026-04-27 - RESUMED):**
+Manual workflow tested and documented:
+- Clone repo to separate directory (agent-manager-template-release)
+- Fetch origin, rebase origin/dev onto main
+- Verified: no dev artifacts (Features/, meetings/) exist on main or in website
+- Symlinks in .cline/commands/ preserved correctly
+- Successfully merged and pushed to main
+- Question: Use separate cache approach + merge, or wrap existing push_template.py?
 
 ## Decisions
 **Phase 1 Outcome (REJECTED):** git status → filter → git add approach doesn't work
