@@ -1,6 +1,10 @@
 # Agent Manager Template
 
-Hey there! This is the Agent Manager Template repository. 
+This repo is using egant-template-manager https://github.com/mickeyperlstein/egant-template-manager
+
+--- DELETE THIS SECTION WHEN YOU START USING YOUR REPO ---
+
+when you start using your REPO, remove/edit this file and put your own repo stuff in it. just link to the template repo here instead. 
 
 [![Template Version](https://img.shields.io/github/v/release/mickeyperlstein/agent-manager-template?label=template)](https://github.com/mickeyperlstein/agent-manager-template/releases)
 
