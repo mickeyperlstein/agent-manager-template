@@ -1,6 +1,6 @@
 # Agent Manager Template
 
-This repo is using egant-template-manager https://github.com/mickeyperlstein/egant-template-manager
+This repo is using agent-template-manager https://github.com/mickeyperlstein/agent-template-manager
 
 --- DELETE THIS SECTION WHEN YOU START USING YOUR REPO ---
 
