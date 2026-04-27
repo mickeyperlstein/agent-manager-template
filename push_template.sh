@@ -4,26 +4,28 @@
 
 set -e
 
+log() {
+  echo -e "\033[32m$*\033[0m"
+}
+
 # Set temp directory
-TEMP_DIR="~/Documents/agent-manager-template-release"
+TEMP_DIR="$HOME/Documents/agent-manager-template-release"
 ORIGINAL_DIR=$(pwd)
-#create temp dir
-cd ~/Documents
-rm -rf $TEMP_DIR
-git clone https://github.com/mickeyperlstein/agent-manager-template.git $TEMP_DIR
-cd $TEMP_DIR
-#update states
+log "create $TEMP_DIR"
+cd "$HOME/Documents"
+rm -rf "$TEMP_DIR" > /dev/null 2>&1
+log clone main repo
+git clone https://github.com/mickeyperlstein/agent-manager-template.git "$TEMP_DIR"
+cd "$TEMP_DIR"
+log current directory: $(pwd)
+log git fetch origin
 git fetch origin
-#merge latest changes
-git merge origin/main
-$ORIGINAL_DIR/push_template.py $@
-
-
-
-echo "Created temp directory: $TEMP_DIR"
-
-# Run the Python script
+log git merge latest changes from dev
+git merge origin/dev || true
+log remove template dev internals
 ARGS1="$@"
-python3 push_template.py $ARGS1
+$ORIGINAL_DIR/remove_template_dev_internals.py $ARGS1
+log git status
+git status
 
-echo "cleanup in https://github.com/mickeyperlstein/agent-manager-template/"
+log cleanup in https://github.com/mickeyperlstein/agent-manager-template/

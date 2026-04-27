@@ -17,7 +17,7 @@ EXCLUSIONS = [
     "tasks.csv",
     "push_template.sh",
     "push_template.py",
-    "remove_template_dev_stuff.py"
+    "remove_template_dev_internals.py"
 ]
 
 def run_command(cmd, capture_output=True, check=True, test_mode=False):
@@ -83,10 +83,32 @@ def load_from_file(file_path):
     with open(file_path, 'r') as f:
         return json.load(f)
 
+def resolve_merge_conflicts():
+    """Resolve modify/delete conflicts by removing excluded files."""
+    stdout, _ = run_command("git status --porcelain", check=False)
+
+    conflicts_resolved = False
+    for line in stdout.split('\n'):
+        if not line.strip():
+            continue
+        # Detect deleted/modified conflicts (DU or UD status)
+        if line[:2] in ['DU', 'UD']:
+            filepath = line[3:]
+            if should_exclude(filepath):
+                run_command(f'git rm "{filepath}"')
+                conflicts_resolved = True
+
+    # Complete the merge after resolving conflicts
+    if conflicts_resolved:
+        run_command('git commit -m "Merge origin/dev, resolve conflicts by removing excluded files"')
+
 def main():
     test_mode = "--test" in sys.argv
 
-    VERSION_FILE = "template_workflow/version.json"
+    VERSION_FILE = Path("template_workflow/version.json").resolve()
+
+    # Resolve any merge conflicts with excluded files
+    resolve_merge_conflicts()
 
     # Read current version
     version_data = load_from_file(VERSION_FILE)
