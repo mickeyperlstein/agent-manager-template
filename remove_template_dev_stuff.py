@@ -16,7 +16,8 @@ EXCLUSIONS = [
     "meetings/",
     "tasks.csv",
     "push_template.sh",
-    "push_template.py"
+    "push_template.py",
+    "remove_template_dev_stuff.py"
 ]
 
 def run_command(cmd, capture_output=True, check=True, test_mode=False):
