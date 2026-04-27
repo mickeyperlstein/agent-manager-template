@@ -29,3 +29,26 @@ From a consuming repo:
 ```bash
 cat template_workflow/version.json
 ```
+
+## Available Commands
+
+The `commands/` folder contains workflow protocols for AI agents and column guides:
+
+**Slash Commands (Claude Code / AI assistants):**
+- **[meeting-protocol.md](commands/meeting-protocol.md)** — `/meeting` command for structured meetings
+- **[start-protocol.md](commands/start-protocol.md)** — `/start` command to begin a task
+- **[review-protocol.md](commands/review-protocol.md)** — `/review` command for code reviews
+- **[housekeeping-protocol.md](commands/housekeeping-protocol.md)** — `/housekeeping` command for maintenance tasks
+
+**Kanban Column Protocols:**
+- **[column-backlog.md](commands/column-backlog.md)** — Backlog column (1-Backlog) — create features & epics
+- **[column-task.md](commands/column-task.md)** — Task column (4-Task) — add LLD + Gherkin + TestPlan
+- **[column-taskreview.md](commands/column-taskreview.md)** — TaskReview column (5-TaskReview) — human LLD gate
+- **[column-implement.md](commands/column-implement.md)** — Implementation column (6-Implementation) — TDD code + tests
+- **[column-test.md](commands/column-test.md)** — Test column (7-Test) — verify E2E scenarios
+- **[column-testing-agent.md](commands/column-testing-agent.md)** — Testing-Agent — automated test verification
+
+## Reference Documentation
+
+The `Docs/` folder contains reference material:
+- **[Docs/Kanban-Workflow.md](Docs/Kanban-Workflow.md)** — Overall Kanban structure, gates, and rules

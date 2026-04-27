@@ -1,17 +1,10 @@
-# Testing-Agent
+# Column: Testing-Agent
 
-## What is Testing-Agent?
+**What:** Automated testing by AI agents. After implementation, stories enter here to verify they work correctly against the Gherkin scenarios and LLD test plan.
 
-The **Testing-Agent** column is for automated testing by AI agents. After implementation, stories enter here to verify they work correctly against the Gherkin scenarios and LLD test plan.
+**When to test:** When implementation is complete, code is ready for verification, and tests can be automated.
 
-## When to Test
-
-**Column:** `Testing-Agent` (Features/5-Testing-Agent/)
-
-Stories are tested when:
-- Implementation is complete
-- Code is ready for verification
-- Tests can be automated (not requiring human judgment)
+---
 
 ## V-Model Test Levels
 
@@ -24,6 +17,8 @@ Tests should cover all levels defined in the story's LLD test coverage plan:
 | Container | Smoke / contract tests | End-to-end flow through containers |
 | Requirements | Acceptance tests | Gherkin scenarios pass |
 
+---
+
 ## What Happens Here
 
 | Activity | Who | Output |
@@ -35,6 +30,8 @@ Tests should cover all levels defined in the story's LLD test coverage plan:
 | Verify acceptance criteria | Agent | Gherkin checklist completion |
 | Route forward | Agent | Next column decision |
 
+---
+
 ## Insufficient Tests
 
 If the existing tests don't cover edge cases, negative paths, or critical failure modes that you identify:
@@ -42,9 +39,11 @@ If the existing tests don't cover edge cases, negative paths, or critical failur
 1. Add `**Rejected by Tester:** insufficient tests — [reason]` at the top of the story file
 2. Add the missing scenarios in Gherkin format at the end of `## Acceptance Criteria`
 3. Add a comment explaining why (dated, with your role)
-4. Route the story to `Testing-Manual` instead of Verified
+4. Route the story to manual testing instead of Verified
 
 Do not route to Verified with known gaps.
+
+---
 
 ## Agent Responsibilities
 
@@ -55,10 +54,12 @@ When a story is in Testing-Agent:
 3. **Report results** — Document pass/fail in story comments
 4. **Route forward**:
    - All pass → Verified
-   - Needs human QA or has gaps → Testing-Manual
+   - Needs human QA or has gaps → Manual testing
    - Fail → Back to Implementation with failure details
 
-## Testing Checklist
+---
+
+## Checklist
 
 - [ ] Unit tests pass (per LLD coverage plan)
 - [ ] Integration tests pass (per LLD coverage plan)
@@ -67,15 +68,11 @@ When a story is in Testing-Agent:
 - [ ] No regressions introduced
 - [ ] All Gherkin scenarios explicitly verified
 
+---
+
 ## After Testing-Agent
 
 Once automated testing passes:
 1. Story moves to Verified (human approval)
-2. Or routes to Testing-Manual if human QA needed
+2. Or routes to manual testing if human QA needed
 3. Human verifies and approves for PR
-
-## See Also
-
-- `Implement.md` — Coding phase that precedes testing
-- `TaskReview.md` — LLD and Gherkin defined here
-- `Kanban.md` — Full column workflow

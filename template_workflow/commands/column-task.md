@@ -1,10 +1,10 @@
-# Task
+# Column: Task (4-Task)
 
-## What is the Task Column?
+**What:** Agent adds LLD + Gherkin + TestPlan to task stubs created by HLD agent.
 
-The **Task** column is where an agent adds LLD + Gherkin + TestPlan to task stubs created by the HLD agent. Each task file already contains: What, Scope, Acceptance Criteria, Test Conditions, and Definition of Done.
+**When to work here:** Agent acts on individual task stub files in `Features/4-Task/`.
 
-**Column:** `4-Task` — agent acts on individual task stub files here.
+---
 
 ## Folder Structure
 
@@ -14,6 +14,8 @@ Features/4-Task/{epic}/{feature}/
   {name}-{taskid}-{featureid}-{epicid}.md   ← task stub, agent adds LLD here
   {name}-{taskid}-{featureid}-{epicid}.md
 ```
+
+---
 
 ## Task File Format
 
@@ -69,12 +71,16 @@ Black-box E2E scenarios. For each: identify every pipeline system affected and h
 - PR/Commit: [link or reference]
 ```
 
+---
+
 ## Agent Responsibilities
 
 1. Read `{feature}-HLD.md` for context
 2. For each task stub: add LLD, Gherkin, and TestPlan sections
 3. Move the task file to `Features/5-TaskReview/{epic}/{feature}/` when done
 4. Do not move files that have unresolved `depends_on` — check those first
+
+---
 
 ## After Task
 
