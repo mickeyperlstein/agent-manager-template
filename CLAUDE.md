@@ -1,6 +1,7 @@
 # Claude Code Rules
 
 ### AGENT_MANAGER_TEMPLATE_START
+
 **IMPORTANT:** Read `agent-manager-claude.md` first for Kanban workflow rules.
 
 ---
