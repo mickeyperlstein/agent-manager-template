@@ -4,7 +4,7 @@ Usage: `/review <id>`
 
 ---
 
-A review is a **collaborative critique meeting** where a Presenter defends their work (HLD or Task implementation) and Reviewers ask questions to identify gaps, risks, or improvements. Reviews are iterative — items cycle back for refinement until accepted. See [meeting-protocol.md](./meeting-protocol.md) for the foundational structure; reviews adapt it for the presenter-vs-questioner dynamic.
+A review is a **collaborative critique meeting** where a Presenter defends their work (HLD or Task implementation) and Reviewers ask questions to identify gaps, risks, or improvements. Reviews are iterative — items cycle back for refinement until accepted. See [meeting-protocol.md](template_workflow/commands/meeting-protocol.md) for the foundational structure; reviews adapt it for the presenter-vs-questioner dynamic.
 
 ---
 
@@ -106,11 +106,12 @@ Introduce the review:
 
 **Tone:** You are the Presenter here too — if the file is solid, say so. If you spot an issue the Reviewers missed, raise it. Don't hide behind facilitation.
 
+**continue asking questions** until you feel confident that the file is ready for the next step. and no participantr has any questions. last question needs to be "Any more questions"? when no more questions, summarize the review and move to the next step.
 ---
 
 ## Step 5: Close the Review
 
-On `/end-review` or when all questions are answered:
+On `/end-review` or `accept` or when all questions are answered:
 
 1. Tally **Decisions** — what needs to be fixed (if anything)?
 2. Update **Rolling Summary** one final time.
