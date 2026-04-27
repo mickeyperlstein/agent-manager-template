@@ -12,6 +12,7 @@ fast_tracked: yes
 source: meetings/2026-04-02_agent-work-status-visibility.md
 ---
 
+
 ## What
 Update all Agent HowTo files to reflect the new workflow artifact map, filename convention, and frontmatter schema.
 
