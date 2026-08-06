@@ -20,7 +20,7 @@ def test_folders_to_csv_generates_csv(test_area, story_helper, run):
 
     # Assert script succeeded
     assert rc == 0, f"Script failed: {stderr}"
-    assert "Rebuilt" in stderr and "2 stories" in stderr
+    assert "Rebuilt" in stderr and "2 tasks" in stderr
 
     # Assert tasks.csv was created and has correct data
     csv_path = test_area / "tasks.csv"
@@ -49,7 +49,7 @@ def test_folders_to_csv_dry_run_prints_no_file(test_area, story_helper, run):
     assert rc == 0
 
     # Assert CSV output to stdout
-    assert "id,epic,feature,story,status" in stdout
+    assert "id,epic,feature,task,status,assignee,column,type,review_gate,path" in stdout
     assert "0005" in stdout
 
     # Assert no file was written

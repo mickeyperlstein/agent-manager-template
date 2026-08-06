@@ -16,7 +16,9 @@ def find_task_file(features_dir: Path, task_id: str) -> Path:
     Find a task file by parsing filename and matching taskid.
 
     Searches all .md files and uses parse_filename() to extract the taskid,
-    which correctly handles task names with hyphens.
+    which correctly handles task names with hyphens. Falls back to matching
+    the leading segment of 2-segment filenames ({taskid}-{name}.md), the
+    legacy naming convention still present alongside 4-segment files.
     """
     for folder in features_dir.iterdir():
         if not folder.is_dir():
@@ -27,7 +29,10 @@ def find_task_file(features_dir: Path, task_id: str) -> Path:
                 if parsed_taskid == task_id:
                     return md_file
             except ValueError:
-                # File doesn't match kanban format, skip it
+                stem = md_file.stem
+                if '-' in stem and stem.split('-', 1)[0] == task_id:
+                    print(f"Exception: Found task file: {md_file} that is legacy format")
+                    return md_file
                 continue
     return None
 
